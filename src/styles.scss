@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "../node_modules/font-awesome/scss/font-awesome.scss";
+
+body {
+    font-family: HelveticaNeue-Light, Helvetica Neue Light, Helvetica Neue,
+    Helvetica, Arial, Lucida Grande, sans-serif;
+    font-size: 14px;
+}

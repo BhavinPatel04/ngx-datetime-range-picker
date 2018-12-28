@@ -1,0 +1,390 @@
+<div class="m1-date-range-picker">
+    <div class="">
+        <input
+            #filterInputBox
+            type="text"
+            [ngClass]="{
+                'retail-dateSelect': 'config.retailCalendar',
+                'config.inputClass': 'config.inputClass'
+            }"
+            class="dateSelect"
+            [attr.aria-label]="config.ariaLabels.inputField"
+            (click)="onComponentClick()"
+            placeholder="{{ config.placeholder }}"
+            [ngModel]="selectedDateText"
+            (ngModelChange)="onDateRangeInputChange($event)"
+            (keyup)="onCalendarClose($event)"
+            (focus)="onFocusInput($event)"
+            (blur)="onBlurInput($event)"
+            [value]="selectedDateText"
+            [disabled]="config.componentDisabled"
+            autocomplete="off"
+            spellcheck="false"
+            autocorrect="off"
+            readonly
+        />
+        <i
+            class="fa fa-calendar"
+            [ngClass]="{ 'retail-calendar': 'config.retailCalendar' }"
+        ></i>
+        <span *ngIf="selectedTimezone" class="timezone-info active-timezone">
+            {{ selectedTimezone }}
+        </span>
+    </div>
+    <div *ngIf="showCalendar" class="calendar-view">
+        <div class="date-select">
+            <div *ngIf="customRange" style="position: relative;">
+                <div
+                    *ngIf="config.timezoneSupport"
+                    class="list-inline timezone-select"
+                >
+                    <div class="timezones">
+                        <div
+                            *ngFor="let tz of timezones; let last = last"
+                            class="timezone"
+                            [ngClass]="{
+                                'border-separator': !last,
+                                'active-timezone': selectedTimezone == tz
+                            }"
+                            (click)="onTimezoneChange(tz)"
+                        >
+                            {{ tz }}
+                        </div>
+                    </div>
+                    <div class="currentTime">
+                        <span class="today-text">Today</span>:
+                        <span class="active-timezone">{{ todayTime }}</span>
+                    </div>
+                </div>
+                <ul class="list-inline calendar-container">
+                    <li
+                        *ngFor="let side of sides; let lastSide = last"
+                        class="calendar"
+                        [ngClass]="side"
+                    >
+                        <div class="dateTitleInput">
+                            <input
+                                type="text"
+                                class="dateSelect"
+                                [ngModel]="dateTitleText[side]"
+                                readonly
+                            />
+                            <!--<i class="fa fa-calendar" [ngClass]="{'retail-calendar': 'config.retailCalendar'}"></i>-->
+                        </div>
+                        <div class="calendar-table">
+                            <div
+                                *ngIf="!calendarAvailable[side]"
+                                class="calendar-loading"
+                            >
+                                <!-- <m-loading></m-loading> -->
+                            </div>
+                            <table
+                                *ngIf="calendarAvailable[side]"
+                                style="table-layout: fixed; min-width: 250px; position: relative;"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="prev"
+                                            [ngClass]="{
+                                                disabled: !isPrevAvailale(
+                                                    dates[side]['label']
+                                                ),
+                                                available: isPrevAvailale(
+                                                    dates[side]['label']
+                                                )
+                                            }"
+                                        >
+                                            <i
+                                                class="fa fa-chevron-left glyphicon glyphicon-chevron-left"
+                                                (click)="
+                                                    onClickPrevious(
+                                                        dates[side]['label'],
+                                                        side
+                                                    )
+                                                "
+                                            ></i>
+                                        </th>
+                                        <th
+                                            [attr.colspan]="
+                                                getCalendarColspan()
+                                            "
+                                            class="calendar-label"
+                                        >
+                                            <div style="position: relative;">
+                                                <div
+                                                    *ngIf="
+                                                        config.type == 'daily'
+                                                    "
+                                                    ngbDropdown
+                                                    class="d-inline-block"
+                                                >
+                                                    <button
+                                                        class="btn month-select"
+                                                        attr.id="month_{{
+                                                            side
+                                                        }}"
+                                                        ngbDropdownToggle
+                                                    >
+                                                        {{
+                                                            selectedMonth[side]
+                                                        }}
+                                                    </button>
+                                                    <div
+                                                        ngbDropdownMenu
+                                                        attr.aria-labelledby="month_{{
+                                                            side
+                                                        }}"
+                                                    >
+                                                        <button
+                                                            *ngFor="
+                                                                let month of dates[
+                                                                    side
+                                                                ]['months']
+                                                            "
+                                                            class="dropdown-item"
+                                                            (click)="
+                                                                onCalendarLabelChange(
+                                                                    month,
+                                                                    side,
+                                                                    'month'
+                                                                )
+                                                            "
+                                                        >
+                                                            {{ month }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    ngbDropdown
+                                                    class="d-inline-block"
+                                                >
+                                                    <button
+                                                        class="btn year-select"
+                                                        attr.id="year_{{
+                                                            side
+                                                        }}"
+                                                        ngbDropdownToggle
+                                                    >
+                                                        {{ selectedYear[side] }}
+                                                    </button>
+                                                    <div
+                                                        ngbDropdownMenu
+                                                        attr.aria-labelledby="year_{{
+                                                            side
+                                                        }}"
+                                                    >
+                                                        <button
+                                                            *ngFor="
+                                                                let year of dates[
+                                                                    side
+                                                                ]['years']
+                                                            "
+                                                            class="dropdown-item"
+                                                            (click)="
+                                                                onCalendarLabelChange(
+                                                                    year,
+                                                                    side,
+                                                                    'year'
+                                                                )
+                                                            "
+                                                        >
+                                                            {{ year }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th
+                                            class="next"
+                                            [ngClass]="{
+                                                disabled: !isNextAvailale(
+                                                    dates[side]['label']
+                                                ),
+                                                available: isNextAvailale(
+                                                    dates[side]['label']
+                                                )
+                                            }"
+                                        >
+                                            <i
+                                                class="fa fa-chevron-right glyphicon glyphicon-chevron-right"
+                                                (click)="
+                                                    onClickNext(
+                                                        dates[side]['label'],
+                                                        side
+                                                    )
+                                                "
+                                            ></i>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th
+                                            *ngIf="config.showRowNumber"
+                                            class="rowNumber"
+                                        ></th>
+                                        <th
+                                            *ngIf="!config.showRowNumber"
+                                            class="rowNumberPlaceholder"
+                                        ></th>
+                                        <th
+                                            *ngFor="let day of weekDayOptions"
+                                            class="calendar-week-day"
+                                        >
+                                            {{ capitalize(day) }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="
+                                            let row of dates[side]['itemRows']
+                                        "
+                                    >
+                                        <td
+                                            *ngIf="
+                                                config.showRowNumber &&
+                                                row.rowNumberText
+                                            "
+                                            class="rowNumber"
+                                        >
+                                            {{ row.rowNumberText }}
+                                        </td>
+                                        <td
+                                            *ngIf="!config.showRowNumber"
+                                            class="rowNumberPlaceholder"
+                                        ></td>
+                                        <td
+                                            #itemCell
+                                            *ngFor="let item of row.items"
+                                            [attr.firstDay]="item.firstDay"
+                                            [attr.lastDay]="item.lastDay"
+                                            [ngClass]="{
+                                                available: item.available,
+                                                'in-range': item.inRange,
+                                                active:
+                                                    (activeStartDate ==
+                                                        item.date &&
+                                                        side == 'left') ||
+                                                    (activeEndDate ==
+                                                        item.date &&
+                                                        side == 'right'),
+                                                today: item.today
+                                            }"
+                                            (click)="
+                                                onCellClick(
+                                                    item,
+                                                    itemCell,
+                                                    side
+                                                )
+                                            "
+                                            (mouseover)="
+                                                onCellMouseEnter(item, itemCell)
+                                            "
+                                            (mouseleave)="onCellMouseLeave()"
+                                        >
+                                            <div>{{ item.rowItemText }}</div>
+                                            <div
+                                                *ngIf="item.today"
+                                                class="todayDate"
+                                            >
+                                                <i
+                                                    class="fa fa-circle"
+                                                    aria-hidden="true"
+                                                ></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+                <ul
+                    *ngIf="config.timePicker"
+                    class="list-inline time-picker-container"
+                >
+                    <li
+                        *ngFor="let side of sides; let lastSide = last"
+                        class="time-select"
+                        [ngClass]="side"
+                    >
+                        <div class="clock-icon-container">
+                            <i
+                                class="fa fa-clock-o fa-lg"
+                                aria-hidden="true"
+                            ></i>
+                        </div>
+                        <div
+                            *ngFor="let timeItem of timeItems"
+                            ngbDropdown
+                            class="d-inline-block time-item-container"
+                        >
+                            <button
+                                class="btn year-select"
+                                attr.id="{{ timeItem }}_{{ side }}"
+                                ngbDropdownToggle
+                            >
+                                {{ getSelectedTimeItemText(timeItem, side) }}
+                            </button>
+                            <div
+                                ngbDropdownMenu
+                                attr.aria-labelledby="{{ timeItem }}_{{ side }}"
+                            >
+                                <button
+                                    *ngFor="let item of times[side][timeItem]"
+                                    class="dropdown-item"
+                                    (click)="
+                                        onTimeLabelChange(timeItem, side, item)
+                                    "
+                                >
+                                    {{ item }}
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div
+                *ngIf="
+                    (!config.singleDatePicker && config.showRanges) ||
+                    config.timePicker
+                "
+                class="ranges"
+            >
+                <div
+                    *ngFor="let range of (config.availableRanges | ObjNgFor)"
+                    class="calendar-range"
+                    [ngClass]="{ 'active-range': range == activeRange }"
+                    (click)="onRangeClick(range, config.availableRanges[range])"
+                >
+                    {{ range }}
+                </div>
+                <div
+                    *ngIf="config.timePicker && customRange"
+                    class="range-select-button-container"
+                    [ngClass]="{
+                        'range-select-button-bottom':
+                            (config.availableRanges | json) != '{}'
+                    }"
+                >
+                    <button
+                        class="range-select-button range-select-apply-button"
+                        (click)="
+                            onTimeApply(range, config.availableRanges[range])
+                        "
+                    >
+                        Apply
+                    </button>
+                    <button
+                        class="range-select-button range-select-cancel-button"
+                        (click)="
+                            onTimeApply(range, config.availableRanges[range])
+                        "
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
