@@ -3,26 +3,17 @@
   border-radius: 0;
   z-index: 1001;
   width: 100% !important;
-  height: 35px;
 
-  input {
-    font-size: 0.9rem !important;
+  .full-width {
+    width: 100%;
   }
 
-  i.fa-calendar {
-    position: absolute;
-    top: 10px;
-    left: 11px;
-    color: #aaa;
+  .fa-calendar {
+    font-size: 100%;
   }
 
   .dateSelect {
-    height: 35px;
-    padding: 0 0 0 30px;
     color: #333;
-    width: 100%;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    border: none;
   }
 
   .retail-dateSelect {
@@ -194,6 +185,24 @@
     text-align: center;
     position: relative;
     width: 100%;
+
+    .date-dropdown-container {
+      display: flex;
+      justify-content: center;
+
+      .mat-form-field-infix {
+        border-top: 0;
+        width: auto;
+
+        .mat-select-value {
+          display: inline;
+        }
+      }
+
+      .date-dropdown {
+        margin: 0 5px;
+      }
+    }
   }
 
   .rowNumber {
@@ -225,9 +234,6 @@
 
     .dateSelect {
       text-align: center;
-      padding: 0px !important;
-      box-shadow: none;
-      border: 1px solid #ddd;
     }
 
     .dateSelect:hover {

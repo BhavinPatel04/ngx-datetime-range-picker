@@ -397,7 +397,7 @@ export class DateTimeRangePickerUtilityService {
       const diff = maxYear - minYear;
 
       for (let i = 0; i <= diff; i++) {
-        years.push(minYear + i);
+        years.push(`${minYear + i}`);
       }
     }
     return years.reverse();

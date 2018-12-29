@@ -42,6 +42,7 @@ export class AppComponent {
     timezoneSupport: false,
     type: "daily",
     viewDateFormat: "MMM D, YYYY",
+    placeholder: "Date",
   };
   public dateRangePickerOptions: DateTimeRangePickerOptions = {};
   public dateRangePickerSettings: DateTimeRangePickerSettings = {
@@ -49,12 +50,14 @@ export class AppComponent {
     timezoneSupport: false,
     type: "weekly",
     viewDateFormat: "MMM D, YYYY",
+    placeholder: "Date Range",
   };
-  public dateRangeTimePickerSettings: DateTimeRangePickerSettings = {
+  public dateTimeRangePickerSettings: DateTimeRangePickerSettings = {
     retailCalendar: false,
     timezoneSupport: false,
     timePicker: true,
     type: "daily",
     viewDateFormat: "MMM D, YYYY",
+    placeholder: "Date Time Range",
   };
 }

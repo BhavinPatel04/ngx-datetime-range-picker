@@ -51,7 +51,6 @@ export class DateTimeRangePickerComponent implements OnChanges {
   @Input() public settings: DateTimeRangePickerSettings;
   @Input() public optionService: Observable<any>;
   @Input() public dateRangeModel: Object;
-  @Input() public cacheKey: string;
   @Input() public canBeEmpty = false;
   @Output() public dateRangeModelChange: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() public dateRangeChanged: EventEmitter<DateRangeModelItem> = new EventEmitter<DateRangeModelItem>();
@@ -140,6 +139,7 @@ export class DateTimeRangePickerComponent implements OnChanges {
       if (
         this.showCalendar &&
         event.target &&
+        event.target.className != "mat-option-text" &&
         this.element.nativeElement !== event.target &&
         !this.element.nativeElement.contains(event.target)
       ) {
@@ -150,10 +150,6 @@ export class DateTimeRangePickerComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges) {
     this.isUserModelChange = true;
-
-    if (changes.cacheKey) {
-      this.cacheKey = changes.cacheKey.currentValue;
-    }
 
     if (changes.canBeEmpty) {
       this.canBeEmpty = changes.canBeEmpty.currentValue;
@@ -286,7 +282,7 @@ export class DateTimeRangePickerComponent implements OnChanges {
 
   public getCalendarColspan() {
     if (this.config.type == "daily") {
-      return 8;
+      return 6;
     } else if (this.config.type == "weekly") {
       return 8;
     } else if (this.config.type == "monthly") {
@@ -552,6 +548,7 @@ export class DateTimeRangePickerComponent implements OnChanges {
   }
 
   public onCalendarLabelChange(label, side, type) {
+    this.showCalendar = true;
     if (type == "month") {
       this.selectedMonth[side] = label;
     } else if (type == "year") {
@@ -704,14 +701,6 @@ export class DateTimeRangePickerComponent implements OnChanges {
 
     this.selectTimeZone();
     this.parseOptionsToDefaultDateFormat();
-    // NOT GETTING VALUES FROM CACHE
-    // if(undefined == this.dateRangeModel || _.isEmpty(this.dateRangeModel)) {
-    //   this.getDateRangeModelFromCache();
-    // } else {
-    //   if(undefined == this.dateRangeModel[this.config.selectedModel] || _.isEmpty(this.dateRangeModel[this.config.selectedModel])) {
-    //     this.getDateRangeModelFromCache();
-    //   }
-    // }
     this.processDateRangeModel();
     this.handleDateArray();
     this.sanitizeDates();
