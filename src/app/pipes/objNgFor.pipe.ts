@@ -13,7 +13,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({ name: "ObjNgFor", pure: false })
 export class ObjNgFor implements PipeTransform {
-    public transform(value: any, args: any[] = null): any {
-        return Object.keys(value); // .map(key => value[key]);
-    }
+  public transform(value: any, args: any[] = null): any {
+    return Object.keys(value); // .map(key => value[key]);
+  }
 }

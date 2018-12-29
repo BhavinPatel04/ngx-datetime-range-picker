@@ -1,359 +1,357 @@
 .m1-date-range-picker {
-    position: relative;
-    border-radius: 0;
-    z-index: 1001;
-    width: 100% !important;
+  position: relative;
+  border-radius: 0;
+  z-index: 1001;
+  width: 100% !important;
+  height: 35px;
+
+  input {
+    font-size: 0.9rem !important;
+  }
+
+  i.fa-calendar {
+    position: absolute;
+    top: 10px;
+    left: 11px;
+    color: #aaa;
+  }
+
+  .dateSelect {
     height: 35px;
+    padding: 0 0 0 30px;
+    color: #333;
+    width: 100%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    border: none;
+  }
 
-    input {
-        font-size: 0.9rem !important;
+  .retail-dateSelect {
+    padding: 0 0 0 30px !important;
+  }
+
+  .retail-calendar:before {
+    content: "\F073";
+  }
+
+  .timezone-info {
+    font-size: 95%;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    opacity: 0.6;
+    font-weight: bolder;
+  }
+
+  .calendar-loading {
+    min-width: 240px;
+    min-height: 240px;
+    padding: 54% 48% 46%;
+  }
+
+  .calendar-view {
+    position: absolute;
+    color: inherit;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 12px 8px;
+    margin-top: 2px;
+    z-index: 99999;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .calendar-view:before,
+  .calendar-view:after {
+    position: absolute;
+    display: inline-block;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    content: "";
+  }
+
+  .timezone-select {
+    font-size: 90%;
+    display: flex;
+    margin: 0 6px 6px;
+
+    .timezones,
+    .currentTime {
+      display: inline-block;
     }
 
-    i.fa-calendar {
-        position: absolute;
-        top: 10px;
-        left: 11px;
-        color: #aaa;
+    .timezones {
+      margin-right: auto;
+      white-space: nowrap;
+      left: 8px;
     }
+
+    .currentTime {
+      margin-left: auto;
+      white-space: nowrap;
+      right: 8px;
+    }
+
+    .border-separator {
+      border-right: 2px solid #ccc;
+      padding-right: 8px;
+      margin-right: 8px;
+    }
+
+    .timezone {
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .today-text {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+
+  .active-timezone {
+    color: #2f7ed8;
+    font-weight: bolder;
+  }
+
+  .date-select {
+    display: inline-flex;
+  }
+
+  .ranges {
+    min-width: 160px;
+    padding: 0 2px;
+
+    .calendar-range {
+      white-space: nowrap;
+      background-color: #f5f5f5;
+      border: 1px solid #f5f5f5;
+      border-radius: 0px;
+      color: #2f7ed8;
+      padding: 5.5px 15px;
+      margin: 0 3px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    }
+
+    .calendar-range:hover {
+      background-color: #eee;
+    }
+
+    .active-range {
+      background-color: #2f7ed8;
+      border: 1px solid #2f7ed8;
+      color: #fff;
+    }
+
+    .active-range:hover {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+
+    .range-select-button-container {
+      white-space: nowrap;
+      margin: 0 3px;
+      margin-bottom: 8px;
+    }
+
+    .range-select-button {
+      width: 48%;
+      border-radius: 0px;
+      padding: 5.5px 15px;
+    }
+
+    .range-select-apply-button {
+      color: #fff;
+      background-color: #2f7ed8;
+      border: 1px solid #2f7ed8;
+    }
+
+    .range-select-cancel-button {
+      background-color: #f5f5f5;
+      border: 1px solid #f5f5f5;
+      color: #2f7ed8;
+    }
+
+    .range-select-button-bottom {
+      position: absolute;
+      bottom: 4px;
+    }
+  }
+
+  .calendar-container {
+    display: flex;
+  }
+
+  .calendar {
+    margin: 0 6px 0;
+    float: left;
+    display: block;
+    width: auto;
+  }
+
+  .calendar-label {
+    text-align: center;
+    position: relative;
+    width: 100%;
+  }
+
+  .rowNumber {
+    color: #bbb !important;
+    font-size: 82%;
+    border-right: 1px solid #dedede;
+    width: 32px;
+  }
+
+  .rowNumberPlaceholder {
+    font-size: 82%;
+    padding: 0 !important;
+    min-width: 0px !important;
+  }
+
+  .calendar-week-day {
+    color: #ffc266;
+    font-weight: normal;
+    font-size: 95%;
+  }
+
+  .dateTitleInput {
+    position: relative;
+    border: none;
+    margin: 0 3px 6px 0;
+    width: 100%;
+    float: left;
+    display: block;
 
     .dateSelect {
-        height: 35px;
-        padding: 0 0 0 30px;
-        color: #333;
-        width: 100%;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16),
-        0 0 0 1px rgba(0, 0, 0, 0.08);
-        border: none;
+      text-align: center;
+      padding: 0px !important;
+      box-shadow: none;
+      border: 1px solid #ddd;
     }
 
-    .retail-dateSelect {
-        padding: 0 0 0 30px !important;
+    .dateSelect:hover {
+      pointer-events: none;
+      background: transparent;
+      cursor: default;
     }
 
-    .retail-calendar:before {
-        content: "\F073";
+    i {
+      position: absolute !important;
+      top: 11px !important;
+      left: 10px !important;
+      color: #aaa !important;
+    }
+  }
+
+  .calendar-table {
+    th,
+    td {
+      white-space: nowrap;
+      text-align: center;
+      min-width: 32px;
+      padding: 5px;
     }
 
-    .timezone-info {
-        font-size: 95%;
+    td {
+      color: #bbb;
+
+      .todayDate {
+        font-size: 6px;
+      }
+    }
+
+    td.valid {
+      cursor: pointer;
+    }
+
+    td.available,
+    th.available {
+      cursor: pointer;
+      color: #333;
+    }
+
+    th.available {
+      width: 32px;
+    }
+
+    th.prev {
+      position: absolute;
+      left: 0;
+    }
+
+    th.next {
+      position: absolute;
+      right: 0;
+    }
+
+    td.available:hover,
+    th.available:hover {
+      background-color: #eee;
+    }
+
+    td.active {
+      background-color: #2f7ed8 !important;
+      color: #fff !important;
+    }
+
+    td.in-range {
+      background-color: #f6f6f6;
+      color: #2f7ed8;
+    }
+  }
+
+  .disabled {
+    color: #eee;
+    pointer-events: none;
+  }
+
+  .month-select,
+  .year-select {
+    background: #fff;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    min-width: unset !important;
+    font-size: 95%;
+    border-radius: 0px;
+    max-height: 100px;
+    overflow: auto;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .time-picker-container {
+    display: flex;
+
+    .time-select {
+      position: relative;
+      padding: 3px 0;
+      text-align: center;
+      width: 50%;
+      margin: 1em 6px 0;
+      border: 1px solid #ddd;
+
+      .clock-icon-container {
         position: absolute;
-        right: 8px;
-        top: 8px;
-        opacity: 0.6;
-        font-weight: bolder;
+        left: 0.5em;
+        height: 100%;
+        padding: 3px;
+        color: #aaa;
+      }
+
+      .time-item-container {
+        margin: 0 5px;
+      }
     }
-
-    .calendar-loading {
-        min-width: 240px;
-        min-height: 240px;
-        padding: 54% 48% 46%;
-    }
-
-    .calendar-view {
-        position: absolute;
-        color: inherit;
-        background-color: #fff;
-        border-radius: 4px;
-        padding: 12px 8px;
-        margin-top: 2px;
-        z-index: 99999;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-        border: 1px solid rgba(0, 0, 0, 0.15);
-    }
-
-    .calendar-view:before,
-    .calendar-view:after {
-        position: absolute;
-        display: inline-block;
-        border-bottom-color: rgba(0, 0, 0, 0.2);
-        content: "";
-    }
-
-    .timezone-select {
-        font-size: 90%;
-        display: flex;
-        margin: 0 6px 6px;
-
-        .timezones,
-        .currentTime {
-            display: inline-block;
-        }
-
-        .timezones {
-            margin-right: auto;
-            white-space: nowrap;
-            left: 8px;
-        }
-
-        .currentTime {
-            margin-left: auto;
-            white-space: nowrap;
-            right: 8px;
-        }
-
-        .border-separator {
-            border-right: 2px solid #ccc;
-            padding-right: 8px;
-            margin-right: 8px;
-        }
-
-        .timezone {
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .today-text {
-            font-weight: bold;
-            text-decoration: underline;
-        }
-    }
-
-    .active-timezone {
-        color: #2f7ed8;
-        font-weight: bolder;
-    }
-
-    .date-select {
-        display: inline-flex;
-    }
-
-    .ranges {
-        min-width: 160px;
-        padding: 0 2px;
-
-        .calendar-range {
-            white-space: nowrap;
-            background-color: #f5f5f5;
-            border: 1px solid #f5f5f5;
-            border-radius: 0px;
-            color: #2f7ed8;
-            padding: 5.5px 15px;
-            margin: 0 3px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16),
-            0 0 0 1px rgba(0, 0, 0, 0.08);
-        }
-
-        .calendar-range:hover {
-            background-color: #eee;
-        }
-
-        .active-range {
-            background-color: #2f7ed8;
-            border: 1px solid #2f7ed8;
-            color: #fff;
-        }
-
-        .active-range:hover {
-            color: #fff;
-            background-color: #0069d9;
-            border-color: #0062cc;
-        }
-
-        .range-select-button-container {
-            white-space: nowrap;
-            margin: 0 3px;
-            margin-bottom: 8px;
-        }
-
-        .range-select-button {
-            width: 48%;
-            border-radius: 0px;
-            padding: 5.5px 15px;
-        }
-
-        .range-select-apply-button {
-            color: #fff;
-            background-color: #2f7ed8;
-            border: 1px solid #2f7ed8;
-        }
-
-        .range-select-cancel-button {
-            background-color: #f5f5f5;
-            border: 1px solid #f5f5f5;
-            color: #2f7ed8;
-        }
-
-        .range-select-button-bottom {
-            position: absolute;
-            bottom: 4px;
-        }
-    }
-
-    .calendar-container {
-        display: flex;
-    }
-
-    .calendar {
-        margin: 0 6px 0;
-        float: left;
-        display: block;
-        width: auto;
-    }
-
-    .calendar-label {
-        text-align: center;
-        position: relative;
-        width: 100%;
-    }
-
-    .rowNumber {
-        color: #bbb !important;
-        font-size: 82%;
-        border-right: 1px solid #dedede;
-        width: 32px;
-    }
-
-    .rowNumberPlaceholder {
-        font-size: 82%;
-        padding: 0 !important;
-        min-width: 0px !important;
-    }
-
-    .calendar-week-day {
-        color: #ffc266;
-        font-weight: normal;
-        font-size: 95%;
-    }
-
-    .dateTitleInput {
-        position: relative;
-        border: none;
-        margin: 0 3px 6px 0;
-        width: 100%;
-        float: left;
-        display: block;
-
-        .dateSelect {
-            text-align: center;
-            padding: 0px !important;
-            box-shadow: none;
-            border: 1px solid #ddd;
-        }
-
-        .dateSelect:hover {
-            pointer-events: none;
-            background: transparent;
-            cursor: default;
-        }
-
-        i {
-            position: absolute !important;
-            top: 11px !important;
-            left: 10px !important;
-            color: #aaa !important;
-        }
-    }
-
-    .calendar-table {
-        th,
-        td {
-            white-space: nowrap;
-            text-align: center;
-            min-width: 32px;
-            padding: 5px;
-        }
-
-        td {
-            color: #bbb;
-
-            .todayDate {
-                font-size: 6px;
-            }
-        }
-
-        td.valid {
-            cursor: pointer;
-        }
-
-        td.available,
-        th.available {
-            cursor: pointer;
-            color: #333;
-        }
-
-        th.available {
-            width: 32px;
-        }
-
-        th.prev {
-            position: absolute;
-            left: 0;
-        }
-
-        th.next {
-            position: absolute;
-            right: 0;
-        }
-
-        td.available:hover,
-        th.available:hover {
-            background-color: #eee;
-        }
-
-        td.active {
-            background-color: #2f7ed8 !important;
-            color: #fff !important;
-        }
-
-        td.in-range {
-            background-color: #f6f6f6;
-            color: #2f7ed8;
-        }
-    }
-
-    .disabled {
-        color: #eee;
-        pointer-events: none;
-    }
-
-    .month-select,
-    .year-select {
-        background: #fff;
-        padding: 0;
-        box-shadow: none;
-    }
-
-    .dropdown-menu {
-        position: absolute;
-        min-width: unset !important;
-        font-size: 95%;
-        border-radius: 0px;
-        max-height: 100px;
-        overflow: auto;
-    }
-
-    .hide {
-        display: none;
-    }
-
-    .show {
-        display: block;
-    }
-
-    .time-picker-container {
-        display: flex;
-
-        .time-select {
-            position: relative;
-            padding: 3px 0;
-            text-align: center;
-            width: 50%;
-            margin: 1em 6px 0;
-            border: 1px solid #ddd;
-
-            .clock-icon-container {
-                position: absolute;
-                left: 0.5em;
-                height: 100%;
-                padding: 3px;
-                color: #aaa;
-            }
-
-            .time-item-container {
-                margin: 0 5px;
-            }
-        }
-    }
+  }
 }

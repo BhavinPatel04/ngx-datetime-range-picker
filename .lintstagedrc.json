@@ -1,15 +1,7 @@
 {
-    "*.ts": ["npm run pretty-quick-current-branch", "tslint --fix", "git add"],
-    "*.css": [
-        "npm run pretty-quick-current-branch",
-        "npm run stylelint-current-branch",
-        "git add"
-    ],
-    "*.scss": [
-        "npm run pretty-quick-current-branch",
-        "npm run stylelint-current-branch --syntax=scss",
-        "git add"
-    ],
-    "*.{png,jpeg,jpg,gif,svg}": ["imagemin-lint-staged", "git add"],
-    "*.{js,html,json,md}": ["npm run pretty-quick-current-branch", "git add"]
+  "*.ts": ["npm run pretty-quick-current-branch", "tslint --fix", "git add"],
+  "*.css": ["npm run pretty-quick-current-branch", "npm run stylelint-current-branch", "git add"],
+  "*.scss": ["npm run pretty-quick-current-branch", "npm run stylelint-current-branch --syntax=scss", "git add"],
+  "*.{png,jpeg,jpg,gif,svg}": ["imagemin-lint-staged", "git add"],
+  "*.{js,html,json,md}": ["npm run pretty-quick-current-branch", "git add"]
 }

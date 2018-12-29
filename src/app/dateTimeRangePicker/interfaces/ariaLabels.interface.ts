@@ -1,3 +1,3 @@
 export interface AriaLabelsOptions {
-    inputField?: string;
+  inputField?: string;
 }

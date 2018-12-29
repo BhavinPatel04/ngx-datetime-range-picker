@@ -11,14 +11,14 @@ import { DateTimeRangePickerComponent } from "./dateTimeRangePicker/dateTimeRang
 import { DateTimeRangePickerUtilityService } from "./dateTimeRangePicker/dateTimeRangePicker.utility.service";
 
 @NgModule({
-    declarations: [AppComponent, ObjNgFor, DateTimeRangePickerComponent],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        // ng-bootstrap
-        NgbModule.forRoot(),
-    ],
-    providers: [NgbDropdown, DateTimeRangePickerUtilityService],
-    bootstrap: [AppComponent],
+  declarations: [AppComponent, ObjNgFor, DateTimeRangePickerComponent],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    // ng-bootstrap
+    NgbModule.forRoot(),
+  ],
+  providers: [NgbDropdown, DateTimeRangePickerUtilityService],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

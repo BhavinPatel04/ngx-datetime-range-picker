@@ -1,17 +1,17 @@
 {
-    "defaultSeverity": "error",
-    "extends": ["tslint:recommended"],
-    "jsRules": {},
-    "rules": {
-        "max-line-length": false,
-        "no-var-requires": false,
-        "object-literal-sort-keys": false,
-        "ban-types": false,
-        "triple-equals": false,
-        "no-console": [true, "log"],
-        "variable-name": false,
-        "no-shadowed-variable": false,
-        "interface-name": false
-    },
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "max-line-length": false,
+    "no-var-requires": false,
+    "object-literal-sort-keys": false,
+    "ban-types": false,
+    "triple-equals": false,
+    "no-console": [true, "log"],
+    "variable-name": false,
+    "no-shadowed-variable": false,
+    "interface-name": false
+  },
+  "rulesDirectory": []
 }

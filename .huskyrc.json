@@ -1,5 +1,5 @@
 {
-    "hooks": {
-        "pre-commit": "lint-staged -c .lintstagedrc.json"
-    }
+  "hooks": {
+    "pre-commit": "lint-staged -c .lintstagedrc.json"
+  }
 }
