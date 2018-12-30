@@ -3,7 +3,6 @@ import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { NgbDropdown, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { MaterialModule } from "./material/material.module";
 
 import { AppComponent } from "./app.component";
@@ -22,10 +21,8 @@ import { DateTimeRangePickerUtilityService } from "./dateTimeRangePicker/dateTim
 
     // material
     MaterialModule,
-    // ng-bootstrap
-    NgbModule.forRoot(),
   ],
-  providers: [NgbDropdown, DateTimeRangePickerUtilityService],
+  providers: [DateTimeRangePickerUtilityService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

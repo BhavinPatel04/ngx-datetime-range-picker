@@ -4,12 +4,22 @@
   z-index: 1001;
   width: 100% !important;
 
+  .mat-icon {
+    height: auto;
+    width: auto;
+  }
+
   .full-width {
     width: 100%;
   }
 
-  .fa-calendar {
+  .fa {
     font-size: 100%;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .fa-calendar {
+    color: #aaa;
   }
 
   .dateSelect {
@@ -103,6 +113,33 @@
     font-weight: bolder;
   }
 
+  .date-dropdown-container,
+  .time-item-container {
+    display: flex;
+    justify-content: center;
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+
+      .mat-form-field-infix {
+        border-top: 0;
+        width: auto;
+
+        .mat-select-value {
+          display: inline;
+        }
+      }
+
+      .mat-form-field-underline {
+        display: none;
+      }
+    }
+
+    .date-dropdown {
+      margin: 0 5px;
+    }
+  }
+
   .date-select {
     display: inline-flex;
   }
@@ -112,12 +149,13 @@
     padding: 0 2px;
 
     .calendar-range {
+      width: 100%;
       white-space: nowrap;
       background-color: #f5f5f5;
       border: 1px solid #f5f5f5;
       border-radius: 0px;
       color: #2f7ed8;
-      padding: 5.5px 15px;
+      line-height: 30px;
       margin: 0 3px;
       margin-bottom: 8px;
       cursor: pointer;
@@ -147,9 +185,18 @@
     }
 
     .range-select-button {
-      width: 48%;
+      width: 50%;
       border-radius: 0px;
-      padding: 5.5px 15px;
+      line-height: 30px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    }
+
+    .range-select-button:first-child {
+      margin-right: 3px;
+    }
+
+    .range-select-button:last-child {
+      margin-left: 3px;
     }
 
     .range-select-apply-button {
@@ -185,24 +232,6 @@
     text-align: center;
     position: relative;
     width: 100%;
-
-    .date-dropdown-container {
-      display: flex;
-      justify-content: center;
-
-      .mat-form-field-infix {
-        border-top: 0;
-        width: auto;
-
-        .mat-select-value {
-          display: inline;
-        }
-      }
-
-      .date-dropdown {
-        margin: 0 5px;
-      }
-    }
   }
 
   .rowNumber {
@@ -296,7 +325,8 @@
       background-color: #eee;
     }
 
-    td.active {
+    td.active,
+    .fa.active {
       background-color: #2f7ed8 !important;
       color: #fff !important;
     }

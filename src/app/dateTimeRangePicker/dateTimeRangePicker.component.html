@@ -65,17 +65,16 @@
               <table *ngIf="calendarAvailable[side]" style="table-layout: fixed; min-width: 250px; position: relative;">
                 <thead>
                   <tr>
-                    <th
-                      class="prev"
-                      [ngClass]="{
-                        disabled: !isPrevAvailale(dates[side]['label']),
-                        available: isPrevAvailale(dates[side]['label'])
-                      }"
-                    >
-                      <i
-                        class="fa fa-chevron-left glyphicon glyphicon-chevron-left"
+                    <th class="prev">
+                      <mat-icon
+                        [ngClass]="{
+                          disabled: !isPrevAvailale(dates[side]['label']),
+                          available: isPrevAvailale(dates[side]['label'])
+                        }"
+                        fontSet="fa"
+                        fontIcon="fa-chevron-left"
                         (click)="onClickPrevious(dates[side]['label'], side)"
-                      ></i>
+                      ></mat-icon>
                     </th>
                     <th [attr.colspan]="getCalendarColspan()" class="calendar-label">
                       <div class="date-dropdown-container" style="position: relative;">
@@ -115,17 +114,16 @@
                         </div>
                       </div>
                     </th>
-                    <th
-                      class="next"
-                      [ngClass]="{
-                        disabled: !isNextAvailale(dates[side]['label']),
-                        available: isNextAvailale(dates[side]['label'])
-                      }"
-                    >
-                      <i
-                        class="fa fa-chevron-right glyphicon glyphicon-chevron-right"
+                    <th class="next">
+                      <mat-icon
+                        [ngClass]="{
+                          disabled: !isNextAvailale(dates[side]['label']),
+                          available: isNextAvailale(dates[side]['label'])
+                        }"
+                        fontSet="fa"
+                        fontIcon="fa-chevron-right"
                         (click)="onClickNext(dates[side]['label'], side)"
-                      ></i>
+                      ></mat-icon>
                     </th>
                   </tr>
                   <tr>
@@ -156,7 +154,19 @@
                       (mouseleave)="onCellMouseLeave()"
                     >
                       <div>{{ item.rowItemText }}</div>
-                      <div *ngIf="item.today" class="todayDate"><i class="fa fa-circle" aria-hidden="true"></i></div>
+                      <div *ngIf="item.today" class="todayDate">
+                        <mat-icon
+                          [ngClass]="{
+                            active:
+                              (activeStartDate == item.date && side == 'left') ||
+                              (activeEndDate == item.date && side == 'right')
+                          }"
+                          fontSet="fa"
+                          fontIcon="fa-circle"
+                          aria-hidden="true"
+                        >
+                        </mat-icon>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -166,33 +176,35 @@
         </ul>
         <ul *ngIf="config.timePicker" class="list-inline time-picker-container">
           <li *ngFor="let side of sides; let lastSide = last" class="time-select" [ngClass]="side">
-            <div class="clock-icon-container"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i></div>
-            <div *ngFor="let timeItem of timeItems" ngbDropdown class="d-inline-block time-item-container">
-              <button class="btn year-select" attr.id="{{ timeItem }}_{{ side }}" ngbDropdownToggle>
-                {{ getSelectedTimeItemText(timeItem, side) }}
-              </button>
-              <div ngbDropdownMenu attr.aria-labelledby="{{ timeItem }}_{{ side }}">
-                <button
-                  *ngFor="let item of times[side][timeItem]"
-                  class="dropdown-item"
-                  (click)="onTimeLabelChange(timeItem, side, item)"
+            <div class="clock-icon-container">
+              <mat-icon fontSet="fa" fontIcon="fa-clock-o" class="fa-lg" aria-hidden="true"></mat-icon>
+            </div>
+            <div *ngFor="let timeItem of timeItems" class="d-inline-block time-item-container">
+              <mat-form-field>
+                <mat-select
+                  class="year-select"
+                  [value]="getSelectedTimeItemText(timeItem, side)"
+                  (selectionChange)="onTimeLabelChange(timeItem, side, $event.value)"
                 >
-                  {{ item }}
-                </button>
-              </div>
+                  <mat-option class="dropdown-item" *ngFor="let item of times[side][timeItem]" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </li>
         </ul>
       </div>
       <div *ngIf="(!config.singleDatePicker && config.showRanges) || config.timePicker" class="ranges">
-        <div
+        <button
+          mat-button
           *ngFor="let range of (config.availableRanges | ObjNgFor)"
           class="calendar-range"
           [ngClass]="{ 'active-range': range == activeRange }"
           (click)="onRangeClick(range, config.availableRanges[range])"
         >
           {{ range }}
-        </div>
+        </button>
         <div
           *ngIf="config.timePicker && customRange"
           class="range-select-button-container"
@@ -201,12 +213,14 @@
           }"
         >
           <button
+            mat-button
             class="range-select-button range-select-apply-button"
             (click)="onTimeApply(range, config.availableRanges[range])"
           >
             Apply
           </button>
           <button
+            mat-button
             class="range-select-button range-select-cancel-button"
             (click)="onTimeApply(range, config.availableRanges[range])"
           >
