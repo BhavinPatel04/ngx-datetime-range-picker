@@ -3,6 +3,7 @@ dist: trusty
 language: node_js
 node_js:
   - "8"
+  - "10"
 install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -17,11 +18,7 @@ branches:
 
 script:
   - npm install
-  - npm test
-  - ./node_modules/.bin/ng build --prod --no-aot --base-href=/ngx-datetime-range-picker/
-
-after_success:
-  - ./node_modules/.bin/ngh --dir demo/dist --repo=https://GH_TOKEN@https://github.com/BhavinPatel04/ngx-datetime-range-picker.git
+  - npm run test-ci
 
 notifications:
   email:

@@ -1,0 +1,14 @@
+# minfied
+*.min.js
+
+# generated
+/dist/
+/test-dist/
+/test-generated/
+*.marko.js
+*.html.js
+*.xml.js
+*.generated.js
+.nyc_output
+coverage
+~*
