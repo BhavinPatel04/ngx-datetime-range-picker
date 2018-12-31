@@ -162,10 +162,6 @@
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     }
 
-    .calendar-range:hover {
-      background-color: #eee;
-    }
-
     .active-range {
       background-color: #2f7ed8;
       border: 1px solid #2f7ed8;
@@ -325,16 +321,16 @@
       background-color: #eee;
     }
 
-    td.active,
-    .fa.active {
-      background-color: #2f7ed8 !important;
-      color: #fff !important;
-    }
-
     td.in-range {
       background-color: #f6f6f6;
       color: #2f7ed8;
     }
+  }
+
+  td.active,
+  .fa.active {
+    background-color: #2f7ed8 !important;
+    color: #fff !important;
   }
 
   .disabled {
