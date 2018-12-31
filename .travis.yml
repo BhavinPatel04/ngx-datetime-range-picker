@@ -20,6 +20,9 @@ script:
   - npm install
   - npm run test-ci
 
+after_success:
+  - npm run coveralls && npm run codecov
+
 notifications:
   email:
     on_failure: change
