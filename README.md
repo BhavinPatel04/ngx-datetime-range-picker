@@ -2,12 +2,10 @@
 
 > Ngx Date time range picker with daily, weekly, monthl, quarterly & yearly levels
 
-[![Build Status](https://travis-ci.org/fetrarij/ngx-daterangepicker-material.svg?branch=master)](https://travis-ci.org/fetrarij/ngx-daterangepicker-material)
-[![npm version](https://badge.fury.io/js/ngx-daterangepicker-material.svg)](https://badge.fury.io/js/ngx-daterangepicker-material)
+[![Build Status](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker?branch=master)](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker)
+[![npm version](https://badge.fury.io/js/ngx-datetime-range-picker.svg)](https://badge.fury.io/js/ngx-datetime-range-picker)
 
 This plugin uses bootstrap, moment.js, lodash and font-awesome.
-
-![](screen.png)
 
 demo: https://ndtrp.stackblitz.io/
 
