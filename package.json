@@ -1,7 +1,7 @@
 {
   "name": "ngx-datetime-range-picker",
   "description": "Date time range picker for daily, weekly, monthly, quarterly & yearly levels",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-pickerissues",
   "repository": {
@@ -9,19 +9,46 @@
     "url": "git+https://github.com/BhavinPatel04/ngx-datetime-range-picker"
   },
   "author": "Bhavin Patel",
+  "private": false,
+  "keywords": [
+    "angular2",
+    "angular4",
+    "angular5",
+    "angular6",
+    "angular7",
+    "ng2",
+    "ngx",
+    "daterangepicker",
+    "datetimerangepicker",
+    "material",
+    "component",
+    "directive",
+    "daterange",
+    "datetimerange",
+    "date",
+    "datetime",
+    "moment",
+    "lodash",
+    "picker"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build": "ng build",
+    "build": "npm run packagr",
     "build-dev": "ng build --dev --output-hashing=all && gulp build",
     "build-prod": "node --max-old-space-size=4076 ./node_modules/.bin/ng build --prod && gulp build",
     "format": "prettier \"**/*.{ts,js,html,css,scss,json,css,md}\" --write",
     "current-branch": "$(git branch | grep \\* | cut -d ' ' -f2)",
     "pretty-quick-current-branch": "pretty-quick --staged --branch npm run current-branch",
-    "stylelint-current-branch": "stylelint npm run current-branch --fix"
+    "stylelint-current-branch": "stylelint npm run current-branch --fix",
+    "packagr": "ng-packagr -p package.json"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0"
   },
   "dependencies": {
     "@angular/animations": "^7.1.4",
@@ -62,12 +89,32 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "lint-staged": "^8.1.0",
+    "ng-packagr": "^4.4.5",
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",
     "protractor": "~5.4.0",
     "stylelint": "^9.9.0",
     "ts-node": "~7.0.0",
+    "tsickle": "^0.34.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.6"
+  },
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "ngPackage": {
+    "whitelistedNonPeerDependencies": [
+      "."
+    ],
+    "lib": {
+      "entryFile": "public_api.ts",
+      "externals": {
+        "lodash": "_",
+        "moment": "moment"
+      },
+      "umdModuleIds": {
+        "lodash": "_",
+        "moment": "moment"
+      }
+    },
+    "dest": "dist"
   }
 }

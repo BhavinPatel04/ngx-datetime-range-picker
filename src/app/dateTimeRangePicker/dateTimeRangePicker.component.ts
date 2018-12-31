@@ -622,7 +622,7 @@ export class DateTimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public onTimeApply(rangeLabel, dateRangeModel: any) {
+  public onTimeApply() {
     this.dateRangeSelected();
     this.updateInputField();
   }

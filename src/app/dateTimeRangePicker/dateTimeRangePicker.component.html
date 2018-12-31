@@ -212,18 +212,10 @@
             'range-select-button-bottom': (config.availableRanges | json) != '{}'
           }"
         >
-          <button
-            mat-button
-            class="range-select-button range-select-apply-button"
-            (click)="onTimeApply(range, config.availableRanges[range])"
-          >
+          <button mat-button class="range-select-button range-select-apply-button" (click)="onTimeApply()">
             Apply
           </button>
-          <button
-            mat-button
-            class="range-select-button range-select-cancel-button"
-            (click)="onTimeApply(range, config.availableRanges[range])"
-          >
+          <button mat-button class="range-select-button range-select-cancel-button" (click)="onTimeApply()">
             Cancel
           </button>
         </div>
