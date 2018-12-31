@@ -153,7 +153,7 @@ describe("DateTimeRangePickerUtilityService", () => {
       minDate: "2017-01-01",
       maxDate: "2017-03-01",
     };
-    expect(service.getYearsAvailable(config)).toEqual([2017]);
+    expect(service.getYearsAvailable(config)).toEqual(["2017"]);
 
     config = {
       type: "daily",

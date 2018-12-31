@@ -1,8 +1,8 @@
 import { APP_BASE_HREF } from "@angular/common";
 import { SimpleChanges } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { AppModule } from "../app.module";
 import { DateTimeRangePickerComponent } from "./dateTimeRangePicker.component";
+import { NgxDateTimeRangePickerModule } from "./dateTimeRangePicker.module";
 
 declare var require: any;
 const moment = require("moment");
@@ -14,7 +14,7 @@ describe("DateTimeRangePickerComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [AppModule],
+      imports: [NgxDateTimeRangePickerModule.forRoot()],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
     }).compileComponents();
   }));
@@ -30,10 +30,6 @@ describe("DateTimeRangePickerComponent", () => {
     component.config.startDate = "2017-02-01";
     component.config.endDate = "2017-03-01";
   });
-
-  it("should create the app", async(() => {
-    expect(fixture).toBeTruthy();
-  }));
 
   it("#ngOnChnages", () => {
     spyOn(component, "initialize");
@@ -125,7 +121,7 @@ describe("DateTimeRangePickerComponent", () => {
 
   it("#getCalendarColspan", () => {
     component.config.type = "daily";
-    expect(component.getCalendarColspan()).toEqual(8);
+    expect(component.getCalendarColspan()).toEqual(6);
   });
 
   it("#getCalendarRowItemColspan", () => {
