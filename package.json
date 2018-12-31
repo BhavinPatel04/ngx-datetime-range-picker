@@ -1,7 +1,7 @@
 {
   "name": "ngx-datetime-range-picker",
   "description": "Date time range picker for daily, weekly, monthly, quarterly & yearly levels",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-pickerissues",
   "repository": {
