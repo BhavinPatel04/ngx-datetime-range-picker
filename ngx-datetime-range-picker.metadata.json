@@ -1,0 +1,14 @@
+{
+  "__symbolic": "module",
+  "version": 4,
+  "exports": [
+    { "from": "./src/app/interfaces/index" },
+    {
+      "export": [{ "name": "NgxDateTimeRangePickerModule", "as": "NgxDateTimeRangePickerModule" }],
+      "from": "./src/app/dateTimeRangePicker.module"
+    }
+  ],
+  "metadata": {},
+  "origins": {},
+  "importAs": "ngx-datetime-range-picker"
+}
