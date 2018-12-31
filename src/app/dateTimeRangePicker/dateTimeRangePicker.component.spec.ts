@@ -6,7 +6,6 @@ import { DateTimeRangePickerComponent } from "./dateTimeRangePicker.component";
 
 declare var require: any;
 const moment = require("moment");
-const _ = require("lodash");
 
 describe("DateTimeRangePickerComponent", () => {
   let component: DateTimeRangePickerComponent;
