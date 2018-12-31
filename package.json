@@ -23,7 +23,6 @@
     "url": "https://github.com/BhavinPatel04/ngx-datetime-range-pickerissues"
   },
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
-  "private": true,
   "peerDependencies": {
     "lodash": "^4.17.11",
     "moment": "^2.23.0"
