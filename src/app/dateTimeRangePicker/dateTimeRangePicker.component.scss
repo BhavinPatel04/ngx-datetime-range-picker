@@ -1,3 +1,9 @@
+@import "~bootstrap/scss/bootstrap.scss";
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome.scss";
+//material
+@import "../material/material.component.scss";
+
 .m1-date-range-picker {
   position: relative;
   border-radius: 0;

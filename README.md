@@ -1,27 +1,91 @@
-# NgxDatetimeRangePicker
+# ngx-datetime-range-picker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+> Ngx Date time range picker with daily, weekly, monthl, quarterly & yearly levels
 
-## Development server
+[![Build Status](https://travis-ci.org/fetrarij/ngx-daterangepicker-material.svg?branch=master)](https://travis-ci.org/fetrarij/ngx-daterangepicker-material)
+[![npm version](https://badge.fury.io/js/ngx-daterangepicker-material.svg)](https://badge.fury.io/js/ngx-daterangepicker-material)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This plugin uses bootstrap, moment.js, lodash and font-awesome.
 
-## Code scaffolding
+![](screen.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+demo: https://ndtrp.stackblitz.io/
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Install the plugin from npm:
 
-## Running unit tests
+```
+npm install ngx-datetime-range-picker --save
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+import **NgxDateTimeRangePickerModule** in your module:
 
-## Running end-to-end tests
+```typescript
+...
+import { FormsModule } from '@angular/forms';
+import { NgxDateTimeRangePickerModule } from 'ngx-datetime-range-picker';
+import { AppComponent } from "./app.component";
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+@NgModule({
+    imports:      [... , FormsModule, NgxDateTimeRangePickerModule.forRoot()],
+    declarations: [AppComponent],
+    bootstrap:    [AppComponent]
+})
+export class AppModule {}
+```
 
-## Further help
+## Usage example
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Html:
+
+```html
+<b-date-range-picker
+  name="date"
+  [options]="datePickerOptions"
+  [settings]="datePickerSettings"
+  [(dateRangeModel)]="selectedDate"
+  (dateRangeChanged)="onFilterChange($event)"
+  required
+>
+</b-date-range-picker>
+```
+
+Typescript:
+
+```typescript
+selectedDate: {
+    daily: {
+        startDate: "2018-10-13",
+        endDate: "2018-10-19",
+      },
+    weekly: {
+        startDate: "2018-10-13",
+        endDate: "2018-10-19",
+    },
+    monthly: {
+        startDate: "2018-10-13",
+        endDate: "2018-10-19",
+    },
+    quarterly: {
+        startDate: "2018-10-13",
+        endDate: "2018-10-19",
+    },
+    yearly: {
+        startDate: "2018-10-13",
+        endDate: "2018-10-19",
+    }
+};
+```
+
+## Options
+
+https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/src/app/dateTimeRangePicker/interfaces/options.interface.ts
+
+## Settings
+
+https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/src/app/dateTimeRangePicker/interfaces/settings.interface.ts
+
+## [License](https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/LICENSE)
+
+MIT

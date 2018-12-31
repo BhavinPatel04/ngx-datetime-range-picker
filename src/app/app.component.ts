@@ -60,4 +60,10 @@ export class AppComponent {
     viewDateFormat: "MMM D, YYYY",
     placeholder: "Date Time Range",
   };
+
+  public onFilterChange(event, filter) {
+    if (typeof event.defaultPrevented != "undefined") {
+      event.preventDefault();
+    }
+  }
 }

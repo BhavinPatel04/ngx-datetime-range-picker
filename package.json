@@ -1,7 +1,7 @@
 {
   "name": "ngx-datetime-range-picker",
   "description": "Date time range picker for daily, weekly, monthly, quarterly & yearly levels",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-pickerissues",
   "repository": {
@@ -29,7 +29,9 @@
     "datetime",
     "moment",
     "lodash",
-    "picker"
+    "picker",
+    "bootstrap",
+    "font-awesome"
   ],
   "scripts": {
     "ng": "ng",
@@ -39,7 +41,7 @@
     "e2e": "ng e2e",
     "build": "npm run packagr",
     "build-dev": "ng build --dev --output-hashing=all && gulp build",
-    "build-prod": "node --max-old-space-size=4076 ./node_modules/.bin/ng build --prod && gulp build",
+    "build-prod": "npm run packagr && gulp build",
     "format": "prettier \"**/*.{ts,js,html,css,scss,json,css,md}\" --write",
     "current-branch": "$(git branch | grep \\* | cut -d ' ' -f2)",
     "pretty-quick-current-branch": "pretty-quick --staged --branch npm run current-branch",
@@ -47,6 +49,8 @@
     "packagr": "ng-packagr -p package.json"
   },
   "peerDependencies": {
+    "bootstrap": "^4.2.1",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0"
   },
@@ -64,6 +68,8 @@
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.4.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "rxjs": "~6.3.3",
