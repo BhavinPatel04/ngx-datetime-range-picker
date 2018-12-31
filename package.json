@@ -1,6 +1,14 @@
 {
   "name": "ngx-datetime-range-picker",
+  "description": "Date time range picker for daily, weekly, monthly, quarterly & yearly levels",
   "version": "1.0.0",
+  "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
+  "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-pickerissues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BhavinPatel04/ngx-datetime-range-picker"
+  },
+  "author": "Bhavin Patel",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -14,18 +22,6 @@
     "current-branch": "$(git branch | grep \\* | cut -d ' ' -f2)",
     "pretty-quick-current-branch": "pretty-quick --staged --branch npm run current-branch",
     "stylelint-current-branch": "stylelint npm run current-branch --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BhavinPatel04/ngx-datetime-range-picker"
-  },
-  "bugs": {
-    "url": "https://github.com/BhavinPatel04/ngx-datetime-range-pickerissues"
-  },
-  "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
-  "peerDependencies": {
-    "lodash": "^4.17.11",
-    "moment": "^2.23.0"
   },
   "dependencies": {
     "@angular/animations": "^7.1.4",
