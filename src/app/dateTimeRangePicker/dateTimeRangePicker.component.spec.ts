@@ -371,10 +371,6 @@ describe("DateTimeRangePickerComponent", () => {
       .subtract(6, "days")
       .format("YYYY-MM-DD");
     const endDate = "2017-02-02";
-    const dateRangeModel = {
-      startDate,
-      endDate,
-    };
     component.config.availableRanges = {
       "Last 7 Days": {
         startDate,
@@ -405,7 +401,6 @@ describe("DateTimeRangePickerComponent", () => {
   });
 
   it("#updateInputField", () => {
-    const startDate = component.config.startDate;
     const endDate = component.config.endDate;
     component.config.type = "weekly";
     component.config.retailCalendar = false;
@@ -449,8 +444,6 @@ describe("DateTimeRangePickerComponent", () => {
   });
 
   it("#updateActiveItemInputField", () => {
-    const startDate = component.config.startDate;
-    const endDate = component.config.endDate;
     component.config.viewDateFormat = "YYYY-MM-DD";
     component.activeItem = {
       left: {
