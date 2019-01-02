@@ -1,4 +1,4 @@
-$app-primary: (
+$ndtrp-primary: (
 50: #e6f0fa,
 100: #c1d8f3,
 200: #97bfec,
@@ -48,9 +48,9 @@ $font-family: "HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat-palette($app-primary); //colors most widely used across all screens and components
+$app-primary: mat-palette($ndtrp-primary); //colors most widely used across all screens and components
 $app-accent: mat-palette(
-$app-primary,
+$ndtrp-primary,
 A200,
 A100,
 A400
