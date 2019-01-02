@@ -41,7 +41,7 @@ const TZ_CODES = DateRangePickerConstants.CONSTANT.TZ_CODES;
 const USA_TZ_CODE = DateRangePickerConstants.CONSTANT.USA_TZ_CODE;
 
 @Component({
-  selector: "b-date-range-picker",
+  selector: "ngx-datetime-range-picker",
   templateUrl: "./dateTimeRangePicker.component.html",
   styleUrls: ["./dateTimeRangePicker.component.scss"],
   encapsulation: ViewEncapsulation.None,

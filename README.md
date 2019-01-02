@@ -38,7 +38,7 @@ export class AppModule {}
 Html:
 
 ```html
-<b-date-range-picker
+<ngx-datetime-range-picker
   name="date"
   [options]="datePickerOptions"
   [settings]="datePickerSettings"
@@ -46,7 +46,7 @@ Html:
   (dateRangeChanged)="onFilterChange($event)"
   required
 >
-</b-date-range-picker>
+</ngx-datetime-range-picker>
 ```
 
 Typescript:
@@ -78,11 +78,37 @@ selectedDate: {
 
 ## Options
 
-https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/src/app/dateTimeRangePicker/interfaces/options.interface.ts
+| Option    | Type   | Description                                 |
+| --------- | ------ | ------------------------------------------- |
+| dateArray | Array  | Only the dates in the array will be enabled |
+| startDate | string | Start date                                  |
+| endDate   | string | End date                                    |
+| minDate   | string | Min date                                    |
+| maxDate   | string | Max date                                    |
+| startTime | string | Start time (only for timepicker)            |
+| endTime   | string | End time (only for timepicker)              |
+| minTime   | string | Min time (only for timepicker)              |
+| maxTime   | string | Max time (only for timepicker)              |
 
 ## Settings
 
-https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/src/app/dateTimeRangePicker/interfaces/settings.interface.ts
+| Setting           | Type    | Default                                                                                                               | Description                                               |
+| ----------------- | ------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| type              | string  | 'daily'                                                                                                               | type (daily                                               | weekly | monthly | quarterly | yearly) |
+| timePicker        | boolean | false                                                                                                                 | enable/disable timepicker                                 |
+| inputDateFormat   | string  | "YYYY-MM-DD"                                                                                                          | input date format                                         |
+| viewDateFormat    | string  | "YYYY-MM-DD"                                                                                                          | date format to view the date in                           |
+| outputDateFormat  | string  | "YYYY-MM-DD"                                                                                                          | date format in which change event will return the date in |
+| singleDatePicker  | boolean | false                                                                                                                 | enable/disable single date picker                         |
+| componentDisabled | string  | false                                                                                                                 | enable/disable component                                  |
+| placeholder       | string  | "Select Date"                                                                                                         | placeholder/title of the component                        |
+| showRowNumber     | boolean | true                                                                                                                  | hide/show week numers for daily                           |
+| availableRanges   | Object  | {"Last 7 Days": {startDate: inputDateFormat, endDate: inputDateFormat}, "Last 30 days": {...}, "Last 90 days": {...}} | ranges to show                                            |
+| showRanges        | boolean | true                                                                                                                  | hide/show ranges                                          |
+| disableWeekends   | boolean | false                                                                                                                 | enable/disable weekends                                   |
+| disableWeekdays   | boolean | false                                                                                                                 | enable/disable weekdays                                   |
+| displayBeginDate  | boolean | false                                                                                                                 | show begin date in input                                  |
+| displayEndDate    | boolean | show end date in input                                                                                                |
 
 ## [License](https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/LICENSE)
 
