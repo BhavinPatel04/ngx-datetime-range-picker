@@ -108,7 +108,7 @@ selectedDate: {
 | disableWeekends   | boolean | false                                                                                                                 | enable/disable weekends                                   |
 | disableWeekdays   | boolean | false                                                                                                                 | enable/disable weekdays                                   |
 | displayBeginDate  | boolean | false                                                                                                                 | show begin date in input                                  |
-| displayEndDate    | boolean | show end date in input                                                                                                |
+| displayEndDate    | boolean | false                                                                                                                 | show end date in input                                    |
 
 ## [License](https://github.com/BhavinPatel04/ngx-datetime-range-picker/blob/master/LICENSE)
 
