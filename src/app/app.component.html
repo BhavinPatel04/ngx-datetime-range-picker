@@ -1,5 +1,12 @@
-<ul class="list-inline m1-filter-container list-group">
-  <li class="m1-filter">
+<ul class="list-inline filter-container list-group">
+  <li class="filter">
+    <mat-form-field>
+      <mat-select [(value)]="selectedOption" (selectionChange)="onFilterChange($event, 'level')">
+        <mat-option *ngFor="let option of options" [value]="option.value"> {{ option.name }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </li>
+  <li class="filter">
     <b-date-range-picker
       name="date"
       [options]="datePickerOptions"
@@ -10,7 +17,7 @@
     >
     </b-date-range-picker>
   </li>
-  <li class="m1-filter date-range">
+  <li class="filter date-range">
     <b-date-range-picker
       name="dateRange"
       [options]="dateRangePickerOptions"
@@ -21,7 +28,7 @@
     >
     </b-date-range-picker>
   </li>
-  <li class="m1-filter date-time-range">
+  <li class="filter date-time-range">
     <b-date-range-picker
       name="dateTimeRange"
       [options]="dateRangePickerOptions"

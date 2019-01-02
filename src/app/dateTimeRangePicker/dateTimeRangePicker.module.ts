@@ -1,8 +1,8 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule } from "@angular/material";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from "../material/material.module";
 
 import { ObjNgFor } from "../pipes/objNgFor.pipe";
 
@@ -13,16 +13,7 @@ const declarations = [ObjNgFor, DateTimeRangePickerComponent];
 
 @NgModule({
   declarations,
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    MatSelectModule,
-  ],
+  imports: [BrowserModule, BrowserAnimationsModule, FormsModule, MaterialModule],
   exports: [DateTimeRangePickerComponent],
 })
 export class NgxDateTimeRangePickerModule {
