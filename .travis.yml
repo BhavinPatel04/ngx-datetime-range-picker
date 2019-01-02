@@ -22,6 +22,7 @@ script:
 
 after_success:
   - npm run gh-pages
+  - npm run coveralls && npm run codecov
 
 notifications:
   email:

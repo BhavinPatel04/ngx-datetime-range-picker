@@ -48,7 +48,7 @@
     "pretty-quick-current-branch": "pretty-quick --staged --branch npm run current-branch",
     "stylelint-current-branch": "stylelint npm run current-branch --fix",
     "packagr": "ng-packagr -p package.json",
-    "gh-pages": "ng build --prod --base-href=\"/ngx-datetime-range-picker/\" && ngh --dir dist",
+    "gh-pages": "ng build --prod --base-href=\"/ngx-datetime-range-picker/\" && ngh --dir dist/ngx-datetime-range-picker",
     "test-ci": "npm run lint && npm run check-format && npm run test-generate-coverage",
     "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
     "test-generate-coverage": "nyc -asc npm test",

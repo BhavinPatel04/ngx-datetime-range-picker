@@ -7,7 +7,7 @@
 
 This plugin uses bootstrap, moment.js, lodash and font-awesome.
 
-demo: https://ndtrp.stackblitz.io/
+Demo: https://bhavinpatel04.github.io/ngx-datetime-range-picker/
 
 ## Installation
 
