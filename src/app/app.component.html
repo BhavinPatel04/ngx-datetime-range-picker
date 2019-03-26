@@ -1,0 +1,42 @@
+<ul class="list-inline filter-container list-group">
+  <li class="filter">
+    <mat-form-field>
+      <mat-select [(value)]="selectedOption" (selectionChange)="onFilterChange($event, 'level')">
+        <mat-option *ngFor="let option of options" [value]="option.value"> {{ option.name }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </li>
+  <li class="filter">
+    <ngx-datetime-range-picker
+      name="date"
+      [options]="datePickerOptions"
+      [settings]="datePickerSettings"
+      [(dateRangeModel)]="selectedOptions.date"
+      (dateRangeChanged)="onFilterChange($event, 'date')"
+      required
+    >
+    </ngx-datetime-range-picker>
+  </li>
+  <li class="filter date-range">
+    <ngx-datetime-range-picker
+      name="dateRange"
+      [options]="dateRangePickerOptions"
+      [settings]="dateRangePickerSettings"
+      [(dateRangeModel)]="selectedOptions.dateRange"
+      (dateRangeChanged)="onFilterChange($event, 'date-range')"
+      required
+    >
+    </ngx-datetime-range-picker>
+  </li>
+  <li class="filter date-time-range">
+    <ngx-datetime-range-picker
+      name="dateTimeRange"
+      [options]="dateRangePickerOptions"
+      [settings]="dateTimeRangePickerSettings"
+      [(dateRangeModel)]="selectedOptions.dateTimeRange"
+      (dateRangeChanged)="onFilterChange($event, 'date-range')"
+      required
+    >
+    </ngx-datetime-range-picker>
+  </li>
+</ul>
