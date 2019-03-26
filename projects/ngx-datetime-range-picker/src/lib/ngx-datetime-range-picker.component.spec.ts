@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { SimpleChanges } from "@angular/core";
+import { NgxDatetimeRangePickerModule } from "./ngx-datetime-range-picker.module";
 
 declare var require: any;
 const moment = require("moment");
@@ -12,7 +13,8 @@ describe("NgxDatetimeRangePickerComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NgxDatetimeRangePickerComponent]
+      imports: [NgxDatetimeRangePickerModule],
+      declarations: []
     }).compileComponents();
   }));
 
