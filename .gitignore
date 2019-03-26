@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/projects/ngx-datetime-range-picker/dist/ 
 /tmp
 /out-tsc
 .nyc_output
