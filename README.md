@@ -17,7 +17,7 @@ Install the plugin from npm:
 npm install ngx-datetime-range-picker --save
 ```
 
-import **NgxDateTimeRangePickerModule** in your module:
+import **NgxDatetimeRangePickerModule** in your module:
 
 ```typescript
 ...
