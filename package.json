@@ -1,11 +1,11 @@
 {
   "name": "ngx-barebone-app",
   "version": "1.0.0",
-  "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
-  "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-picker/issues",
+  "homepage": "https://github.com/BhavinPatel04/ngx-barebone-app#readme",
+  "bugs": "https://github.com/BhavinPatel04/ngx-barebone-app/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BhavinPatel04/ngx-datetime-range-picker"
+    "url": "git+https://github.com/BhavinPatel04/ngx-barebone-app"
   },
   "author": "Bhavin Patel",
   "keywords": [
@@ -21,16 +21,7 @@
     "ng7",
     "ngx",
     "boilerplate",
-    "barebone",
-    "datetime-range-picker",
-    "date-range-picker",
-    "date-range",
-    "datetime-range",
-    "datetime",
-    "date",
-    "time",
-    "time-range-picker",
-    "time-range"
+    "barebone"
   ],
   "scripts": {
     "setup": "npm install && gulp init",

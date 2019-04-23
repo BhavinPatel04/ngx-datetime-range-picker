@@ -1,13 +1,16 @@
 {
   "name": "ngx-datetime-range-picker",
-  "version": "1.0.9",
-  "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker#readme",
+  "version": "1.1.1",
+  "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-picker/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BhavinPatel04/ngx-datetime-range-picker"
   },
-  "author": "Bhavin Patel",
+  "author": {
+    "name": "Bhavin Patel",
+    "url": "https://github.com/BhavinPatel04"
+  },
   "keywords": [
     "angular",
     "angular2",
@@ -21,8 +24,21 @@
     "ng7",
     "ngx",
     "boilerplate",
-    "barebone"
+    "barebone",
+    "datetime-range-picker",
+    "datetime-range",
+    "datetime",
+    "date-time-range-picker",
+    "date-time-range",
+    "date-time",
+    "date-range-picker",
+    "date-range",
+    "date",
+    "time-range-picker",
+    "time-range",
+    "time"
   ],
+  "private": false,
   "peerDependencies": {
     "@angular/cdk": "^7.2.0",
     "@angular/common": "^7.1.0",
