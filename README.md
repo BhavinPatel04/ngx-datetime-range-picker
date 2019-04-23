@@ -1,6 +1,6 @@
 # ngx-datetime-range-picker
 
-> Ngx Date time range picker with daily, weekly, monthl, quarterly & yearly levels
+> Ngx Date time range picker with daily, weekly, monthly, quarterly & yearly levels
 
 [![Build Status](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker.svg?branch=master)](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker)
 [![npm version](https://badge.fury.io/js/ngx-datetime-range-picker.svg)](https://badge.fury.io/js/ngx-datetime-range-picker)
@@ -17,16 +17,16 @@ Install the plugin from npm:
 npm install ngx-datetime-range-picker --save
 ```
 
-import **NgxDateTimeRangePickerModule** in your module:
+import **NgxDatetimeRangePickerModule** in your module:
 
 ```typescript
 ...
 import { FormsModule } from '@angular/forms';
-import { NgxDateTimeRangePickerModule } from 'ngx-datetime-range-picker';
+import { NgxDatetimeRangePickerModule } from 'ngx-datetime-range-picker';
 import { AppComponent } from "./app.component";
 
 @NgModule({
-    imports:      [... , FormsModule, NgxDateTimeRangePickerModule.forRoot()],
+    imports:      [... , FormsModule, NgxDatetimeRangePickerModule.forRoot()],
     declarations: [AppComponent],
     bootstrap:    [AppComponent]
 })
