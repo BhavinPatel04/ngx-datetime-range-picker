@@ -15,9 +15,9 @@ import { NgxDatetimeRangePickerConstants } from "./ngx-datetime-range-picker.con
 import { NgxDatetimeRangePickerService } from "./ngx-datetime-range-picker.service";
 import {
   CalendarSides,
-  DateRangeModelItem,
-  DateTimeRangePickerOptions,
-  DateTimeRangePickerSettings
+  NgxDatetimeRangePickerModelItem,
+  NgxDatetimeRangePickerOptions,
+  NgxDatetimeRangePickerSettings
 } from "./interfaces/index";
 
 declare var require: any;
@@ -47,76 +47,78 @@ const USA_TZ_CODE = NgxDatetimeRangePickerConstants.CONSTANT.USA_TZ_CODE;
   encapsulation: ViewEncapsulation.None
 })
 export class NgxDatetimeRangePickerComponent implements OnChanges {
-  @Input() public options: DateTimeRangePickerOptions;
-  @Input() public settings: DateTimeRangePickerSettings;
-  @Input() public optionService: Observable<any>;
-  @Input() public dateRangeModel: Object;
-  @Input() public canBeEmpty = false;
-  @Output() public dateRangeModelChange: EventEmitter<Object> = new EventEmitter<Object>();
-  @Output() public dateRangeChanged: EventEmitter<DateRangeModelItem> = new EventEmitter<DateRangeModelItem>();
-  @Output() public inputFocusBlur: EventEmitter<Object> = new EventEmitter<Object>();
-  @Output() public selectedDate: EventEmitter<Object> = new EventEmitter<Object>();
-  @ViewChild("filterInputBox") public filterInputBox: any;
+  @Input() options: NgxDatetimeRangePickerOptions;
+  @Input() settings: NgxDatetimeRangePickerSettings;
+  @Input() optionService: Observable<any>;
+  @Input() dateRangeModel: Object;
+  @Input() canBeEmpty = false;
+  @Output() dateRangeModelChange: EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() dateRangeChanged: EventEmitter<NgxDatetimeRangePickerModelItem> = new EventEmitter<
+    NgxDatetimeRangePickerModelItem
+  >();
+  @Output() inputFocusBlur: EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() selectedDate: EventEmitter<Object> = new EventEmitter<Object>();
+  @ViewChild("filterInputBox") filterInputBox: any;
 
-  public sides: string[] = [];
-  public dates: CalendarSides = {
+  sides: string[] = [];
+  dates: CalendarSides = {
     left: {} as Object,
     right: {} as Object
   };
-  public calendarAvailable: CalendarSides = {
+  calendarAvailable: CalendarSides = {
     left: false as boolean,
     right: false as boolean
   };
-  public showCalendar = false;
-  public customRange = false;
-  public selectedDateText = "";
-  public dateTitleText: CalendarSides = {
+  showCalendar = false;
+  customRange = false;
+  selectedDateText = "";
+  dateTitleText: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public weekDayOptions: string[] = ["su", "mo", "tu", "we", "th", "fr", "sa"];
-  public selectedMonth: CalendarSides = {
+  weekDayOptions: string[] = ["su", "mo", "tu", "we", "th", "fr", "sa"];
+  selectedMonth: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public selectedYear: CalendarSides = {
+  selectedYear: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public activeItem: CalendarSides = {
+  activeItem: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public activeStartDate: string = null;
-  public activeEndDate: string = null;
-  public activeRange: string = null;
-  public frequencyColumnHeader: string = null;
+  activeStartDate: string = null;
+  activeEndDate: string = null;
+  activeRange: string = null;
+  frequencyColumnHeader: string = null;
 
-  public config: any = {};
+  config: any = {};
 
-  public isValidFilter = false;
-  public isUserModelChange = true;
+  isValidFilter = false;
+  isUserModelChange = true;
 
-  public timezones: string[] = TZ_CODES;
-  public localTimezone: string = this.ngxDateTimeRangePickerService.getLocalTimezone();
+  timezones: string[] = TZ_CODES;
+  localTimezone: string = this.ngxDateTimeRangePickerService.getLocalTimezone();
   // Since 'useLocalTimezone: false' byDefault;
-  public selectedTimezone: string;
-  public todayTime = "";
+  selectedTimezone: string;
+  todayTime = "";
 
-  public timeItems: string[] = ["hour", "minute"];
-  public times: CalendarSides = {
+  timeItems: string[] = ["hour", "minute"];
+  times: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public selectedHour: CalendarSides = {
+  selectedHour: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public selectedMinute: CalendarSides = {
+  selectedMinute: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
-  public selectedMeridian: CalendarSides = {
+  selectedMeridian: CalendarSides = {
     left: "" as string,
     right: "" as string
   };
@@ -201,26 +203,26 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   }
 
   // Events
-  public onDateRangeInputChange(value: string) {
+  onDateRangeInputChange(value: string) {
     this.dateRangeSelected();
   }
 
-  public setDisabledState(disabled: boolean): void {
+  setDisabledState(disabled: boolean): void {
     this.config.componentDisabled = disabled;
   }
 
-  public onComponentClick(): void {
+  onComponentClick(): void {
     this.showCalendar = !this.showCalendar;
   }
 
-  public onFocusInput(event: any): void {
+  onFocusInput(event: any): void {
     this.inputFocusBlur.emit({
       reason: InputFocusBlur.focus,
       value: event.target.value
     });
   }
 
-  public onBlurInput(event: any): void {
+  onBlurInput(event: any): void {
     this.selectedDateText = event.target.value;
     this.inputFocusBlur.emit({
       reason: InputFocusBlur.blur,
@@ -228,7 +230,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     });
   }
 
-  public onCalendarClose(event: any): void {
+  onCalendarClose(event: any): void {
     if (this.config.startDate && this.config.endDate) {
       this.filterInputBox.nativeElement.classList.remove("empty-filter");
       this.showCalendar = false;
@@ -237,7 +239,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public isPrevAvailale(month) {
+  isPrevAvailale(month) {
     const minDate = this.ngxDateTimeRangePickerService.formatDateToDefaultFormat(
       this.config.minDate,
       DEFAULT_DATE_FROMAT
@@ -257,7 +259,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public isNextAvailale(month) {
+  isNextAvailale(month) {
     const maxDate = this.ngxDateTimeRangePickerService.formatDateToDefaultFormat(
       this.config.maxDate,
       DEFAULT_DATE_FROMAT
@@ -277,7 +279,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public getCalendarColspan() {
+  getCalendarColspan() {
     if (this.config.type === "daily") {
       return 6;
     } else if (this.config.type === "weekly") {
@@ -291,7 +293,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public getCalendarRowItemColspan() {
+  getCalendarRowItemColspan() {
     if (this.config.type === "monthly") {
       return 3;
     } else if (this.config.type === "quarterly") {
@@ -301,7 +303,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public getDatecharacteristics(date, month, side) {
+  getDatecharacteristics(date, month, side) {
     const currentDate = moment(date, DEFAULT_DATE_FROMAT)
       .startOf("day")
       .valueOf();
@@ -377,7 +379,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     };
   }
 
-  public onClickPrevious(month, side) {
+  onClickPrevious(month, side) {
     const startDate = moment(month, "MMM YYYY")
       .subtract(1, "month")
       .startOf("month")
@@ -385,7 +387,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.dates[side] = this.generateCalendar(startDate, side);
   }
 
-  public onClickNext(month, side) {
+  onClickNext(month, side) {
     const endDate = moment(month, "MMM YYYY")
       .add(1, "month")
       .endOf("month")
@@ -393,7 +395,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.dates[side] = this.generateCalendar(endDate, side);
   }
 
-  public onCellClick(item, itemCell, side) {
+  onCellClick(item, itemCell, side) {
     const date = item.date ? moment(item.date, DEFAULT_DATE_FROMAT).valueOf() : item.date;
     const startDate = this.config.startDate
       ? moment(this.config.startDate, DEFAULT_DATE_FROMAT).valueOf()
@@ -435,7 +437,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.doApply();
   }
 
-  public onCellMouseEnter(item, itemCell): void {
+  onCellMouseEnter(item, itemCell): void {
     if (!item.available) {
       return;
     }
@@ -482,7 +484,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public onCellMouseLeave(): void {
+  onCellMouseLeave(): void {
     if (!this.config.endDate) {
       _.forOwn(this.dates, (sideDates, side) => {
         _.forEach(sideDates.itemRows, (rows) => {
@@ -496,7 +498,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public onRangeClick(rangeLabel, dateRangeModel: any) {
+  onRangeClick(rangeLabel, dateRangeModel: any) {
     this.activeRange = rangeLabel;
     if (rangeLabel === "Custom Range") {
       this.customRange = !this.customRange;
@@ -525,7 +527,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public updateCalendar() {
+  updateCalendar() {
     this.sides.length = 0;
     this.dates = {};
     // takes 223 milliSeconds
@@ -544,7 +546,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public onCalendarLabelChange(label, side, type) {
+  onCalendarLabelChange(label, side, type) {
     this.showCalendar = true;
     if (type === "month") {
       this.selectedMonth[side] = label;
@@ -588,7 +590,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public onTimeLabelChange(timeItem, side, item) {
+  onTimeLabelChange(timeItem, side, item) {
     let time = null;
     if (side === "left") {
       time = this.config.startTime.split(":");
@@ -619,13 +621,13 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public onTimeApply() {
+  onTimeApply() {
     this.dateRangeSelected();
     this.updateInputField();
   }
 
   // Helpers
-  public init() {
+  init() {
     if (this.isUserModelChange) {
       this.isValidFilter = false;
       this.config = Object.assign(
@@ -638,7 +640,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public initialize() {
+  initialize() {
     this.sides.length = 0;
     this.dates = {};
     this.calendarAvailable = {
@@ -675,7 +677,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.activeRange = "";
   }
 
-  public parseOptions(): void {
+  parseOptions(): void {
     if (this.options !== undefined) {
       Object.keys(this.options).forEach((k) => {
         this.config[k] = this.options[k];
@@ -706,7 +708,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     // this.config.selectedModel = undefined;
   }
 
-  public selectTimeZone() {
+  selectTimeZone() {
     if (this.config.timezoneSupport) {
       if (!this.config.defaultTimezone) {
         this.config.defaultTimezone = USA_TZ_CODE;
@@ -720,7 +722,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.onTimezoneChange(this.selectedTimezone);
   }
 
-  public parseOptionsToDefaultDateFormat() {
+  parseOptionsToDefaultDateFormat() {
     this.config.minDate = this.config.minDate
       ? this.ngxDateTimeRangePickerService.formatDateToDefaultFormat(this.config.minDate, this.config.inputDateFormat)
       : DEFAULT_MIN_DATE;
@@ -753,7 +755,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   /**
    * @desc sets startDate, endDate
    */
-  public processDateRangeModel() {
+  processDateRangeModel() {
     if (undefined !== this.dateRangeModel && !_.isEmpty(this.dateRangeModel)) {
       if (this.dateRangeModel[this.config.selectedModel]) {
         const dateRangeMinDate = this.dateRangeModel[this.config.selectedModel].minDate;
@@ -804,7 +806,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   /**
    * @desc sets minDate, maxDate, startDate, endDate if not passed
    */
-  public handleDateArray() {
+  handleDateArray() {
     if (this.config.dateArray && this.config.dateArray.length > 0) {
       this.config.dateArray = this.ngxDateTimeRangePickerService.getSanitizedDateArray(this.config);
 
@@ -870,7 +872,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public sanitizeDates() {
+  sanitizeDates() {
     const subtractWeekCount = 0;
     if (this.config.type === "monthly") {
       this.config.minDate = moment(this.config.minDate, DEFAULT_DATE_FROMAT)
@@ -941,7 +943,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public processRanges() {
+  processRanges() {
     if (this.config.showRanges && !this.config.singleDatePicker) {
       if (_.isEmpty(this.config.availableRanges)) {
         this.config.availableRanges = this.ngxDateTimeRangePickerService.createDefaultRanges(this.config);
@@ -953,7 +955,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public selectActiveRange() {
+  selectActiveRange() {
     _.forOwn(this.config.availableRanges, (rangeModel, range) => {
       if (this.config.startDate === rangeModel.startDate && this.config.endDate === rangeModel.endDate) {
         this.activeRange = range;
@@ -967,7 +969,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public generateCalendar(date, side) {
+  generateCalendar(date, side) {
     this.selectedMonth[side] = moment(date, DEFAULT_DATE_FROMAT).format("MMM");
     this.selectedYear[side] = this.ngxDateTimeRangePickerService.getSelectedYear(this.config, date, side);
     const calendarLabel = `${this.selectedMonth[side]} ${this.selectedYear[side]}`;
@@ -1087,7 +1089,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     return dates;
   }
 
-  public generateTimePicker(time, side) {
+  generateTimePicker(time, side) {
     const timeObject = {
       hour: [],
       minute: [],
@@ -1149,11 +1151,11 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     return timeObject;
   }
 
-  public capitalize(day) {
+  capitalize(day) {
     return _.capitalize(day);
   }
 
-  public updateInputField() {
+  updateInputField() {
     const startDate = this.ngxDateTimeRangePickerService.formatStartDate(this.config, this.config.viewDateFormat);
     const endDate = this.config.endDate
       ? moment(this.config.endDate, DEFAULT_DATE_FROMAT).format(this.config.viewDateFormat)
@@ -1201,7 +1203,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public updateActiveItemInputField() {
+  updateActiveItemInputField() {
     let itemFirstDate = "";
     let itemLastDate = "";
     let itemText = "";
@@ -1230,25 +1232,25 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public dateRangeSelected() {
-    const dateRangeModel: DateRangeModelItem = this.getDateRangeModelItem();
+  dateRangeSelected() {
+    const dateRangeModel: NgxDatetimeRangePickerModelItem = this.getNgxDatetimeRangePickerModelItem();
     this.showCalendar = false;
     this.filterInputBox.nativeElement.classList.remove("empty-filter");
     this.doDateRangeModelChange();
     this.dateRangeChanged.emit(dateRangeModel);
   }
 
-  public getDateRangeModel(format?) {
+  getDateRangeModel(format?) {
     let dRModel = {};
     if (undefined !== this.dateRangeModel && !_.isEmpty(this.dateRangeModel)) {
       dRModel = _.cloneDeep(this.dateRangeModel);
     }
-    dRModel[this.config.selectedModel] = this.getDateRangeModelItem(format);
+    dRModel[this.config.selectedModel] = this.getNgxDatetimeRangePickerModelItem(format);
     return dRModel;
   }
 
-  public getDateRangeModelItem(format?): DateRangeModelItem {
-    let dateRangeModelItem: DateRangeModelItem;
+  getNgxDatetimeRangePickerModelItem(format?): NgxDatetimeRangePickerModelItem {
+    let dateRangeModelItem: NgxDatetimeRangePickerModelItem;
     let outputDateFormat = this.config.outputDateFormat;
     if (undefined !== format) {
       outputDateFormat = format;
@@ -1286,7 +1288,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     return dateRangeModelItem;
   }
 
-  public doApply() {
+  doApply() {
     const startDate = this.config.startDate;
     const endDate = this.config.endDate;
 
@@ -1319,12 +1321,12 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.updateInputField();
   }
 
-  public doDateRangeModelChange() {
+  doDateRangeModelChange() {
     const dateRangeModel = this.getDateRangeModel(this.config.inputDateFormat);
     this.dateRangeModelChange.emit(dateRangeModel);
   }
 
-  public onTimezoneChange(tz) {
+  onTimezoneChange(tz) {
     this.selectedTimezone = tz;
     this.todayTime = this.ngxDateTimeRangePickerService.getZoneToday(this.selectedTimezone, this.config.viewDateFormat);
 
@@ -1343,7 +1345,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     });
   }
 
-  public getSelectedTimeItemText(item, side) {
+  getSelectedTimeItemText(item, side) {
     if (item === "hour") {
       return this.selectedHour[side];
     } else if (item === "minute") {
@@ -1351,12 +1353,12 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  public setActiveItemOnRangeClick() {
+  setActiveItemOnRangeClick() {
     this.updateActiveItem();
     this.doApply();
   }
 
-  public updateActiveItem() {
+  updateActiveItem() {
     const startDate: any = this.ngxDateTimeRangePickerService.getFirstLastDay(this.config.startDate, this.config.type);
     const endDate: any = this.ngxDateTimeRangePickerService.getFirstLastDay(this.config.endDate, this.config.type);
 

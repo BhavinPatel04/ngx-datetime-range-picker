@@ -1,4 +1,4 @@
-export interface DateRangeModelItem {
+export interface NgxDatetimeRangePickerModelItem {
   dateArray?: string[];
   startDate?: string | number;
   endDate?: string | number;

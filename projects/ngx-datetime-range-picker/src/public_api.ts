@@ -5,3 +5,4 @@
 export * from "./lib/ngx-datetime-range-picker.service";
 export * from "./lib/ngx-datetime-range-picker.component";
 export * from "./lib/ngx-datetime-range-picker.module";
+export * from "./lib/interfaces";

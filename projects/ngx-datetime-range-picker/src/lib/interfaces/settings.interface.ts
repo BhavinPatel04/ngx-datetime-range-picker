@@ -1,6 +1,6 @@
 import { AriaLabelsOptions } from "./ariaLabels.interface";
 
-export interface DateTimeRangePickerSettings {
+export interface NgxDatetimeRangePickerSettings {
   type?: string;
   modelKeys?: string[];
   selectedModel?: string;

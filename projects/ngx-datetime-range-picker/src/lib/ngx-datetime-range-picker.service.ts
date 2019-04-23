@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { NgxDatetimeRangePickerConstants } from "./ngx-datetime-range-picker.constants";
-import { AriaLabelsOptions, DateTimeRangePickerOptions, DateTimeRangePickerSettings } from "./interfaces/index";
+import { AriaLabelsOptions, NgxDatetimeRangePickerOptions, NgxDatetimeRangePickerSettings } from "./interfaces/index";
 
 declare var require: any;
 const moment = require("moment");
@@ -26,17 +26,17 @@ const TZ_NAMES = NgxDatetimeRangePickerConstants.CONSTANT.TZ_NAMES;
   providedIn: "root"
 })
 export class NgxDatetimeRangePickerService {
-  public getNotAvailableText(): string {
+  getNotAvailableText(): string {
     return "N/A";
   }
 
-  public getDefaultAriaLabelOptions(): AriaLabelsOptions {
+  getDefaultAriaLabelOptions(): AriaLabelsOptions {
     return {
       inputField: "Date Range Input Field" as string
     };
   }
 
-  public getDefaultOptions(): DateTimeRangePickerOptions {
+  getDefaultOptions(): NgxDatetimeRangePickerOptions {
     return {
       dateArray: [] as string[],
       startDate: DEFAULT_START_DATE as string,
@@ -48,7 +48,7 @@ export class NgxDatetimeRangePickerService {
     };
   }
 
-  public getDefaultSettings(): DateTimeRangePickerSettings {
+  getDefaultSettings(): NgxDatetimeRangePickerSettings {
     return {
       type: DEFAULT_TYPE as string,
       modelKeys: DEFAULT_MODEL_KEYS as string[],
@@ -75,7 +75,7 @@ export class NgxDatetimeRangePickerService {
     };
   }
 
-  public formatDateToDefaultFormat(date, format = DEFAULT_DATE_FROMAT): string {
+  formatDateToDefaultFormat(date, format = DEFAULT_DATE_FROMAT): string {
     let fromattedDate = null;
     if (date) {
       if (!isNaN(Number(date))) {
@@ -100,7 +100,7 @@ export class NgxDatetimeRangePickerService {
     return fromattedDate;
   }
 
-  public formatTimeToDefaultFormat(time) {
+  formatTimeToDefaultFormat(time) {
     let formattedTime = null;
     if (time) {
       if (time.indexOf(":") > -1) {
@@ -118,7 +118,7 @@ export class NgxDatetimeRangePickerService {
     return formattedTime;
   }
 
-  public getFrequencyColumnHeader(type) {
+  getFrequencyColumnHeader(type) {
     return (() => {
       switch (type) {
         case "daily":
@@ -135,7 +135,7 @@ export class NgxDatetimeRangePickerService {
     })();
   }
 
-  public getCalendarRowNumberText(type, number) {
+  getCalendarRowNumberText(type, number) {
     return (() => {
       switch (type) {
         case "daily":
@@ -152,7 +152,7 @@ export class NgxDatetimeRangePickerService {
     })();
   }
 
-  public createDefaultRanges(config): Object {
+  createDefaultRanges(config): Object {
     const ranges = {};
     const type = config.type;
     const maxDate = _.cloneDeep(config.maxDate);
@@ -242,7 +242,7 @@ export class NgxDatetimeRangePickerService {
     return ranges;
   }
 
-  public getSanitizedDateArray(config) {
+  getSanitizedDateArray(config) {
     const sanitizedDateArray = [];
     const type = config.type;
     const dateArray = config.dateArray;
@@ -313,7 +313,7 @@ export class NgxDatetimeRangePickerService {
     return _.uniqBy(sanitizedDateArray);
   }
 
-  public getNumberOfWeeks(date): number {
+  getNumberOfWeeks(date): number {
     let numberOfWeeks = null;
     if (date) {
       const monthStart: number = moment(date, DEFAULT_DATE_FROMAT)
@@ -329,7 +329,7 @@ export class NgxDatetimeRangePickerService {
     return numberOfWeeks;
   }
 
-  public getYearlyWeekCount(year, retailCalendar?) {
+  getYearlyWeekCount(year, retailCalendar?) {
     let weekCount: number = null;
     if (year) {
       const yearStartDate = moment(year, "YYYY")
@@ -353,7 +353,7 @@ export class NgxDatetimeRangePickerService {
     return weekCount;
   }
 
-  public getMonthsAvailable(minDate, maxDate, selectedYear) {
+  getMonthsAvailable(minDate, maxDate, selectedYear) {
     const months = [];
     if (minDate && maxDate && selectedYear) {
       let minDatems = moment(minDate, DEFAULT_DATE_FROMAT).valueOf();
@@ -390,7 +390,7 @@ export class NgxDatetimeRangePickerService {
     return months;
   }
 
-  public getYearsAvailable(config) {
+  getYearsAvailable(config) {
     const minDate = config ? config.minDate : "";
     const maxDate = config ? config.maxDate : "";
     const years = [];
@@ -406,7 +406,7 @@ export class NgxDatetimeRangePickerService {
     return years.reverse();
   }
 
-  public isDateAvailable(date, minDate, maxDate, startDate, endDate, monthStartDate, monthEndDate, config): boolean {
+  isDateAvailable(date, minDate, maxDate, startDate, endDate, monthStartDate, monthEndDate, config): boolean {
     let available = false;
     const type = config.type;
     const dateArray = config.dateArray ? config.dateArray : [];
@@ -452,17 +452,7 @@ export class NgxDatetimeRangePickerService {
     return available;
   }
 
-  public isDateInRange(
-    date,
-    minDate,
-    maxDate,
-    startDate,
-    endDate,
-    monthStartDate,
-    monthEndDate,
-    available,
-    config
-  ): boolean {
+  isDateInRange(date, minDate, maxDate, startDate, endDate, monthStartDate, monthEndDate, available, config): boolean {
     let inRange = false;
     const type = config.type;
     const singleDatePicker = config.singleDatePicker;
@@ -480,7 +470,7 @@ export class NgxDatetimeRangePickerService {
     return inRange;
   }
 
-  public isDateActive(date, startDate, endDate, side): boolean {
+  isDateActive(date, startDate, endDate, side): boolean {
     let active = false;
     if ((date === startDate && side === "left") || (date === endDate && side === "right")) {
       active = true;
@@ -488,7 +478,7 @@ export class NgxDatetimeRangePickerService {
     return active;
   }
 
-  public isDateToday(date, config): boolean {
+  isDateToday(date, config): boolean {
     let today = false;
     const todayDate = moment()
       .startOf("day")
@@ -503,11 +493,11 @@ export class NgxDatetimeRangePickerService {
     return today;
   }
 
-  public isWeekday(date, format?) {
+  isWeekday(date, format?) {
     return !this.isWeekend(date, format);
   }
 
-  public isWeekend(date, format?) {
+  isWeekend(date, format?) {
     if (!format) {
       format = null;
     }
@@ -515,7 +505,7 @@ export class NgxDatetimeRangePickerService {
     return day === 0 || day === 6 ? true : false;
   }
 
-  public getCalendarRowVariables(options) {
+  getCalendarRowVariables(options) {
     const variables: any = {};
     const type = options.type;
     const monthStartWeekNumber = options.monthStartWeekNumber;
@@ -543,7 +533,7 @@ export class NgxDatetimeRangePickerService {
     return variables;
   }
 
-  public getCalendarRowItemVariables(options) {
+  getCalendarRowItemVariables(options) {
     const variables: any = {
       currentItemDate: "",
       rowItemText: "",
@@ -613,7 +603,7 @@ export class NgxDatetimeRangePickerService {
     return variables;
   }
 
-  public isRowIemValid(options): boolean {
+  isRowIemValid(options): boolean {
     let valid = false;
     const type = options.type;
     const year = options.year;
@@ -636,7 +626,7 @@ export class NgxDatetimeRangePickerService {
     return valid;
   }
 
-  public formatStartDate(config, returnFormat) {
+  formatStartDate(config, returnFormat) {
     const startDate = config ? config.startDate : null;
     const type = config ? config.type : "";
     let formattedStartDate = null;
@@ -665,11 +655,11 @@ export class NgxDatetimeRangePickerService {
     return formattedStartDate;
   }
 
-  public getSelectedYear(config, date, side): string {
+  getSelectedYear(config, date, side): string {
     return moment(date, DEFAULT_DATE_FROMAT).format("YYYY");
   }
 
-  public getFirstLastDay(date, type) {
+  getFirstLastDay(date, type) {
     let firstDay = "";
     let lastDay = "";
 
@@ -711,7 +701,7 @@ export class NgxDatetimeRangePickerService {
     };
   }
 
-  public getLocalTimezone() {
+  getLocalTimezone() {
     let tz = /\((.*)\)/.exec(new Date().toString())[1];
 
     if (tz === "Central Europe Standard Time") {
@@ -723,7 +713,7 @@ export class NgxDatetimeRangePickerService {
     return tz;
   }
 
-  public getZoneDate(tz, format, date?) {
+  getZoneDate(tz, format, date?) {
     if (date) {
       date = moment(date, format)
         .startOf("day")
@@ -739,17 +729,17 @@ export class NgxDatetimeRangePickerService {
     return today;
   }
 
-  public getZoneToday(tz, viewDateFormat) {
+  getZoneToday(tz, viewDateFormat) {
     const today = this.getZoneDate(tz, viewDateFormat);
     return moment(today).format(`${viewDateFormat}  hh:mm A`);
   }
 
-  public formatToZoneDate(tz, format, date) {
+  formatToZoneDate(tz, format, date) {
     const formattedDate = this.getZoneDate(tz, format, date);
     return moment(formattedDate).format(`${format}`);
   }
 
-  public convertToViewTimeItem(item) {
+  convertToViewTimeItem(item) {
     let stringified_item = item + "";
     if (stringified_item.length === 1) {
       stringified_item = `0${stringified_item}`;
@@ -757,7 +747,7 @@ export class NgxDatetimeRangePickerService {
     return stringified_item;
   }
 
-  public getWeekNumber(date): any {
+  getWeekNumber(date): any {
     if (date) {
       const year = moment(date, "YYYY-MM-DD").year();
       const month = moment(date, "YYYY-MM-DD").month();

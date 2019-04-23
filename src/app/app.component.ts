@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import {
-  DateTimeRangePickerOptions,
-  DateTimeRangePickerSettings
+  NgxDatetimeRangePickerOptions,
+  NgxDatetimeRangePickerSettings
 } from "../../projects/ngx-datetime-range-picker/src/lib/interfaces";
 
 declare var require: any;
@@ -59,11 +59,11 @@ export class AppComponent {
       }
     }
   };
-  public datePickerOptions: DateTimeRangePickerOptions = {};
-  public datePickerSettings: DateTimeRangePickerSettings = this.getDateSettings();
-  public dateRangePickerOptions: DateTimeRangePickerOptions = {};
-  public dateRangePickerSettings: DateTimeRangePickerSettings = this.getDateRangeSettings();
-  public dateTimeRangePickerSettings: DateTimeRangePickerSettings = this.getDateTimeRangeSettings();
+  public datePickerOptions: NgxDatetimeRangePickerOptions = {};
+  public datePickerSettings: NgxDatetimeRangePickerSettings = this.getDateSettings();
+  public dateRangePickerOptions: NgxDatetimeRangePickerOptions = {};
+  public dateRangePickerSettings: NgxDatetimeRangePickerSettings = this.getDateRangeSettings();
+  public dateTimeRangePickerSettings: NgxDatetimeRangePickerSettings = this.getDateTimeRangeSettings();
 
   public onFilterChange(event, filter) {
     if (typeof event.defaultPrevented !== "undefined") {
@@ -79,7 +79,7 @@ export class AppComponent {
     }
   }
 
-  public getDateSettings(): DateTimeRangePickerSettings {
+  public getDateSettings(): NgxDatetimeRangePickerSettings {
     return {
       singleDatePicker: true,
       displayEndDate: true,
@@ -91,7 +91,7 @@ export class AppComponent {
     };
   }
 
-  public getDateRangeSettings(): DateTimeRangePickerSettings {
+  public getDateRangeSettings(): NgxDatetimeRangePickerSettings {
     return {
       retailCalendar: false,
       timezoneSupport: false,
@@ -101,7 +101,7 @@ export class AppComponent {
     };
   }
 
-  public getDateTimeRangeSettings(): DateTimeRangePickerSettings {
+  public getDateTimeRangeSettings(): NgxDatetimeRangePickerSettings {
     return {
       retailCalendar: false,
       timezoneSupport: false,

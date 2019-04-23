@@ -1,4 +1,4 @@
-export interface DateTimeRangePickerOptions {
+export interface NgxDatetimeRangePickerOptions {
   dateArray?: string[];
   startDate?: string | number;
   endDate?: string | number;
