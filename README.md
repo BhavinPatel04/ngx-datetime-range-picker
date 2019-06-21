@@ -20,13 +20,15 @@ npm install ngx-datetime-range-picker --save
 import **NgxDatetimeRangePickerModule** in your module:
 
 ```typescript
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 ...
 import { FormsModule } from '@angular/forms';
 import { NgxDatetimeRangePickerModule } from 'ngx-datetime-range-picker';
 import { AppComponent } from "./app.component";
 
 @NgModule({
-    imports:      [... , FormsModule, NgxDatetimeRangePickerModule.forRoot()],
+    imports:      [BrowserModule, BrowserAnimationsModule, ... , FormsModule, NgxDatetimeRangePickerModule.forRoot()],
     declarations: [AppComponent],
     bootstrap:    [AppComponent]
 })
