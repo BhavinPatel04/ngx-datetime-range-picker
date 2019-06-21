@@ -198,7 +198,7 @@
       <div *ngIf="(!config.singleDatePicker && config.showRanges) || config.timePicker" class="ranges">
         <button
           mat-button
-          *ngFor="let range of (config.availableRanges | ObjNgFor)"
+          *ngFor="let range of config.availableRanges | ObjNgFor"
           class="calendar-range"
           [ngClass]="{ 'active-range': range == activeRange }"
           (click)="onRangeClick(range, config.availableRanges[range])"

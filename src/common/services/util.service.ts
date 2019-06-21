@@ -2,7 +2,7 @@ import { Cache } from "./cache.service";
 
 import * as _ from "lodash";
 
-export const Util = new class UtilService {
+export const Util = new (class UtilService {
   constructor() {}
 
   truncateCharacter(input, chars, breakOnWord) {
@@ -214,4 +214,4 @@ export const Util = new class UtilService {
       }
     };
   }
-}();
+})();

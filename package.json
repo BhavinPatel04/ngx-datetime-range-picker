@@ -34,7 +34,7 @@
     "test": "ng test",
     "lint": "ng lint --fix",
     "e2e": "ng e2e",
-    "gh-pages": "ng build --prod --base-href=\"/ngx-datetime-range-picker/\" && ngh --dir dist/ngx-braebone-app",
+    "gh-pages": "ng build --prod --base-href=\"/ngx-datetime-range-picker/\" && ngh --dir dist",
     "format": "prettier \"**/*.{ts,js,html,css,scss,json,md}\" --write",
     "check-format": "prettier \"**/*.{ts,js,html,css,scss,json,md}\" --write -l",
     "current-branch": "$(git branch | grep \\* | cut -d ' ' -f2)",
