@@ -86,7 +86,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "lint-staged": "^8.1.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "moment": "^2.23.0",
     "ng-packagr": "^5.1.0",
     "ngx-restangular": "^4.0.1",
