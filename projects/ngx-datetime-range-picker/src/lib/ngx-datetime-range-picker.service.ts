@@ -1,10 +1,15 @@
 import { Injectable } from "@angular/core";
 import { NgxDatetimeRangePickerConstants } from "./ngx-datetime-range-picker.constants";
-import { AriaLabelsOptions, NgxDatetimeRangePickerOptions, NgxDatetimeRangePickerSettings } from "./interfaces/index";
+import { getNotAvailableText, cloneDeep, isNil } from "./ngx-datetime-range-picker.utils";
+import {
+  AriaLabelsOptions,
+  NgxDatetimeRangePickerOptions,
+  NgxDatetimeRangePickerSettings,
+  CalendarSides
+} from "./interfaces/index";
 
 declare var require: any;
 const moment = require("moment");
-const _ = require("lodash");
 
 const DEFAULT_TYPE = NgxDatetimeRangePickerConstants.DEFAULT.TYPE;
 const DEFAULT_INPUT_CLASS = NgxDatetimeRangePickerConstants.DEFAULT.INPUT_CLASS;
@@ -26,10 +31,6 @@ const TZ_NAMES = NgxDatetimeRangePickerConstants.CONSTANT.TZ_NAMES;
   providedIn: "root"
 })
 export class NgxDatetimeRangePickerService {
-  getNotAvailableText(): string {
-    return "N/A";
-  }
-
   getDefaultAriaLabelOptions(): AriaLabelsOptions {
     return {
       inputField: "Date Range Input Field" as string
@@ -155,7 +156,7 @@ export class NgxDatetimeRangePickerService {
   createDefaultRanges(config): Object {
     const ranges = {};
     const type = config.type;
-    const maxDate = _.cloneDeep(config.maxDate);
+    const maxDate = cloneDeep(config.maxDate);
     const formattedMaxDate = this.formatDateToDefaultFormat(maxDate, DEFAULT_DATE_FROMAT);
 
     if (type === "daily") {
@@ -243,13 +244,13 @@ export class NgxDatetimeRangePickerService {
   }
 
   getSanitizedDateArray(config) {
-    const sanitizedDateArray = [];
+    const sanitizedDateArray: Array<number> = [];
     const type = config.type;
     const dateArray = config.dateArray;
     const inputDateFormat = config.inputDateFormat;
 
     // dateArray can have nulls
-    _.forEach(dateArray, (date) => {
+    dateArray.forEach((date) => {
       if (date) {
         let format = null;
         if (isNaN(Number(date))) {
@@ -310,7 +311,7 @@ export class NgxDatetimeRangePickerService {
       }
     });
 
-    return _.uniqBy(sanitizedDateArray);
+    return [...new Set(sanitizedDateArray)];
   }
 
   getNumberOfWeeks(date): number {
@@ -425,7 +426,7 @@ export class NgxDatetimeRangePickerService {
 
     if (date >= minDate && date <= maxDate) {
       if (dateArray.length > 0) {
-        available = _.some(dateArray, (d) => {
+        available = dateArray.some((d) => {
           let format = null;
           if (isNaN(Number(date))) {
             if (inputDateFormat) {
@@ -552,7 +553,7 @@ export class NgxDatetimeRangePickerService {
     let firstLastDayObject: any = {};
 
     if (type === "daily") {
-      if (!_.isNil(monthStartWeekNumber) && !_.isNil(dateRows) && !_.isNil(year)) {
+      if (!isNil(monthStartWeekNumber) && !isNil(dateRows) && !isNil(year)) {
         const yearStartDateDaily = moment()
           .year(year)
           .startOf("year")
@@ -565,7 +566,7 @@ export class NgxDatetimeRangePickerService {
         rowItemText = moment(currentItemDate, DEFAULT_DATE_FROMAT).format("D");
       }
     } else if (type === "weekly") {
-      if (!_.isNil(yearStartDate) && !_.isNil(itemCount)) {
+      if (!isNil(yearStartDate) && !isNil(itemCount)) {
         currentItemDate = moment(yearStartDate, DEFAULT_DATE_FROMAT)
           .add(itemCount, "week")
           .endOf("week")
@@ -574,7 +575,7 @@ export class NgxDatetimeRangePickerService {
         rowItemText = `W${weekNumber}`;
       }
     } else if (type === "monthly") {
-      if (!_.isNil(itemCount) && !_.isNil(year)) {
+      if (!isNil(itemCount) && !isNil(year)) {
         currentItemDate = moment()
           .year(year)
           .month(itemCount)
@@ -583,7 +584,7 @@ export class NgxDatetimeRangePickerService {
         rowItemText = moment(currentItemDate, DEFAULT_DATE_FROMAT).format("MMM");
       }
     } else if (type === "quarterly") {
-      if (!_.isNil(itemCount) && !_.isNil(year)) {
+      if (!isNil(itemCount) && !isNil(year)) {
         currentItemDate = moment()
           .year(year)
           .quarter(itemCount + 1)
@@ -758,7 +759,20 @@ export class NgxDatetimeRangePickerService {
       return Math.ceil(((datems.getTime() - yearStartms.getTime()) / 86400000 + yearStartms.getDay() + 1) / 7);
     } else {
       console.warn("getWeekNumber: Invalid date");
-      return this.getNotAvailableText();
+      return getNotAvailableText();
+    }
+  }
+
+  iterateOverDateObj(dates: CalendarSides, func) {
+    for (const side in dates) {
+      if (side) {
+        const sideDates = dates[side];
+        sideDates.itemRows.forEach((rows) => {
+          rows.items.forEach((rowItem) => {
+            func(rowItem);
+          });
+        });
+      }
     }
   }
 }
