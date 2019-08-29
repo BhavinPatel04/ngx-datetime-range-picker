@@ -390,11 +390,6 @@ describe("NgxDatetimeRangePickerComponent", () => {
     expect(component.calendarAvailable[side]).toBeTruthy();
   });
 
-  it("#capitalize", () => {
-    const day = "su";
-    expect(component.capitalize(day)).toEqual("Su");
-  });
-
   it("#updateInputField", () => {
     const endDate = component.config.endDate;
     component.config.type = "weekly";
