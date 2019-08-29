@@ -255,6 +255,10 @@ $fa-font-path: "~font-awesome/fonts";
     font-size: 95%;
   }
 
+  .capitalize {
+    text-transform: capitalize;
+  }
+
   .dateTitleInput {
     position: relative;
     border: none;

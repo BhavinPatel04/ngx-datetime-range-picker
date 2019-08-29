@@ -13,6 +13,7 @@ import {
 import { Observable } from "rxjs";
 import { NgxDatetimeRangePickerConstants } from "./ngx-datetime-range-picker.constants";
 import { NgxDatetimeRangePickerService } from "./ngx-datetime-range-picker.service";
+import { cloneDeep, isEmpty, mergeDeep } from "./ngx-datetime-range-picker.utils";
 import {
   CalendarSides,
   NgxDatetimeRangePickerModelItem,
@@ -22,7 +23,6 @@ import {
 
 declare var require: any;
 const moment = require("moment");
-const _ = require("lodash");
 
 enum InputFocusBlur {
   focus = 1,
@@ -155,7 +155,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
 
     if (changes.settings) {
-      this.settings = _.merge(this.settings, changes.settings.currentValue);
+      this.settings = mergeDeep(this.settings, changes.settings.currentValue);
     }
 
     if (changes.dateRangeModel) {
@@ -180,7 +180,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     if (changes.optionService && changes.optionService.currentValue) {
       changes.optionService.currentValue.subscribe(
         (dateOptions: any) => {
-          if (_.isObject(dateOptions) && !_.isArray(dateOptions)) {
+          if (typeof dateOptions === "object" && !Array.isArray(dateOptions)) {
             this.options = dateOptions.plain ? dateOptions.plain() : dateOptions;
           }
         },
@@ -422,7 +422,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       this.config.startDate = item.date;
       this.activeItem.left = item;
     } else if (!endDate && date < startDate) {
-      this.config.endDate = _.cloneDeep(this.config.startDate);
+      this.config.endDate = cloneDeep(this.config.startDate);
       this.activeItem.right = item;
     } else {
       this.config.endDate = item.date;
@@ -430,7 +430,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
 
     if (this.config.singleDatePicker) {
-      this.config.endDate = _.cloneDeep(this.config.startDate);
+      this.config.endDate = cloneDeep(this.config.startDate);
       this.activeItem.right = this.activeItem.left = item;
     }
 
@@ -462,19 +462,17 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
 
     if (!endDate) {
-      _.forOwn(this.dates, (sideDates, side) => {
-        _.forEach(sideDates.itemRows, (rows) => {
-          _.forEach(rows.items, (rowItem) => {
-            if (rowItem.available) {
-              const hoverItemDate = rowItem.date ? moment(rowItem.date, DEFAULT_DATE_FROMAT).valueOf() : rowItem.date;
-              if ((hoverItemDate > startDate && hoverItemDate < date) || date === hoverItemDate) {
-                rowItem.inRange = true;
-                this.dateTitleText.right = activeItemInputFieldText;
-              }
-            }
-          });
-        });
-      });
+      const func = (rowItem) => {
+        if (rowItem.available) {
+          const hoverItemDate = rowItem.date ? moment(rowItem.date, DEFAULT_DATE_FROMAT).valueOf() : rowItem.date;
+          if ((hoverItemDate > startDate && hoverItemDate < date) || date === hoverItemDate) {
+            rowItem.inRange = true;
+            this.dateTitleText.right = activeItemInputFieldText;
+          }
+        }
+      };
+
+      this.ngxDateTimeRangePickerService.iterateOverDateObj(this.dates, func.bind(this));
     } else {
       if (this.config.singleDatePicker) {
         this.dateTitleText.right = activeItemInputFieldText;
@@ -486,13 +484,10 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
   onCellMouseLeave(): void {
     if (!this.config.endDate) {
-      _.forOwn(this.dates, (sideDates, side) => {
-        _.forEach(sideDates.itemRows, (rows) => {
-          _.forEach(rows.items, (item) => {
-            item.inRange = false;
-          });
-        });
-      });
+      const func = (rowItem) => {
+        rowItem.inRange = false;
+      };
+      this.ngxDateTimeRangePickerService.iterateOverDateObj(this.dates, func.bind(this));
     } else {
       this.updateActiveItemInputField();
     }
@@ -515,7 +510,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       this.config.startDate = dateRangeModel.startDate;
       this.config.endDate = dateRangeModel.endDate;
       if (this.config.timePicker) {
-        // _.forEach(this.sides, (side) => {
+        // this.sides.forEach((side) => {
         //   this.times[side] = this.generateTimePicker(null, side);
         // })
         if (this.config.timePicker) {
@@ -695,7 +690,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       this.config.showRowNumber = false;
     }
     if (this.config.singleDatePicker) {
-      this.config.startDate = _.cloneDeep(this.config.endDate);
+      this.config.startDate = cloneDeep(this.config.endDate);
     }
 
     this.selectTimeZone();
@@ -756,7 +751,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
    * @desc sets startDate, endDate
    */
   processDateRangeModel() {
-    if (undefined !== this.dateRangeModel && !_.isEmpty(this.dateRangeModel)) {
+    if (undefined !== this.dateRangeModel && !isEmpty(this.dateRangeModel)) {
       if (this.dateRangeModel[this.config.selectedModel]) {
         const dateRangeMinDate = this.dateRangeModel[this.config.selectedModel].minDate;
         const dateRangeMaxDate = this.dateRangeModel[this.config.selectedModel].maxDate;
@@ -811,18 +806,22 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       this.config.dateArray = this.ngxDateTimeRangePickerService.getSanitizedDateArray(this.config);
 
       // sort in asc order
-      this.config.dateArray = _.sortBy(this.config.dateArray, (date) => {
-        let format = null;
-        if (isNaN(Number(date))) {
-          if (this.config.inputDateFormat) {
-            format = this.config.inputDateFormat;
-          } else {
-            format = moment(date)._f;
-          }
+      this.config.dateArray = this.config.dateArray.sort((date1, date2) => {
+        let format1,
+          format2 = null;
+
+        if (isNaN(Number(date1))) {
+          format1 = this.config.inputDateFormat ? this.config.inputDateFormat : moment(date1)._f;
         }
-        const value = moment(date, format).valueOf();
-        if (!isNaN(value)) {
-          return value;
+        if (isNaN(Number(date2))) {
+          format2 = this.config.inputDateFormat ? this.config.inputDateFormat : moment(date2)._f;
+        }
+
+        const value1 = moment(date1, format1).valueOf();
+        const value2 = moment(date2, format2).valueOf();
+
+        if (!isNaN(value1) && !isNaN(value2)) {
+          return value1 - value2;
         } else {
           console.warn(
             "ERR_NGX_DATETIME_RANGE_PICKER: dateArray values are in unknown format. Pass the format or pass the dates in known format"
@@ -945,7 +944,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
   processRanges() {
     if (this.config.showRanges && !this.config.singleDatePicker) {
-      if (_.isEmpty(this.config.availableRanges)) {
+      if (isEmpty(this.config.availableRanges)) {
         this.config.availableRanges = this.ngxDateTimeRangePickerService.createDefaultRanges(this.config);
       }
       this.selectActiveRange();
@@ -956,12 +955,15 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   }
 
   selectActiveRange() {
-    _.forOwn(this.config.availableRanges, (rangeModel, range) => {
-      if (this.config.startDate === rangeModel.startDate && this.config.endDate === rangeModel.endDate) {
-        this.activeRange = range;
-        this.updateActiveItem();
+    for (const range in this.config.availableRanges) {
+      if (range) {
+        const rangeModel = this.config.availableRanges[range];
+        if (this.config.startDate === rangeModel.startDate && this.config.endDate === rangeModel.endDate) {
+          this.activeRange = range;
+          this.updateActiveItem();
+        }
       }
-    });
+    }
 
     if (!this.activeRange) {
       this.activeRange = "Custom Range";
@@ -1151,10 +1153,6 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     return timeObject;
   }
 
-  capitalize(day) {
-    return _.capitalize(day);
-  }
-
   updateInputField() {
     const startDate = this.ngxDateTimeRangePickerService.formatStartDate(this.config, this.config.viewDateFormat);
     const endDate = this.config.endDate
@@ -1242,8 +1240,8 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
   getDateRangeModel(format?) {
     let dRModel = {};
-    if (undefined !== this.dateRangeModel && !_.isEmpty(this.dateRangeModel)) {
-      dRModel = _.cloneDeep(this.dateRangeModel);
+    if (undefined !== this.dateRangeModel && !isEmpty(this.dateRangeModel)) {
+      dRModel = cloneDeep(this.dateRangeModel);
     }
     dRModel[this.config.selectedModel] = this.getNgxDatetimeRangePickerModelItem(format);
     return dRModel;
@@ -1300,7 +1298,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
         this.dateRangeSelected();
       } else {
         if (this.config.timePicker) {
-          _.forEach(this.sides, (side) => {
+          this.sides.forEach((side) => {
             this.times[side] = this.generateTimePicker(null, side);
           });
         }
@@ -1331,7 +1329,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.todayTime = this.ngxDateTimeRangePickerService.getZoneToday(this.selectedTimezone, this.config.viewDateFormat);
 
     this.parseOptionsToDefaultDateFormat();
-    _.forEach(this.sides, (side) => {
+    this.sides.forEach((side) => {
       let date = this.config.startDate;
       let time = this.config.startTime;
       if (side === "right") {

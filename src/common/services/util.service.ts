@@ -1,7 +1,5 @@
 import { Cache } from "./cache.service";
 
-import * as _ from "lodash";
-
 export const Util = new (class UtilService {
   constructor() {}
 
@@ -198,7 +196,7 @@ export const Util = new (class UtilService {
           (function(_this) {
             return function() {
               clicks = 0;
-              if (_.isFunction(clickFunc)) {
+              if (this.isFunction(clickFunc)) {
                 return clickFunc.apply(_this, args);
               }
             };
@@ -208,10 +206,14 @@ export const Util = new (class UtilService {
       } else {
         clicks = 0;
         clearTimeout(timer);
-        if (_.isFunction(dblclickFunc)) {
+        if (this.isFunction(dblclickFunc)) {
           return dblclickFunc.apply(this, args);
         }
       }
     };
+  }
+
+  isFunction(functionToCheck) {
+    return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
   }
 })();
