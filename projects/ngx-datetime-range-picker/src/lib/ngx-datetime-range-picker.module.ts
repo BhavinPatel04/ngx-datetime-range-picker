@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material/material.module";
 import { NgxDatetimeRangePickerComponent } from "./ngx-datetime-range-picker.component";
 import { ObjNgFor } from "./pipes/objNgFor.pipe";
@@ -9,13 +8,14 @@ import { NgxDatetimeRangePickerService } from "./ngx-datetime-range-picker.servi
 
 @NgModule({
   declarations: [ObjNgFor, NgxDatetimeRangePickerComponent],
-  imports: [CommonModule, NoopAnimationsModule, FormsModule, MaterialModule],
+  imports: [CommonModule, FormsModule, MaterialModule],
   exports: [NgxDatetimeRangePickerComponent, MaterialModule]
 })
 export class NgxDatetimeRangePickerModule {
   constructor(@Optional() @SkipSelf() parentModule: NgxDatetimeRangePickerModule) {
     if (parentModule) {
-      throw new Error("NgxDatetimeRangePickerModule is already loaded. Import it in the AppModule only");
+      throw new Error(`ERR_NGX_DATETIME_RANGE_PICKER:
+        NgxDatetimeRangePickerModule is already loaded. Import it in the AppModule only`);
     }
   }
 

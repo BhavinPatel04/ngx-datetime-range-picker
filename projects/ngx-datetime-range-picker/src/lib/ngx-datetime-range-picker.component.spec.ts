@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { SimpleChanges } from "@angular/core";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxDatetimeRangePickerModule } from "./ngx-datetime-range-picker.module";
 import { NgxDatetimeRangePickerComponent } from "./ngx-datetime-range-picker.component";
 import { DateSide } from "./interfaces";
@@ -13,7 +14,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgxDatetimeRangePickerModule],
+      imports: [NgxDatetimeRangePickerModule, NoopAnimationsModule],
       declarations: []
     }).compileComponents();
   }));
