@@ -9,6 +9,7 @@
     "deprecation": {
       "severity": "warn"
     },
+    "interface-name": [true, "never-prefix"],
     "eofline": true,
     "forin": true,
     "import-blacklist": [true, "rxjs/Rx"],

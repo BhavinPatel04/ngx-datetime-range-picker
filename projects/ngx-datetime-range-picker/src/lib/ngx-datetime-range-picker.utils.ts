@@ -7,7 +7,7 @@ export const getNotAvailableText = (): string => {
  * @param value the value to be cloned
  * @note will not work for objects containing functions
  */
-export const cloneDeep = (value: Object): Object => {
+export const cloneDeep = (value: Object | string | number): Object | string | number => {
   if (value) {
     return JSON.parse(JSON.stringify(value));
   }
@@ -41,5 +41,5 @@ export const mergeDeep = (...objects): Object => {
 };
 
 export const isNil = (value) => {
-  return value == null;
+  return value == null || value === undefined;
 };

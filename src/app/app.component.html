@@ -28,6 +28,17 @@
     >
     </ngx-datetime-range-picker>
   </li>
+  <li class="filter date-array-range">
+    <ngx-datetime-range-picker
+      name="dateArrayRange"
+      [options]="dateArrayRangePickerOptions"
+      [settings]="dateArrayRangePickerSettings"
+      [(dateRangeModel)]="selectedOptions.dateArrayRange"
+      (dateRangeChanged)="onFilterChange($event, 'date-array-range')"
+      required
+    >
+    </ngx-datetime-range-picker>
+  </li>
   <li class="filter date-time-range">
     <ngx-datetime-range-picker
       name="dateTimeRange"

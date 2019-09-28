@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { SimpleChanges } from "@angular/core";
 import { NgxDatetimeRangePickerModule } from "./ngx-datetime-range-picker.module";
+import { NgxDatetimeRangePickerComponent } from "./ngx-datetime-range-picker.component";
+import { DateSide } from "./interfaces";
 
 declare var require: any;
 const moment = require("moment");
-
-import { NgxDatetimeRangePickerComponent } from "./ngx-datetime-range-picker.component";
 
 describe("NgxDatetimeRangePickerComponent", () => {
   let component: NgxDatetimeRangePickerComponent;
@@ -70,52 +70,52 @@ describe("NgxDatetimeRangePickerComponent", () => {
   });
 
   it("#onComponentClick", () => {
-    component.showCalendar = false;
+    component.state.isCalendarVisible = false;
     component.onComponentClick();
-    expect(component.showCalendar).toBeTruthy();
+    expect(component.state.isCalendarVisible).toBeTruthy();
   });
 
   it("#onFocusInput", () => {
-    const event = {
+    const event: MouseEvent = {
       target: {
         value: "text"
       }
-    };
+    } as any;
     component.onFocusInput(event);
   });
 
   it("#onBlurInput", () => {
-    const event = {
+    const event: MouseEvent = {
       target: {
         value: "text"
       }
-    };
+    } as any;
     component.onBlurInput(event);
-    expect(component.selectedDateText).toEqual("text");
+    expect(component.state.selectedDateText).toEqual("text");
   });
 
   it("#onCalendarClose", () => {
-    const event = {
+    const event: MouseEvent = {
       target: {
         value: "text"
       }
-    };
+    } as any;
     component.config.startDate = "2017-01-01";
     component.config.endDate = "2017-12-31";
     component.onCalendarClose(event);
-    expect(component.showCalendar).toBeFalsy();
+    expect(component.state.isCalendarVisible).toBeFalsy();
   });
 
-  it("#isPrevAvailale", () => {
+  it("#isPrevAvailable", () => {
     component.config.minDate = "2017-01-01";
-    expect(component.isPrevAvailale("Feb 2017")).toBeTruthy();
-    expect(component.isPrevAvailale("Jan 2017")).toBeFalsy();
+    expect(component.isPrevAvailable("Feb 2017")).toBeTruthy();
+    expect(component.isPrevAvailable("Jan 2017")).toBeFalsy();
   });
 
-  it("#isNextAvailale", () => {
+  it("#isNextAvailable", () => {
     component.config.maxDate = "2017-03-31";
-    expect(component.isNextAvailale("Feb 2017")).toBeTruthy();
-    expect(component.isNextAvailale("Mar 2017")).toBeFalsy();
+    expect(component.isNextAvailable("Feb 2017")).toBeTruthy();
+    expect(component.isNextAvailable("Mar 2017")).toBeFalsy();
   });
 
   it("#getCalendarColspan", () => {
@@ -128,31 +128,18 @@ describe("NgxDatetimeRangePickerComponent", () => {
     expect(component.getCalendarRowItemColspan()).toEqual(3);
   });
 
-  it("#getDatecharacteristics", () => {
-    const date = "2017-02-02";
-    const month = "Feb 2017";
-    const side = "left";
-
-    expect(component.getDatecharacteristics(date, month, side)).toEqual({
-      available: true,
-      inRange: true,
-      active: false,
-      today: false
-    });
-  });
-
   it("#onClickPrevious", () => {
     const month = "Feb 2017";
     const side = "left";
     component.onClickPrevious(month, side);
-    expect(component.dates[side]).toBeDefined();
+    expect(component.state.dates[side]).toBeDefined();
   });
 
   it("#onClickNext", () => {
     const month = "Feb 2017";
     const side = "left";
     component.onClickNext(month, side);
-    expect(component.dates[side]).toBeDefined();
+    expect(component.state.dates[side]).toBeDefined();
   });
 
   it("#onCellClick", () => {
@@ -196,7 +183,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
       date: "2017-02-02",
       available: true
     };
-    component.dates = {
+    component.state.dates = {
       left: {
         label: "Feb 2017",
         months: ["Jan", "Feb", "Mar"],
@@ -224,7 +211,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
 
   it("#onCellMouseLeave", () => {
     component.config.endDate = null;
-    component.dates = {
+    component.state.dates = {
       left: {
         label: "Feb 2017",
         months: ["Jan", "Feb", "Mar"],
@@ -267,12 +254,12 @@ describe("NgxDatetimeRangePickerComponent", () => {
 
     rangeLabel = "Custom Range";
     component.onRangeClick(rangeLabel, dateRangeModel);
-    expect(component.sides.length).toBeGreaterThan(0);
+    expect(component.state.sides.length).toBeGreaterThan(0);
 
     rangeLabel = "Custom Range";
-    component.customRange = true;
+    component.state.customRange = true;
     component.onRangeClick(rangeLabel, dateRangeModel);
-    expect(component.sides.length).toEqual(0);
+    expect(component.state.sides.length).toEqual(0);
   });
 
   it("#onCalendarLabelChange", () => {
@@ -280,28 +267,31 @@ describe("NgxDatetimeRangePickerComponent", () => {
     const label = "Feb";
     let side = "left";
     let type = "month";
-    component.selectedYear[side] = "2017";
+    component.state.selectedYear[side] = "2017";
     component.onCalendarLabelChange(label, side, type);
-    expect(component.dates[side]).toBeDefined();
+    expect(component.state.dates[side]).toBeDefined();
 
     component.config.type = "yearly";
     type = "year";
     side = "right";
-    component.selectedYear[side] = "2017";
-    component.selectedYear.left = "2017";
+    component.state.selectedYear[side] = "2017";
+    component.state.selectedYear.left = "2017";
     component.onCalendarLabelChange(label, side, type);
     expect(component.doApply).toHaveBeenCalled();
   });
 
   it("#initialize", () => {
     component.initialize();
-    expect(component.sides.length).toEqual(0);
-    expect(component.dates).toEqual({});
-    expect(component.activeStartDate).toBeNull();
-    expect(component.activeEndDate).toBeNull();
-    expect(component.frequencyColumnHeader).toBeNull();
-    expect(component.customRange).toBeFalsy();
-    expect(component.activeRange).toEqual("");
+    expect(component.state.sides.length).toEqual(0);
+    expect(component.state.dates).toEqual({
+      left: {} as DateSide,
+      right: {} as DateSide
+    });
+    expect(component.state.activeStartDate).toBeNull();
+    expect(component.state.activeEndDate).toBeNull();
+    expect(component.state.frequencyColumnHeader).toBeNull();
+    expect(component.state.customRange).toBeFalsy();
+    expect(component.state.activeRange).toEqual(null);
   });
 
   it("#parseOptions", () => {
@@ -354,10 +344,10 @@ describe("NgxDatetimeRangePickerComponent", () => {
     component.processRanges();
     expect(component.config.availableRanges).toBeDefined();
 
-    component.customRange = false;
+    component.state.customRange = false;
     component.config.showRanges = false;
     component.processRanges();
-    expect(component.customRange).toBeTruthy();
+    expect(component.state.customRange).toBeTruthy();
   });
 
   it("#selectActiveRange", () => {
@@ -372,14 +362,14 @@ describe("NgxDatetimeRangePickerComponent", () => {
         endDate
       }
     };
-    component.activeRange = null;
+    component.state.activeRange = null;
     component.selectActiveRange();
-    expect(component.activeRange).toEqual("Custom Range");
+    expect(component.state.activeRange).toEqual("Custom Range");
 
     component.config.startDate = startDate;
     component.config.endDate = endDate;
     component.selectActiveRange();
-    expect(component.activeRange).toEqual("Last 7 Days");
+    expect(component.state.activeRange).toEqual("Last 7 Days");
   });
 
   it("#generateCalendar", () => {
@@ -387,14 +377,14 @@ describe("NgxDatetimeRangePickerComponent", () => {
     const date = component.config.startDate;
     const side = "left";
     component.generateCalendar(date, side);
-    expect(component.calendarAvailable[side]).toBeTruthy();
+    expect(component.state.calendarAvailable[side]).toBeTruthy();
   });
 
   it("#updateInputField", () => {
     const endDate = component.config.endDate;
     component.config.type = "weekly";
     component.config.retailCalendar = false;
-    component.activeItem = {
+    component.state.activeItem = {
       left: {
         firstDay: moment("2017-10-06", "YYYY-MM-DD"),
         lastDay: moment("2017-10-06", "YYYY-MM-DD"),
@@ -409,33 +399,33 @@ describe("NgxDatetimeRangePickerComponent", () => {
     component.config.viewDateFormat = "YYYY-MM-DD";
 
     component.updateInputField();
-    expect(component.selectedDateText).toEqual(`2017-01-29 - 2017-03-01`);
-    expect(component.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
-    expect(component.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.selectedDateText).toEqual(`2017-01-29 - 2017-03-01`);
+    expect(component.state.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
 
     component.config.singleDatePicker = true;
     component.updateInputField();
-    expect(component.selectedDateText).toEqual(`2017-01-29 - 2017-03-01`);
-    expect(component.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
-    expect(component.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.selectedDateText).toEqual(`2017-01-29 - 2017-03-01`);
+    expect(component.state.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
 
     component.config.displayBeginDate = true;
     component.updateInputField();
-    expect(component.selectedDateText).toEqual(`2017-01-29`);
-    expect(component.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
-    expect(component.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.selectedDateText).toEqual(`2017-01-29`);
+    expect(component.state.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
 
     component.config.displayBeginDate = false;
     component.config.displayEndDate = true;
     component.updateInputField();
-    expect(component.selectedDateText).toEqual(`${endDate}`);
-    expect(component.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
-    expect(component.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.selectedDateText).toEqual(`${endDate}`);
+    expect(component.state.dateTitleText.left).toEqual("Test (2017-10-06 - 2017-10-06)");
+    expect(component.state.dateTitleText.right).toEqual("Test (2017-10-06 - 2017-10-06)");
   });
 
   it("#updateActiveItemInputField", () => {
     component.config.viewDateFormat = "YYYY-MM-DD";
-    component.activeItem = {
+    component.state.activeItem = {
       left: {
         firstDay: moment("2017-10-06", "YYYY-MM-DD"),
         lastDay: moment("2017-10-06", "YYYY-MM-DD"),
@@ -449,21 +439,21 @@ describe("NgxDatetimeRangePickerComponent", () => {
     };
 
     component.updateActiveItemInputField();
-    expect(component.selectedDateText).toEqual(``);
-    expect(component.dateTitleText.left).toEqual("2017-10-06");
-    expect(component.dateTitleText.right).toEqual("2017-10-06");
+    expect(component.state.selectedDateText).toEqual(``);
+    expect(component.state.dateTitleText.left).toEqual("2017-10-06");
+    expect(component.state.dateTitleText.right).toEqual("2017-10-06");
   });
 
   it("#dateRangeSelected", () => {
     spyOn(component, "getDateRangeModel");
     component.dateRangeSelected();
-    expect(component.showCalendar).toBeFalsy();
+    expect(component.state.isCalendarVisible).toBeFalsy();
   });
 
   it("#getDateRangeModel", () => {
     const startDate = component.config.startDate;
     const endDate = component.config.endDate;
-    component.config.selectedModel = "daily";
+    component.config.type = "daily";
     component.config.outputDateFormat = "YYYY-MM-DD";
     expect(component.getDateRangeModel()).toEqual({
       daily: {
@@ -479,7 +469,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
     const startDate = component.config.startDate;
     const endDate = component.config.endDate;
     component.doApply();
-    expect(component.activeStartDate).toEqual(startDate as string);
-    expect(component.activeEndDate).toEqual(endDate as string);
+    expect(component.state.activeStartDate).toEqual(startDate as string);
+    expect(component.state.activeEndDate).toEqual(endDate as string);
   });
 });
