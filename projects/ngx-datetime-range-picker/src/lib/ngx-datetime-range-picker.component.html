@@ -38,9 +38,9 @@
     <div class="date-select">
       <div *ngIf="state.customRange" style="position: relative;">
         <div *ngIf="config.timezoneSupport" class="list-inline timezone-select">
-          <div class="timezones">
+          <div class="timeZones">
             <div
-              *ngFor="let tz of state.timezones; let last = last"
+              *ngFor="let tz of state.timeZones; let last = last"
               class="timezone"
               [ngClass]="{
                 'border-separator': !last,
@@ -207,7 +207,7 @@
           mat-button
           *ngFor="let range of config.availableRanges | ObjNgFor"
           class="calendar-range"
-          [ngClass]="{ 'active-range': range == activeRange }"
+          [ngClass]="{ 'active-range': range == state.activeRange }"
           (click)="onRangeClick(range, config.availableRanges[range])"
         >
           {{ range }}
