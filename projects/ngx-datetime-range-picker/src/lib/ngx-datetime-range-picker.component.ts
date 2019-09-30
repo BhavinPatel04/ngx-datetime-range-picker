@@ -79,7 +79,9 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.renderer.listen("document", "click", (event: MouseEvent) => {
       if (
         this.state.isCalendarVisible &&
-        event.target &&
+        <HTMLElement>event.target &&
+        !(<HTMLElement>event.target).parentElement.getElementsByClassName("ngx-datetime-range-picker-select-panel")
+          .length &&
         (<HTMLElement>event.target).className !== "mat-option-text" &&
         this.element.nativeElement !== event.target &&
         !this.element.nativeElement.contains(event.target)
@@ -183,24 +185,28 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  isPrevAvailable(month: string): boolean {
+  isPrevAvailable(side): boolean {
+    const { label, labelFormat, type } = this.service.getLabelProps(this.state, this.config.type, side);
+
     return (
-      moment(month, "MMM YYYY")
-        .startOf("month")
+      moment(label, labelFormat)
+        .startOf(type)
         .valueOf() >
       moment(this.config.minDate, DEFAULT_DATE_FORMAT)
-        .startOf("month")
+        .startOf(type)
         .valueOf()
     );
   }
 
-  isNextAvailable(month: string): boolean {
+  isNextAvailable(side): boolean {
+    const { label, labelFormat, type } = this.service.getLabelProps(this.state, this.config.type, side);
+
     return (
-      moment(month, "MMM YYYY")
-        .endOf("month")
+      moment(label, labelFormat)
+        .endOf(type)
         .valueOf() <
       moment(this.config.maxDate, DEFAULT_DATE_FORMAT)
-        .endOf("month")
+        .endOf(type)
         .valueOf()
     );
   }
@@ -213,19 +219,23 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     return this.service.getCalendarRowItemColspan(this.config.type);
   }
 
-  onClickPrevious(month: string, side: string) {
-    const startDate = moment(month, "MMM YYYY")
-      .subtract(1, "month")
-      .startOf("month")
+  onClickPrevious(side: string) {
+    const { label, labelFormat, type } = this.service.getLabelProps(this.state, this.config.type, side);
+    const startDate = moment(label, labelFormat)
+      .subtract(1, type)
+      .startOf(type)
       .format(DEFAULT_DATE_FORMAT);
+
     this.state.dates[side] = this.generateCalendar(startDate, side);
   }
 
-  onClickNext(month: string, side: string) {
-    const endDate = moment(month, "MMM YYYY")
-      .add(1, "month")
-      .endOf("month")
+  onClickNext(side: string) {
+    const { label, labelFormat, type } = this.service.getLabelProps(this.state, this.config.type, side);
+    const endDate = moment(label, labelFormat)
+      .add(1, type)
+      .endOf(type)
       .format(DEFAULT_DATE_FORMAT);
+
     this.state.dates[side] = this.generateCalendar(endDate, side);
   }
 
@@ -319,27 +329,13 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   onRangeClick(rangeLabel: string, dateRangeModel: Options) {
     this.state.activeRange = rangeLabel;
     if (rangeLabel === "Custom Range") {
-      this.state.customRange = !this.state.customRange;
-      if (this.state.customRange) {
-        this.updateCalendar();
-      } else {
-        this.state.sides.length = 0;
-        this.state.dates = {};
-        if (this.config.timePicker) {
-          this.state.times = {};
-        }
-      }
+      this.state.customRange = true;
     } else {
+      this.state.customRange = false;
       this.config.startDate = dateRangeModel.startDate;
       this.config.endDate = dateRangeModel.endDate;
       if (this.config.timePicker) {
-        // this.state.sides.forEach((side) => {
-        //   this.state.times[side] = this.generateTimePicker(null, side);
-        // })
-        if (this.config.timePicker) {
-          this.state.times = {};
-        }
-        this.updateCalendar();
+        this.state.times = {};
       }
       this.setActiveItemOnRangeClick();
     }
@@ -506,6 +502,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.sanitizeDates();
     this.processRanges();
     this.doDateRangeModelChange();
+    this.updateCalendar();
   }
 
   selectTimeZone() {
@@ -674,9 +671,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
   processRanges() {
     if (this.config.showRanges && !this.config.singleDatePicker) {
-      if (isEmpty(this.config.availableRanges)) {
-        this.config.availableRanges = this.service.createDefaultRanges(this.config);
-      }
+      this.config.availableRanges = this.service.createDefaultRanges(this.config);
       this.selectActiveRange();
     } else {
       this.state.activeRange = "Custom Range";
@@ -1078,8 +1073,8 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       endDate.rowItemText = `Quarter ${moment(endDate.firstDay, DEFAULT_DATE_FORMAT).quarter()}`;
     }
 
-    this.state.activeItem.left = startDate;
-    this.state.activeItem.right = endDate;
+    Object.assign(this.state.activeItem.left, startDate);
+    Object.assign(this.state.activeItem.right, endDate);
 
     // this.doApply();
   }

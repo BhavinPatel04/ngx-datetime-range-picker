@@ -36,7 +36,7 @@
   </div>
   <div *ngIf="state.isCalendarVisible" class="calendar-view">
     <div class="date-select">
-      <div *ngIf="state.customRange" style="position: relative;">
+      <div style="position: relative;">
         <div *ngIf="config.timezoneSupport" class="list-inline timezone-select">
           <div class="timeZones">
             <div
@@ -66,118 +66,123 @@
               <div *ngIf="!state.calendarAvailable[side]" class="calendar-loading">
                 <!-- <m-loading></m-loading> -->
               </div>
-              <table
+              <div
                 *ngIf="state.calendarAvailable[side]"
-                style="table-layout: fixed; min-width: 250px; position: relative;"
+                class="calendar-side-container"
+                style="min-width: 250px; position: relative;"
               >
-                <thead>
-                  <tr>
-                    <th class="prev">
-                      <mat-icon
-                        [ngClass]="{
-                          disabled: !isPrevAvailable(state.dates[side]['label']),
-                          available: isPrevAvailable(state.dates[side]['label'])
-                        }"
-                        fontSet="fa"
-                        fontIcon="fa-chevron-left"
-                        (click)="onClickPrevious(state.dates[side]['label'], side)"
-                      ></mat-icon>
-                    </th>
-                    <th [attr.colspan]="getCalendarColspan()" class="calendar-label">
-                      <div class="date-dropdown-container" style="position: relative;">
-                        <div *ngIf="config.type == 'daily'" class="date-dropdown">
-                          <mat-form-field>
-                            <mat-select
-                              class="month-select"
-                              [value]="state.selectedMonth[side]"
-                              (selectionChange)="onCalendarLabelChange($event.value, side, 'month')"
-                            >
-                              <mat-option
-                                class="dropdown-item"
-                                *ngFor="let month of state.dates[side]['months']"
-                                [value]="month"
-                              >
-                                {{ month }}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
-                        <div class="date-dropdown">
-                          <mat-form-field>
-                            <mat-select
-                              class="year-select"
-                              [value]="state.selectedYear[side]"
-                              (selectionChange)="onCalendarLabelChange($event.value, side, 'year')"
-                            >
-                              <mat-option
-                                class="dropdown-item"
-                                *ngFor="let year of state.dates[side]['years']"
-                                [value]="year"
-                              >
-                                {{ year }}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                    </th>
-                    <th class="next">
-                      <mat-icon
-                        [ngClass]="{
-                          disabled: !isNextAvailable(state.dates[side]['label']),
-                          available: isNextAvailable(state.dates[side]['label'])
-                        }"
-                        fontSet="fa"
-                        fontIcon="fa-chevron-right"
-                        (click)="onClickNext(state.dates[side]['label'], side)"
-                      ></mat-icon>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th *ngIf="config.showRowNumber" class="rowNumber"></th>
-                    <th *ngIf="!config.showRowNumber" class="rowNumberPlaceholder"></th>
-                    <th *ngFor="let day of state.weekDayOptions" class="calendar-week-day capitalize">{{ day }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of state.dates[side]['itemRows']">
-                    <td *ngIf="config.showRowNumber && row.rowNumberText" class="rowNumber">{{ row.rowNumberText }}</td>
-                    <td *ngIf="!config.showRowNumber" class="rowNumberPlaceholder"></td>
-                    <td
-                      #itemCell
-                      *ngFor="let item of row.items"
-                      [attr.firstDay]="item.firstDay"
-                      [attr.lastDay]="item.lastDay"
+                <div class="calendar-label-container">
+                  <div class="prev">
+                    <mat-icon
                       [ngClass]="{
-                        available: item.available,
-                        'in-range': item.inRange,
-                        active:
-                          (state.activeStartDate == item.date && side == 'left') ||
-                          (state.activeEndDate == item.date && side == 'right'),
-                        today: item.today
+                        disabled: !isPrevAvailable(side),
+                        available: isPrevAvailable(side)
                       }"
-                      (click)="onCellClick(item, itemCell, side)"
-                      (mouseover)="onCellMouseEnter(item, itemCell)"
-                      (mouseleave)="onCellMouseLeave()"
-                    >
-                      <div>{{ item.rowItemText }}</div>
-                      <div *ngIf="item.today" class="todayDate">
-                        <mat-icon
-                          [ngClass]="{
-                            active:
-                              (state.activeStartDate == item.date && side == 'left') ||
-                              (state.activeEndDate == item.date && side == 'right')
-                          }"
-                          fontSet="fa"
-                          fontIcon="fa-circle"
-                          aria-hidden="true"
-                        >
-                        </mat-icon>
+                      fontSet="fa"
+                      fontIcon="fa-chevron-left"
+                      (click)="onClickPrevious(side)"
+                    ></mat-icon>
+                  </div>
+                  <div [attr.colspan]="getCalendarColspan()" class="calendar-label">
+                    <div class="date-dropdown-container" style="position: relative;">
+                      <div *ngIf="config.type == 'daily'" class="date-dropdown">
+                        <mat-form-field>
+                          <mat-select
+                            class="month-select"
+                            panelClass="ngx-datetime-range-picker-select-panel month-select-panel"
+                            [value]="state.selectedMonth[side]"
+                            (selectionChange)="onCalendarLabelChange($event.value, side, 'month')"
+                          >
+                            <mat-option
+                              class="dropdown-item"
+                              *ngFor="let month of state.dates[side]['months']"
+                              [value]="month"
+                            >
+                              {{ month }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <div class="date-dropdown">
+                        <mat-form-field>
+                          <mat-select
+                            class="year-select"
+                            panelClass="ngx-datetime-range-picker-select-panel year-select-panel"
+                            [value]="state.selectedYear[side]"
+                            (selectionChange)="onCalendarLabelChange($event.value, side, 'year')"
+                          >
+                            <mat-option
+                              class="dropdown-item"
+                              *ngFor="let year of state.dates[side]['years']"
+                              [value]="year"
+                            >
+                              {{ year }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="next">
+                    <mat-icon
+                      [ngClass]="{
+                        disabled: !isNextAvailable(side),
+                        available: isNextAvailable(side)
+                      }"
+                      fontSet="fa"
+                      fontIcon="fa-chevron-right"
+                      (click)="onClickNext(side)"
+                    ></mat-icon>
+                  </div>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th *ngIf="config.showRowNumber" class="rowNumber"></th>
+                      <th *ngFor="let day of state.weekDayOptions" class="calendar-week-day capitalize">{{ day }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of state.dates[side]['itemRows']">
+                      <td *ngIf="config.showRowNumber && row.rowNumberText" class="rowNumber">
+                        {{ row.rowNumberText }}
+                      </td>
+                      <td
+                        #itemCell
+                        *ngFor="let item of row.items"
+                        [attr.firstDay]="item.firstDay"
+                        [attr.lastDay]="item.lastDay"
+                        [ngClass]="{
+                          available: item.available,
+                          'in-range': item.inRange,
+                          active:
+                            (state.activeStartDate == item.date && side == 'left') ||
+                            (state.activeEndDate == item.date && side == 'right'),
+                          today: item.today
+                        }"
+                        (click)="onCellClick(item, itemCell, side)"
+                        (mouseover)="onCellMouseEnter(item, itemCell)"
+                        (mouseleave)="onCellMouseLeave()"
+                      >
+                        <div>{{ item.rowItemText }}</div>
+                        <div *ngIf="item.today" class="todayDate">
+                          <mat-icon
+                            [ngClass]="{
+                              active:
+                                (state.activeStartDate == item.date && side == 'left') ||
+                                (state.activeEndDate == item.date && side == 'right')
+                            }"
+                            fontSet="fa"
+                            fontIcon="fa-circle"
+                            aria-hidden="true"
+                          >
+                          </mat-icon>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </li>
         </ul>
@@ -189,7 +194,8 @@
             <div *ngFor="let timeItem of state.timeItems" class="d-inline-block time-item-container">
               <mat-form-field>
                 <mat-select
-                  class="year-select"
+                  class="timeItem-select"
+                  panelClass="ngx-datetime-range-picker-select-panel timeItem-select-panel"
                   [value]="getSelectedTimeItemText(timeItem, side)"
                   (selectionChange)="onTimeLabelChange(timeItem, side, $event.value)"
                 >

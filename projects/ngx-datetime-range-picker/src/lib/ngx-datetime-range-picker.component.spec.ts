@@ -109,14 +109,24 @@ describe("NgxDatetimeRangePickerComponent", () => {
 
   it("#isPrevAvailable", () => {
     component.config.minDate = "2017-01-01";
-    expect(component.isPrevAvailable("Feb 2017")).toBeTruthy();
-    expect(component.isPrevAvailable("Jan 2017")).toBeFalsy();
+    const side = "left";
+    component.state.selectedMonth[side] = "Feb";
+    component.state.selectedYear[side] = "2017";
+    expect(component.isPrevAvailable(side)).toBeTruthy();
+
+    component.state.selectedMonth[side] = "Jan";
+    expect(component.isPrevAvailable(side)).toBeFalsy();
   });
 
   it("#isNextAvailable", () => {
     component.config.maxDate = "2017-03-31";
-    expect(component.isNextAvailable("Feb 2017")).toBeTruthy();
-    expect(component.isNextAvailable("Mar 2017")).toBeFalsy();
+    const side = "left";
+    component.state.selectedMonth[side] = "Feb";
+    component.state.selectedYear[side] = "2017";
+    expect(component.isNextAvailable(side)).toBeTruthy();
+
+    component.state.selectedMonth[side] = "Mar";
+    expect(component.isNextAvailable(side)).toBeFalsy();
   });
 
   it("#getCalendarColspan", () => {
@@ -130,16 +140,18 @@ describe("NgxDatetimeRangePickerComponent", () => {
   });
 
   it("#onClickPrevious", () => {
-    const month = "Feb 2017";
     const side = "left";
-    component.onClickPrevious(month, side);
+    component.state.selectedMonth[side] = "Feb";
+    component.state.selectedYear[side] = "2017";
+    component.onClickPrevious(side);
     expect(component.state.dates[side]).toBeDefined();
   });
 
   it("#onClickNext", () => {
-    const month = "Feb 2017";
     const side = "left";
-    component.onClickNext(month, side);
+    component.state.selectedMonth[side] = "Feb";
+    component.state.selectedYear[side] = "2017";
+    component.onClickNext(side);
     expect(component.state.dates[side]).toBeDefined();
   });
 
@@ -252,10 +264,6 @@ describe("NgxDatetimeRangePickerComponent", () => {
     component.onRangeClick(rangeLabel, dateRangeModel);
     expect(component.config.startDate).toEqual(startDate);
     expect(component.config.endDate).toEqual(endDate);
-
-    rangeLabel = "Custom Range";
-    component.onRangeClick(rangeLabel, dateRangeModel);
-    expect(component.state.sides.length).toBeGreaterThan(0);
 
     rangeLabel = "Custom Range";
     component.state.customRange = true;

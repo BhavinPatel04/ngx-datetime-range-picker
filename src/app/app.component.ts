@@ -85,7 +85,8 @@ export class AppComponent {
       type: this.selectedOption,
       viewDateFormat: "MMM D, YYYY",
       placeholder: "Date",
-      inputDateFormat: "YYYY-MM-DD"
+      inputDateFormat: "YYYY-MM-DD",
+      showRowNumber: true
     };
   }
 

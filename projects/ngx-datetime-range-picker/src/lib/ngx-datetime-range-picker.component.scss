@@ -56,15 +56,13 @@ $fa-font-path: "~font-awesome/fonts";
   }
 
   .calendar-view {
-    position: absolute;
-    color: inherit;
+    width: fit-content;
     background-color: #fff;
-    border-radius: 4px;
     padding: 12px 8px;
     margin-top: 2px;
-    z-index: 99999;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
   }
 
   .calendar-view:before,
@@ -286,54 +284,57 @@ $fa-font-path: "~font-awesome/fonts";
   }
 
   .calendar-table {
-    th,
-    td {
-      white-space: nowrap;
-      text-align: center;
-      min-width: 32px;
-      padding: 5px;
-    }
-
-    td {
-      color: #bbb;
-
-      .todayDate {
-        font-size: 6px;
+    .calendar-side-container {
+      .calendar-label-container {
+        display: inline-flex;
+        width: 100%;
+        padding: 5px;
       }
-    }
 
-    td.valid {
-      cursor: pointer;
-    }
+      table {
+        table-layout: fixed;
+        min-width: 100%;
 
-    td.available,
-    th.available {
-      cursor: pointer;
-      color: #333;
-    }
+        th,
+        td {
+          white-space: nowrap;
+          text-align: center;
+          min-width: 32px;
+          padding: 5px;
+        }
 
-    th.available {
-      width: 32px;
-    }
+        td {
+          color: #bbb;
 
-    th.prev {
-      position: absolute;
-      left: 0;
-    }
+          .todayDate {
+            font-size: 6px;
+          }
+        }
 
-    th.next {
-      position: absolute;
-      right: 0;
-    }
+        td.valid {
+          cursor: pointer;
+        }
 
-    td.available:hover,
-    th.available:hover {
-      background-color: #eee;
-    }
+        td.available,
+        th.available {
+          cursor: pointer;
+          color: #333;
+        }
 
-    td.in-range {
-      background-color: #f6f6f6;
-      color: #2f7ed8;
+        th.available {
+          width: 32px;
+        }
+
+        td.available:hover,
+        th.available:hover {
+          background-color: #eee;
+        }
+
+        td.in-range {
+          background-color: #f6f6f6;
+          color: #2f7ed8;
+        }
+      }
     }
   }
 
@@ -349,7 +350,8 @@ $fa-font-path: "~font-awesome/fonts";
   }
 
   .month-select,
-  .year-select {
+  .year-select,
+  .timeItem-select {
     background: #fff;
     padding: 0;
     box-shadow: none;

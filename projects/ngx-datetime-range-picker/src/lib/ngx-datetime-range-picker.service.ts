@@ -78,7 +78,7 @@ export class NgxDatetimeRangePickerService {
       singleDatePicker: false,
       componentDisabled: false,
       placeholder: "Select Date",
-      showRowNumber: true,
+      showRowNumber: false,
       availableRanges: {},
       showRanges: true,
       disableWeekends: false,
@@ -794,5 +794,25 @@ export class NgxDatetimeRangePickerService {
     }
 
     return { available, inRange, active, today };
+  }
+
+  getLabelProps(
+    state: State,
+    calendarType: string,
+    side: string
+  ): { label: string; labelFormat: string; type: string } {
+    let label: string, labelFormat: string, type: string;
+
+    if (calendarType === "daily") {
+      label = `${state.selectedMonth[side]} ${state.selectedYear[side]}`;
+      labelFormat = "MMM YYYY";
+      type = "month";
+    } else {
+      label = `${state.selectedYear[side]}`;
+      labelFormat = "YYYY";
+      type = "year";
+    }
+
+    return { label, labelFormat, type };
   }
 }
