@@ -23,7 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "src/app/app.theme.scss"],
             "scripts": []
           },
           "configurations": {
@@ -99,7 +99,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "src/app/app.theme.scss"],
             "scripts": [],
             "assets": ["src/favicon.ico", "src/assets"],
             "codeCoverageExclude": ["src/common/**/*", "src/config/**/*", "src/test.ts", "src/app/app.config.ts"]

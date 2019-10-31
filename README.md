@@ -23,8 +23,8 @@ import **NgxDatetimeRangePickerModule** in your module:
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 ...
-import { FormsModule } from '@angular/forms';
-import { NgxDatetimeRangePickerModule } from 'ngx-datetime-range-picker';
+import { FormsModule } from "@angular/forms";
+import { NgxDatetimeRangePickerModule } from "ngx-datetime-range-picker";
 import { AppComponent } from "./app.component";
 
 @NgModule({
@@ -34,6 +34,23 @@ import { AppComponent } from "./app.component";
 })
 export class AppModule {}
 ```
+
+Tell ngx-datetime-range-picker which theme to use:
+Add below config in your `style.scss`/`some-cool-name-theme.scss`, which has material theme (or not) and is imported in your `angular.json`
+
+```
+@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.scss";
+@include ngx-datetime-range-picker-theme($app-theme);
+```
+
+If you _don't_ have a theme and want to use library's default theme
+
+```
+@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.scss";
+@include ngx-datetime-range-picker-theme();
+```
+
+_Note_: Make sure whichever file you are adding this to should be imported in `angular.json`
 
 ## Usage example
 

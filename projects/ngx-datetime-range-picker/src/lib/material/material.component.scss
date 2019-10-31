@@ -1,3 +1,5 @@
+@import "~@angular/material/theming";
+
 $ndtrp-primary: (
 50: #e6f0fa,
 100: #c1d8f3,
@@ -31,25 +33,24 @@ contrast: (
 )
 );
 
-@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
-$app-typography: mat-typography-config(
+$ndtrp-app-typography: mat-typography-config(
 $font-family: "HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica, Arial,Lucida Grande,sans-serif"
 );
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core($app-typography);
+@include mat-core($ndtrp-app-typography);
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat-palette($ndtrp-primary); //colors most widely used across all screens and components
-$app-accent: mat-palette(
+$ndtrp-app-primary: mat-palette($ndtrp-primary); //colors most widely used across all screens and components
+$ndtrp-app-accent: mat-palette(
 $ndtrp-primary,
 A200,
 A100,
@@ -57,31 +58,36 @@ A400
 ); //colors used for the floating action button and interactive elements
 
 // The warn palette is optional (defaults to red).
-$app-warn: mat-palette($mat-red); //colors used to convey error state
+$ndtrp-app-warn: mat-palette($mat-red); //colors used to convey error state
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$ndtrp-app-theme: mat-light-theme($ndtrp-app-primary, $ndtrp-app-accent, $ndtrp-app-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($app-theme);
+// @include angular-material-theme($ndtrp-app-theme);
+@import "../ngx-datetime-range-picker.component.scss";
 
-//Setting the overlay very high so it always appears on top
-$cdk-z-index-overlay-container: 999999;
-@include cdk-overlay();
+@mixin ngx-datetime-range-picker-theme($app-theme: $ndtrp-app-theme) {
+  @include ngx-datetime-range-picker-component-theme($app-theme);
 
-//Custom
-.mat-form-field-placeholder {
-  font-size: 115% !important;
-}
+  //Setting the overlay very high so it always appears on top
+  $cdk-z-index-overlay-container: 999999;
+  @include cdk-overlay();
 
-.mat-form-field {
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
+  //Custom
+  .mat-form-field-placeholder {
+    font-size: 115% !important;
   }
 
-  .mat-form-field-underline {
-    bottom: 0;
+  .mat-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-underline {
+      bottom: 0;
+    }
   }
 }
