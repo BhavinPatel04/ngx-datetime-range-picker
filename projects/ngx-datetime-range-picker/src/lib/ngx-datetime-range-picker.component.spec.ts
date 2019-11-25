@@ -3,7 +3,7 @@ import { SimpleChanges } from "@angular/core";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxDatetimeRangePickerModule } from "./ngx-datetime-range-picker.module";
 import { NgxDatetimeRangePickerComponent } from "./ngx-datetime-range-picker.component";
-import { DateSide } from "./interfaces";
+import { DateSide, DateTimeRangeChangeOutput, DateTimeRangeModelChangeOutput } from "./interfaces";
 
 declare var require: any;
 const moment = require("moment");
@@ -462,14 +462,16 @@ describe("NgxDatetimeRangePickerComponent", () => {
   it("#getDateRangeModel", () => {
     const startDate = component.config.startDate;
     const endDate = component.config.endDate;
+    component.state.activeRange = "activeRange";
     component.config.type = "daily";
     component.config.outputDateFormat = "YYYY-MM-DD";
     expect(component.getDateRangeModel()).toEqual({
       daily: {
+        activeRange: component.state.activeRange,
         startDate: startDate as string,
         endDate: endDate as string
-      }
-    });
+      } as DateTimeRangeChangeOutput
+    } as DateTimeRangeModelChangeOutput);
   });
 
   it("#doApply", () => {

@@ -1,3 +1,7 @@
+const tuple = <T extends string[]>(...args: T) => args;
+export const CalendarTypes = tuple("daily", "weekly", "monthly", "quarterly", "yearly");
+export type CalendarType = typeof CalendarTypes[number];
+
 export interface AriaLabelsOptions {
   inputField?: string;
 }
@@ -33,6 +37,16 @@ export interface CalendarSides {
   left?: DateSide | TimeSide | ActiveItemSide | string | boolean;
   right?: DateSide | TimeSide | ActiveItemSide | string | boolean;
 }
+
+export interface DateTimeRangeChangeOutput {
+  activeRange: string;
+  startDate: string | number;
+  endDate: string | number;
+  startTime?: string;
+  endTime?: string;
+}
+
+export type DateTimeRangeModelChangeOutput = { [key in CalendarType]?: DateTimeRangeChangeOutput };
 
 export interface Options {
   dateArray?: any[];
@@ -143,6 +157,4 @@ export interface RowItemOptions {
   columns: number;
 }
 
-type CalendarTypes = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
-
-export type DateRangeModel = { [key in CalendarTypes]?: Options };
+export type DateRangeModel = { [key in CalendarType]?: Options };

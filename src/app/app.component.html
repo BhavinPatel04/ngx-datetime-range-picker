@@ -1,53 +1,68 @@
-<ul class="list-inline filter-container list-group">
-  <li class="filter">
-    <mat-form-field>
-      <mat-select [(value)]="selectedOption" (selectionChange)="onFilterChange($event, 'level')">
-        <mat-option *ngFor="let option of options" [value]="option.value"> {{ option.name }} </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </li>
-  <li class="filter">
-    <ngx-datetime-range-picker
-      name="date"
-      [options]="datePickerOptions"
-      [settings]="datePickerSettings"
-      [(dateRangeModel)]="selectedOptions.date"
-      (dateRangeChanged)="onFilterChange($event, 'date')"
-      required
-    >
-    </ngx-datetime-range-picker>
-  </li>
-  <li class="filter date-range">
-    <ngx-datetime-range-picker
-      name="dateRange"
-      [options]="dateRangePickerOptions"
-      [settings]="dateRangePickerSettings"
-      [(dateRangeModel)]="selectedOptions.dateRange"
-      (dateRangeChanged)="onFilterChange($event, 'date-range')"
-      required
-    >
-    </ngx-datetime-range-picker>
-  </li>
-  <li class="filter date-array-range">
-    <ngx-datetime-range-picker
-      name="dateArrayRange"
-      [options]="dateArrayRangePickerOptions"
-      [settings]="dateArrayRangePickerSettings"
-      [(dateRangeModel)]="selectedOptions.dateArrayRange"
-      (dateRangeChanged)="onFilterChange($event, 'date-array-range')"
-      required
-    >
-    </ngx-datetime-range-picker>
-  </li>
-  <li class="filter date-time-range">
-    <ngx-datetime-range-picker
-      name="dateTimeRange"
-      [options]="dateRangePickerOptions"
-      [settings]="dateTimeRangePickerSettings"
-      [(dateRangeModel)]="selectedOptions.dateTimeRange"
-      (dateRangeChanged)="onFilterChange($event, 'date-range')"
-      required
-    >
-    </ngx-datetime-range-picker>
-  </li>
-</ul>
+<div class="date-container">
+  <mat-form-field>
+    <mat-select [(value)]="selectedOption" (selectionChange)="onFilterChange($event, 'level')">
+      <mat-option *ngFor="let option of options" [value]="option.value"> {{ option.name }} </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ul class="list-inline filter-container">
+    <li class="filter">
+      <ngx-datetime-range-picker
+        class="date"
+        name="date"
+        [options]="datePickerOptions"
+        [settings]="datePickerSettings"
+        [(dateRangeModel)]="selectedOptions.date"
+        (dateRangeChanged)="onFilterChange($event, 'date')"
+        required
+      >
+      </ngx-datetime-range-picker>
+      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.date }"></div>
+    </li>
+    <li class="filter">
+      <ngx-datetime-range-picker
+        name="dateRange"
+        class="date-range"
+        [options]="dateRangePickerOptions"
+        [settings]="dateRangePickerSettings"
+        [(dateRangeModel)]="selectedOptions.dateRange"
+        (dateRangeChanged)="onFilterChange($event, 'date-range')"
+        required
+      >
+      </ngx-datetime-range-picker>
+      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.dateRange }"></div>
+    </li>
+    <li class="filter">
+      <ngx-datetime-range-picker
+        name="dateArrayRange"
+        class="date-array-range"
+        [options]="dateArrayRangePickerOptions"
+        [settings]="dateArrayRangePickerSettings"
+        [(dateRangeModel)]="selectedOptions.dateArrayRange"
+        (dateRangeChanged)="onFilterChange($event, 'date-array-range')"
+        required
+      >
+      </ngx-datetime-range-picker>
+      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.dateArrayRange }"></div>
+    </li>
+    <li class="filter">
+      <ngx-datetime-range-picker
+        name="dateTimeRange"
+        class="date-time-range"
+        [options]="dateRangePickerOptions"
+        [settings]="dateTimeRangePickerSettings"
+        [(dateRangeModel)]="selectedOptions.dateTimeRange"
+        (dateRangeChanged)="onFilterChange($event, 'date-range')"
+        required
+      >
+      </ngx-datetime-range-picker>
+      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.dateTimeRange }"></div>
+    </li>
+  </ul>
+</div>
+
+<ng-template #printSelectedDate let-date="date">
+  <code class="selectedDate">
+    <pre>{{ printDate(date) }}</pre>
+  </code>
+</ng-template>

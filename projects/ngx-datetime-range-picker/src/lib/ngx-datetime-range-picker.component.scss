@@ -9,7 +9,6 @@ $fa-font-path: "~font-awesome/fonts";
   .m1-date-range-picker {
     position: relative;
     border-radius: 0;
-    z-index: 1001;
     width: 100% !important;
 
     .mat-icon {
@@ -58,6 +57,8 @@ $fa-font-path: "~font-awesome/fonts";
     }
 
     .calendar-view {
+      position: absolute;
+      z-index: 1;
       width: fit-content;
       background-color: #fff;
       padding: 12px 8px;

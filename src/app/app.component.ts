@@ -123,4 +123,11 @@ export class AppComponent {
       inputDateFormat: "YYYY-MM-DD"
     };
   }
+
+  public printDate(date): string {
+    if (!date || !date[this.selectedOption]) {
+      return;
+    }
+    return JSON.stringify(date[this.selectedOption], null, 4).trim();
+  }
 }

@@ -14,7 +14,9 @@ import {
   DateCharacteristics,
   Config,
   RowOptions,
-  RowVariables
+  CalendarTypes,
+  RowVariables,
+  CalendarType
 } from "./interfaces/index";
 import { Moment } from "moment";
 
@@ -151,6 +153,13 @@ export class NgxDatetimeRangePickerService {
     };
   }
 
+  checkSettingsValidity(settings: Settings) {
+    if (settings.type && !CalendarTypes.includes(settings.type as CalendarType)) {
+      const errMsg = `${settings.type} is an invalid calendar type. It should one of ${[...CalendarTypes]}`;
+      throw new Error(errMsg);
+    }
+  }
+
   formatDateToDefaultFormat(date: string | number, format: string): string {
     let formattedDate = null;
     if (!date) {
@@ -258,7 +267,7 @@ export class NgxDatetimeRangePickerService {
       const value: Moment = format ? moment(date, format) : moment(date);
 
       if (value) {
-        const formattedDate = value.endOf(MOMENT_CONVERSION_MAP[type]).format(DEFAULT_DATE_FORMAT);
+        const formattedDate = value.endOf(MOMENT_CONVERSION_MAP[type as string]).format(DEFAULT_DATE_FORMAT);
         sanitizedDateArray.push(formattedDate);
       } else {
         console.warn(

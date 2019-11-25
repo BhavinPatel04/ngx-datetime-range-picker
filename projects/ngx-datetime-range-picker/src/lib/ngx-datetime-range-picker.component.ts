@@ -28,7 +28,9 @@ import {
   Config,
   TimeSide,
   DateRow,
-  RowVariables
+  RowVariables,
+  DateTimeRangeChangeOutput,
+  DateTimeRangeModelChangeOutput
 } from "./interfaces/index";
 
 declare var require: any;
@@ -99,6 +101,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
 
     if (settings) {
+      this.service.checkSettingsValidity(settings.currentValue as Settings);
       this.settings = mergeDeep(this.settings, settings.currentValue);
     }
 
@@ -941,24 +944,29 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   }
 
   dateRangeSelected() {
-    const dateRangeModel: Options = this.getNgxDatetimeRangePickerModelItem();
+    const dateRangeModel: DateTimeRangeChangeOutput = this.getNgxDatetimeRangeChangeOutput();
     this.state.isCalendarVisible = false;
     this.filterInputBox.nativeElement.classList.remove("empty-filter");
     this.doDateRangeModelChange();
     this.dateRangeChanged.emit(dateRangeModel);
   }
 
-  getDateRangeModel(format?: string): DateRangeModel {
-    let dRModel: DateRangeModel = {};
+  doDateRangeModelChange() {
+    const dateRangeModel: DateTimeRangeModelChangeOutput = this.getDateRangeModel(this.config.inputDateFormat);
+    this.dateRangeModelChange.emit(dateRangeModel);
+  }
+
+  getDateRangeModel(format?: string): DateTimeRangeModelChangeOutput {
+    let dRModel: DateTimeRangeModelChangeOutput = {};
     if (undefined !== this.dateRangeModel && !isEmpty(this.dateRangeModel)) {
       dRModel = cloneDeep(this.dateRangeModel) as {};
     }
-    dRModel[this.config.type] = this.getNgxDatetimeRangePickerModelItem(format);
+    dRModel[this.config.type] = this.getNgxDatetimeRangeChangeOutput(format);
     return dRModel;
   }
 
-  getNgxDatetimeRangePickerModelItem(format?: string): Options {
-    let dateRangeModelItem: Options;
+  getNgxDatetimeRangeChangeOutput(format?: string): DateTimeRangeChangeOutput {
+    let dateRangeChangeOutput: DateTimeRangeChangeOutput;
     let outputDateFormat: string = this.config.outputDateFormat;
     if (undefined !== format) {
       outputDateFormat = format;
@@ -971,13 +979,18 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       endDate = this.service.formatToZoneDate(this.config.selectedTimezone, outputDateFormat, endDate);
     }
 
-    dateRangeModelItem = { startDate, endDate };
+    dateRangeChangeOutput = {
+      activeRange: this.state.activeRange,
+      startDate,
+      endDate
+    };
 
     if (this.config.timePicker) {
       const startTime = this.config.startTime;
       const endTime = this.config.endTime;
 
-      dateRangeModelItem = {
+      dateRangeChangeOutput = {
+        activeRange: this.state.activeRange,
         startDate,
         endDate,
         startTime,
@@ -985,7 +998,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       };
     }
 
-    return dateRangeModelItem;
+    return dateRangeChangeOutput;
   }
 
   doApply() {
@@ -1019,11 +1032,6 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     });
 
     this.updateInputField();
-  }
-
-  doDateRangeModelChange() {
-    const dateRangeModel: DateRangeModel = this.getDateRangeModel(this.config.inputDateFormat);
-    this.dateRangeModelChange.emit(dateRangeModel);
   }
 
   onTimezoneChange(tz: string) {

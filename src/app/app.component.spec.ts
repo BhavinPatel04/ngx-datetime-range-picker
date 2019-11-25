@@ -26,6 +26,12 @@ describe("AppComponent", () => {
     expect(component).toBeDefined();
   });
 
+  it("printDate", () => {
+    component.selectedOption = "daily";
+    const json = { daily: { a: 1 } };
+    expect(component.printDate(json)).toBe(JSON.stringify(json[component.selectedOption], null, 4).trim());
+  });
+
   it(`should save route data params`, inject([SharedService], (ss: SharedService) => {
     console.log(ss);
     // expect(component.ss.currentRouteParams).toBeDefined();
