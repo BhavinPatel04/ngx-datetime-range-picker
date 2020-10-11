@@ -1,6 +1,6 @@
 {
   "name": "ngx-datetime-range-picker",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-picker/issues",
   "repository": {
@@ -36,7 +36,19 @@
     "date",
     "time-range-picker",
     "time-range",
-    "time"
+    "time",
+    "ngx-datetime-range-picker",
+    "ngx-datetime-range",
+    "ngx-datetime",
+    "ngx-date-time-range-picker",
+    "ngx-date-time-range",
+    "ngx-date-time",
+    "ngx-date-range-picker",
+    "ngx-date-range",
+    "ngx-date",
+    "ngx-time-range-picker",
+    "ngx-time-range",
+    "ngx-time"
   ],
   "private": false,
   "peerDependencies": {
