@@ -179,7 +179,9 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
   onCalendarClose(event: MouseEvent): void {
     if (this.config.startDate && this.config.endDate) {
-      this.filterInputBox.nativeElement.classList.remove("empty-filter");
+      if (this.filterInputBox) {
+        this.filterInputBox.nativeElement.classList.remove("empty-filter");
+      }
       this.state.isCalendarVisible = false;
     } else {
       // this.filterInputBox.nativeElement.classList.add('empty-filter');
@@ -978,7 +980,9 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   dateRangeSelected() {
     const dateRangeModel: DateTimeRangeChangeOutput = this.getNgxDatetimeRangeChangeOutput();
     this.state.isCalendarVisible = false;
-    this.filterInputBox.nativeElement.classList.remove("empty-filter");
+    if (this.filterInputBox) {
+      this.filterInputBox.nativeElement.classList.remove("empty-filter");
+    }
     this.doDateRangeModelChange();
     this.dateRangeChanged.emit(dateRangeModel);
   }

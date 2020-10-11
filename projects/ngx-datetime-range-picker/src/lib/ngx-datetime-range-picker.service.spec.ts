@@ -2,12 +2,11 @@ import { TestBed } from "@angular/core/testing";
 
 import { NgxDatetimeRangePickerService } from "./ngx-datetime-range-picker.service";
 import { Options, Config, State, Settings } from "./interfaces";
-import { NgxDatetimeRangePickerConstants as Constants } from "./ngx-datetime-range-picker.constants";
 
 declare var require: any;
 const moment = require("moment");
 
-const DEFAULT_DATE_FORMAT = Constants.DEFAULT.DATE_FORMAT;
+const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
 describe("NgxDatetimeRangePickerService", () => {
   let service: NgxDatetimeRangePickerService;
