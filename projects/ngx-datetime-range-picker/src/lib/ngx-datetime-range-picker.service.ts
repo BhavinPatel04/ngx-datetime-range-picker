@@ -1,46 +1,31 @@
 import { Injectable } from "@angular/core";
-import { NgxDatetimeRangePickerConstants as Constants } from "./ngx-datetime-range-picker.constants";
+import {
+  DEFAULT_DATE_FORMAT,
+  NgxDatetimeRangePickerConstants as Constants
+} from "./ngx-datetime-range-picker.constants";
 import { getNotAvailableText, cloneDeep, isNil } from "./ngx-datetime-range-picker.utils";
 import {
-  AriaLabelsOptions,
   Options,
   Settings,
   CalendarSides,
   State,
   RowItemVariables,
   RowItemOptions,
-  DateSide,
-  ActiveItemSide,
   DateCharacteristics,
   Config,
   RowOptions,
   CalendarTypes,
   RowVariables,
   CalendarType
-} from "./interfaces/index";
+} from "./interfaces";
 import { Moment } from "moment";
 
 declare var require: any;
 const moment = require("moment");
 
-const DEFAULT_TYPE = Constants.DEFAULT.TYPE;
-const DEFAULT_INPUT_CLASS = Constants.DEFAULT.INPUT_CLASS;
-const DEFAULT_DATE_FORMAT = Constants.DEFAULT.DATE_FORMAT;
 const DEFAULT_TIME_FORMAT = Constants.DEFAULT.TIME_FORMAT;
-const DEFAULT_START_DATE = Constants.DEFAULT.START_DATE;
-const DEFAULT_END_DATE = Constants.DEFAULT.END_DATE;
-const DEFAULT_MIN_DATE = Constants.DEFAULT.MIN_DATE;
-const DEFAULT_MAX_DATE = Constants.DEFAULT.MAX_DATE;
-const DEFAULT_START_TIME = Constants.DEFAULT.START_TIME;
-const DEFAULT_END_TIME = Constants.DEFAULT.END_TIME;
-const DEFAULT_MODEL_KEYS = Constants.DEFAULT.MODEL_KEYS;
 const MONTHS_AVAILABLE = Constants.CONSTANT.MONTHS_AVAILABLE;
-const DEFAULT_TIMEZONE_CODE = Constants.DEFAULT.TZ_CODE;
-const EU_TZ_CODE = Constants.CONSTANT.EU_TZ_CODE;
 const TZ_NAMES = Constants.CONSTANT.TZ_NAMES;
-const TZ_CODES = Constants.CONSTANT.TZ_CODES;
-const WEEKDAYS_AVAILABLE = Constants.CONSTANT.WEEKDAYS_AVAILABLE;
-const TIMES_AVAILABLE = Constants.CONSTANT.TIMES_AVAILABLE;
 const DEFAULT_RANGES = Constants.DEFAULT.RANGES;
 const MOMENT_CONVERSION_MAP = Constants.CONSTANT.MOMENT_CONVERSION_MAP;
 
@@ -48,109 +33,16 @@ const MOMENT_CONVERSION_MAP = Constants.CONSTANT.MOMENT_CONVERSION_MAP;
   providedIn: "root"
 })
 export class NgxDatetimeRangePickerService {
-  getDefaultAriaLabelOptions(): AriaLabelsOptions {
-    return {
-      inputField: "Date Range Input Field"
-    };
-  }
-
   getDefaultOptions(): Options {
-    return {
-      dateArray: [],
-      startDate: DEFAULT_START_DATE,
-      endDate: DEFAULT_END_DATE,
-      minDate: DEFAULT_MIN_DATE,
-      maxDate: DEFAULT_MAX_DATE,
-      startTime: DEFAULT_START_TIME,
-      endTime: DEFAULT_END_TIME
-    };
+    return cloneDeep(Constants.DEFAULT.OPTIONS) as Options;
   }
 
   getDefaultSettings(): Settings {
-    return {
-      type: DEFAULT_TYPE,
-      modelKeys: DEFAULT_MODEL_KEYS,
-      showTimezoneSelect: false,
-      useLocalTimezone: false,
-      timePicker: false,
-      inputClass: DEFAULT_INPUT_CLASS,
-      inputDateFormat: null,
-      viewDateFormat: DEFAULT_DATE_FORMAT,
-      outputDateFormat: DEFAULT_DATE_FORMAT,
-      singleDatePicker: false,
-      componentDisabled: false,
-      placeholder: "Select Date",
-      showRowNumber: false,
-      availableRanges: {},
-      showRanges: true,
-      disableWeekends: false,
-      disableWeekdays: false,
-      retailCalendar: false,
-      displayBeginDate: false,
-      displayEndDate: false,
-      ariaLabels: this.getDefaultAriaLabelOptions()
-    };
+    return cloneDeep(Constants.DEFAULT.SETTINGS) as Settings;
   }
 
   getDefaultState(): State {
-    return {
-      activeEndDate: null,
-      activeItem: {
-        left: {} as ActiveItemSide,
-        right: {} as ActiveItemSide
-      },
-      activeRange: null,
-      activeStartDate: null,
-      calendarAvailable: {
-        left: false,
-        right: false
-      },
-      customRange: false,
-      dates: {
-        left: {} as DateSide,
-        right: {} as DateSide
-      },
-      dateTitleText: {
-        left: "",
-        right: ""
-      },
-      frequencyColumnHeader: null,
-      isCalendarVisible: false,
-      isValidFilter: false,
-      isUserModelChange: true,
-      localTimezone: this.getLocalTimezone(),
-      selectedDateText: "",
-      selectedHour: {
-        left: "",
-        right: ""
-      },
-      selectedMeridian: {
-        left: "",
-        right: ""
-      },
-      selectedMinute: {
-        left: "",
-        right: ""
-      },
-      selectedMonth: {
-        left: "",
-        right: ""
-      },
-      selectedTimezone: undefined, // Since 'useLocalTimezone: false' by default;
-      selectedYear: {
-        left: "",
-        right: ""
-      },
-      sides: [],
-      timeItems: TIMES_AVAILABLE,
-      times: {
-        left: "",
-        right: ""
-      },
-      timeZones: TZ_CODES,
-      todayTime: "",
-      weekDayOptions: WEEKDAYS_AVAILABLE
-    };
+    return cloneDeep(Constants.DEFAULT.STATE) as State;
   }
 
   checkSettingsValidity(settings: Settings) {
@@ -329,6 +221,9 @@ export class NgxDatetimeRangePickerService {
       return;
     }
 
+    minDate = moment(minDate, DEFAULT_DATE_FORMAT).startOf("month");
+    maxDate = moment(maxDate, DEFAULT_DATE_FORMAT).startOf("month");
+
     let minDatems: number = moment(minDate, DEFAULT_DATE_FORMAT).valueOf();
     let maxDatems: number = moment(maxDate, DEFAULT_DATE_FORMAT).valueOf();
     const yearStartms: number = moment()
@@ -410,6 +305,9 @@ export class NgxDatetimeRangePickerService {
         if (disableWeekdays) {
           available = !this.isWeekday(date);
         }
+        if (config.dateArray.length) {
+          available = this.isInDateArray(date, config.dateArray, DEFAULT_DATE_FORMAT);
+        }
       }
     }
     return available;
@@ -467,6 +365,13 @@ export class NgxDatetimeRangePickerService {
     }
     const day = moment(date, format).day();
     return day === 0 || day === 6;
+  }
+
+  isInDateArray(date: number, dateArray: any[], format?: string): boolean {
+    if (!format) {
+      format = null;
+    }
+    return dateArray.find((d) => moment(d, format).valueOf() === date) !== undefined;
   }
 
   getCalendarRowVariables(options: RowOptions): RowVariables {
@@ -636,16 +541,6 @@ export class NgxDatetimeRangePickerService {
     }
 
     return { firstDay, lastDay };
-  }
-
-  getLocalTimezone(): string {
-    const tz: string = /\((.*)\)/.exec(new Date().toString())[1];
-
-    if (tz === "Central Europe Standard Time") {
-      return EU_TZ_CODE;
-    } else {
-      return DEFAULT_TIMEZONE_CODE;
-    }
   }
 
   getZoneDate(tz: string, format: string, date?: string): Moment {

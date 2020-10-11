@@ -17,7 +17,12 @@
         required
       >
       </ngx-datetime-range-picker>
-      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.date }"></div>
+      <div
+        *ngTemplateOutlet="
+          printSelectedDate;
+          context: { settings: datePickerSettings, config: config.date, date: selectedOptions.date }
+        "
+      ></div>
     </li>
     <li class="filter">
       <ngx-datetime-range-picker
@@ -30,7 +35,12 @@
         required
       >
       </ngx-datetime-range-picker>
-      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.dateRange }"></div>
+      <div
+        *ngTemplateOutlet="
+          printSelectedDate;
+          context: { settings: dateRangePickerSettings, config: config.dateRange, date: selectedOptions.dateRange }
+        "
+      ></div>
     </li>
     <li class="filter">
       <ngx-datetime-range-picker
@@ -43,7 +53,16 @@
         required
       >
       </ngx-datetime-range-picker>
-      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.dateArrayRange }"></div>
+      <div
+        *ngTemplateOutlet="
+          printSelectedDate;
+          context: {
+            settings: dateArrayRangePickerSettings,
+            config: config.dateArrayRange,
+            date: selectedOptions.dateArrayRange
+          }
+        "
+      ></div>
     </li>
     <li class="filter">
       <ngx-datetime-range-picker
@@ -56,13 +75,24 @@
         required
       >
       </ngx-datetime-range-picker>
-      <div *ngTemplateOutlet="printSelectedDate; context: { date: selectedOptions.dateTimeRange }"></div>
+      <div
+        *ngTemplateOutlet="
+          printSelectedDate;
+          context: {
+            settings: dateTimeRangePickerSettings,
+            config: config.dateTimeRange,
+            date: selectedOptions.dateTimeRange
+          }
+        "
+      ></div>
     </li>
   </ul>
 </div>
 
-<ng-template #printSelectedDate let-date="date">
+<ng-template #printSelectedDate let-settings="settings" let-config="config" let-date="date">
   <code class="selectedDate">
+    <pre>Settings: {{ printSettings(settings) }}</pre>
+    <pre>Config: {{ printSettings(config) }}</pre>
     <pre>{{ printDate(date) }}</pre>
   </code>
 </ng-template>

@@ -1,4 +1,4 @@
-<div class="m1-date-range-picker">
+<div class="ngx-datetime-range-picker">
   <div class="date-input">
     <mat-form-field class="full-width">
       <span matPrefix>
@@ -165,19 +165,6 @@
                         (mouseleave)="onCellMouseLeave()"
                       >
                         <div>{{ item.rowItemText }}</div>
-                        <div *ngIf="item.today" class="todayDate">
-                          <mat-icon
-                            [ngClass]="{
-                              active:
-                                (state.activeStartDate == item.date && side == 'left') ||
-                                (state.activeEndDate == item.date && side == 'right')
-                            }"
-                            fontSet="fa"
-                            fontIcon="fa-circle"
-                            aria-hidden="true"
-                          >
-                          </mat-icon>
-                        </div>
                       </td>
                     </tr>
                   </tbody>
