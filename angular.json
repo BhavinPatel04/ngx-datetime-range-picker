@@ -196,5 +196,8 @@
       }
     }
   },
-  "defaultProject": "ngx-barebone-app"
+  "defaultProject": "ngx-barebone-app",
+  "cli": {
+    "analytics": false
+  }
 }

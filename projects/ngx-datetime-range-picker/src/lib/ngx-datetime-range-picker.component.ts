@@ -63,7 +63,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   @Output() dateRangeChanged: EventEmitter<Options> = new EventEmitter<Options>();
   @Output() inputFocusBlur: EventEmitter<Object> = new EventEmitter<Object>();
   @Output() selectedDate: EventEmitter<Options> = new EventEmitter<Options>();
-  @ViewChild("filterInputBox") filterInputBox: any;
+  @ViewChild("filterInputBox", { static: false }) filterInputBox: any;
 
   state: State = this.service.getDefaultState();
 
