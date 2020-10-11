@@ -19,7 +19,7 @@ export class NgxDatetimeRangePickerModule {
     }
   }
 
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<NgxDatetimeRangePickerModule> {
     return {
       ngModule: NgxDatetimeRangePickerModule,
       providers: [NgxDatetimeRangePickerService]
