@@ -1146,9 +1146,11 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     `;
 
     const selectContainerEl = document.getElementById(`${options.type}Select`);
-    selectContainerEl.innerHTML = selectEl;
-    selectContainerEl.getElementsByTagName("select")[0].addEventListener("change", (e) => {
-      options.onChange(e, options.side, options.type);
-    });
+    if (selectContainerEl) {
+      selectContainerEl.innerHTML = selectEl;
+      selectContainerEl.getElementsByTagName("select")[0].addEventListener("change", (e) => {
+        options.onChange(e, options.side, options.type);
+      });
+    }
   }
 }
