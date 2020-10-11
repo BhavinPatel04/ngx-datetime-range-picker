@@ -37,8 +37,8 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 // that you are using.
 @include angular-material-theme($app-theme);
 // SCSS
-// @import "../../projects/ngx-datetime-range-picker/dist/ngx-datetime-range-picker.theme.scss";
-// @include ngx-datetime-range-picker-theme($app-theme);
+@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.scss";
+@include ngx-datetime-range-picker-theme($app-theme);
 
 // CSS
-@import "../../projects/ngx-datetime-range-picker/dist/ngx-datetime-range-picker.theme.css";
+// @import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.css";
