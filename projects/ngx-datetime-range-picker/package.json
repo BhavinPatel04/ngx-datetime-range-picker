@@ -1,6 +1,6 @@
 {
   "name": "ngx-datetime-range-picker",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-picker/issues",
   "repository": {
@@ -58,10 +58,10 @@
   ],
   "private": false,
   "peerDependencies": {
-    "@angular/cdk": "^7.2.0",
-    "@angular/common": "^7.1.0",
-    "@angular/core": "^7.1.0",
-    "@angular/material": "^7.2.0",
+    "@angular/cdk": "^10.2.4",
+    "@angular/common": "~10.1.5",
+    "@angular/core": "~10.1.5",
+    "@angular/material": "^10.2.4",
     "bootstrap": "^4.2.1",
     "font-awesome": "^4.7.0",
     "moment": "^2.23.0"
