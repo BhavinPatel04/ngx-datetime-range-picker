@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "../../out-tsc/lib",
-    "target": "esnext",
+    "target": "es2015",
     "module": "amd",
     "moduleResolution": "node",
     "declaration": true,
@@ -13,7 +13,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "types": [],
-    "lib": ["dom", "esnext"]
+    "lib": ["dom", "es2015", "es2017"]
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

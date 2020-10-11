@@ -12,9 +12,9 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "noUnusedLocals": true,
-    "target": "esnext",
+    "target": "es2015",
     "typeRoots": ["node_modules/@types"],
-    "lib": ["esnext", "dom"],
+    "lib": ["es2015", "dom", "es2017"],
     "paths": {
       "ngx-datetime-range-picker": ["dist/ngx-datetime-range-picker"],
       "ngx-datetime-range-picker/*": ["dist/ngx-datetime-range-picker/*"]

@@ -166,6 +166,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
+            "aot": true,
             "tsConfig": "projects/ngx-datetime-range-picker/tsconfig.lib.json",
             "project": "projects/ngx-datetime-range-picker/ng-package.json"
           },
