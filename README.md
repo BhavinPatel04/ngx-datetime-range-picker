@@ -17,7 +17,7 @@ Demo: https://bhavinpatel04.github.io/ngx-datetime-range-picker/
 npm install ngx-datetime-range-picker --save
 ```
 
-#### import *NgxDatetimeRangePickerModule* in your module:
+#### import _NgxDatetimeRangePickerModule_ in your module:
 
 ```typescript
 import { BrowserModule } from "@angular/platform-browser";
@@ -35,7 +35,10 @@ import { AppComponent } from "./app.component";
 export class AppModule {}
 ```
 
-#### Tell ngx-datetime-range-picker which theme to use:<br/> 
+#### Tell ngx-datetime-range-picker which theme to use:<br/>
+
+##### SCSS
+
 Add below config in your `style.scss`/`some-cool-name-theme.scss`, which has material theme (or not) and is imported in your `angular.json`
 
 ```
@@ -48,6 +51,14 @@ If you _don't_ have a theme and want to use library's default theme
 ```
 @import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.scss";
 @include ngx-datetime-range-picker-theme();
+```
+
+##### CSS
+
+Add below config in your `style.css`/`some-cool-name-theme.css` and is imported in your `angular.json`
+
+```
+@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.css";
 ```
 
 _Note_: Make sure whichever file you are adding this to should be imported in `angular.json`

@@ -3,6 +3,7 @@ import { Options, Settings, DateRangeModel } from "../../projects/ngx-datetime-r
 
 declare var require: any;
 const moment = require("moment");
+const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
 @Component({
   selector: "app-root",
@@ -21,37 +22,80 @@ export class AppComponent {
 
   public selectedOptions: any = {
     date: {
-      startDate: "2018-10-19",
-      endDate: "2018-10-19",
+      daily: {
+        startDate: moment().format(DEFAULT_DATE_FORMAT),
+        endDate: moment().format(DEFAULT_DATE_FORMAT)
+      },
       weekly: {
-        startDate: "2019-01-01",
-        endDate: "2019-01-06"
+        startDate: moment()
+          .subtract(6, "days")
+          .format(DEFAULT_DATE_FORMAT),
+        endDate: moment().format(DEFAULT_DATE_FORMAT)
       } as Options
     } as DateRangeModel,
     dateRange: {
+      daily: {
+        startDate: moment()
+          .subtract(6, "days")
+          .format(DEFAULT_DATE_FORMAT),
+        endDate: moment().format(DEFAULT_DATE_FORMAT)
+      },
       weekly: {
-        startDate: "2018-10-13",
-        endDate: "2018-10-19"
+        startDate: moment()
+          .subtract(2, "weeks")
+          .format(DEFAULT_DATE_FORMAT),
+        endDate: moment().format(DEFAULT_DATE_FORMAT)
       } as Options
     } as DateRangeModel,
     dateArrayRange: {
+      daily: {
+        dateArray: [
+          moment()
+            .subtract(1, "weeks")
+            .format(DEFAULT_DATE_FORMAT),
+          moment()
+            .subtract(3, "weeks")
+            .format(DEFAULT_DATE_FORMAT),
+          moment()
+            .subtract(5, "weeks")
+            .format(DEFAULT_DATE_FORMAT)
+        ],
+        minDate: moment()
+          .subtract(6, "weeks")
+          .format(DEFAULT_DATE_FORMAT),
+        maxDate: moment().format(DEFAULT_DATE_FORMAT)
+      },
       weekly: {
-        dateArray: ["2018-10-13", "2018-10-20", "2018-10-27"],
-        minDate: "2018-06-03",
-        maxDate: "2018-12-15"
+        dateArray: [
+          moment().format(DEFAULT_DATE_FORMAT),
+          moment()
+            .subtract(3, "weeks")
+            .format(DEFAULT_DATE_FORMAT),
+          moment()
+            .subtract(5, "weeks")
+            .format(DEFAULT_DATE_FORMAT)
+        ],
+        minDate: moment()
+          .subtract(6, "weeks")
+          .format(DEFAULT_DATE_FORMAT),
+        maxDate: moment().format(DEFAULT_DATE_FORMAT)
       } as Options
     } as DateRangeModel,
     dateTimeRange: {
       daily: {
-        startDate: "2017-01-01",
-        endDate: moment().format("YYYY-MM-DD"),
+        startDate: moment()
+          .subtract(6, "weeks")
+          .format(DEFAULT_DATE_FORMAT),
+        endDate: moment().format(DEFAULT_DATE_FORMAT),
         minDate: "2017-01-01",
-        maxDate: "2018-12-31",
+        maxDate: moment().format(DEFAULT_DATE_FORMAT),
         startTime: "13:00",
         endTime: "18:00"
       } as Options
     } as DateRangeModel
   };
+
+  public config: any = JSON.parse(JSON.stringify(this.selectedOptions));
   public datePickerOptions: Options = {};
   public datePickerSettings: Settings = this.getDateSettings();
   public dateRangePickerOptions: Options = {};
@@ -129,5 +173,12 @@ export class AppComponent {
       return;
     }
     return JSON.stringify(date[this.selectedOption], null, 4).trim();
+  }
+
+  public printSettings(settings): string {
+    if (!settings) {
+      return;
+    }
+    return JSON.stringify(settings, null, 4).trim();
   }
 }

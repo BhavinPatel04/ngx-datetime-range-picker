@@ -3,34 +3,54 @@ $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
 
 @mixin ngx-datetime-range-picker-component-theme($theme) {
-  $primary-color: map-get($theme, primary);
-  $primary-hover-color: darken(mat-color($primary-color), 15%);
+  $ndtrp-primary-color-map: map-get($theme, primary);
+  $ndtrp-primary-color: mat-color($ndtrp-primary-color-map);
+  $ndtrp-primary-hover-color: darken($ndtrp-primary-color, 15%) !default;
+  $ndtrp-primary-text-color: #333 !default;
+  $ndtrp-secondary-text-color: lighten($ndtrp-primary-text-color, 50%) !default;
+  $ndtrp-icon-color: lighten($ndtrp-primary-text-color, 40%) !default;
+  $ndtrp-disabled-color: lighten($ndtrp-primary-text-color, 70%) !default;
+  $ndtrp-weekdays-color: #ffc266 !default;
+  $ndtrp-range-button-background-color: lighten($ndtrp-primary-text-color, 75%) !default;
+  $ndtrp-range-button-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08) !default;
 
-  .m1-date-range-picker {
+  .ngx-datetime-range-picker {
     position: relative;
     border-radius: 0;
     width: 100% !important;
-
-    .mat-icon {
-      height: auto;
-      width: auto;
-    }
 
     .full-width {
       width: 100%;
     }
 
+    .input-container {
+      width: 100%;
+      position: relative;
+
+      .input-label {
+        position: absolute;
+        top: 0;
+        color: #999;
+        font-size: 0.875em;
+      }
+
+      .date-view {
+        width: 100%;
+        color: $ndtrp-primary-text-color;
+        border: 0;
+        border-bottom: 1px solid #000;
+        margin-top: 1em;
+        padding-left: 1.5em;
+      }
+    }
+
     .fa {
       font-size: 100%;
-      color: rgba(0, 0, 0, 0.54);
+      color: $ndtrp-icon-color;
     }
 
     .fa-calendar {
-      color: #aaa;
-    }
-
-    .dateSelect {
-      color: #333;
+      color: $ndtrp-icon-color;
     }
 
     .retail-dateSelect {
@@ -66,13 +86,18 @@ $fa-font-path: "~font-awesome/fonts";
       border-radius: 4px;
       box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
       0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+
+      .date-select {
+        .date-view {
+          margin: 0;
+        }
+      }
     }
 
     .calendar-view:before,
     .calendar-view:after {
       position: absolute;
       display: inline-block;
-      border-bottom-color: rgba(0, 0, 0, 0.2);
       content: "";
     }
 
@@ -116,7 +141,7 @@ $fa-font-path: "~font-awesome/fonts";
     }
 
     .active-timezone {
-      color: mat-color($primary-color);
+      color: $ndtrp-primary-color;
       font-weight: bolder;
     }
 
@@ -158,27 +183,26 @@ $fa-font-path: "~font-awesome/fonts";
       .calendar-range {
         width: 100%;
         white-space: nowrap;
-        background-color: #f5f5f5;
-        border: 1px solid #f5f5f5;
+        background-color: $ndtrp-range-button-background-color;
         border-radius: 0px;
-        color: mat-color($primary-color);
+        color: $ndtrp-primary-color;
         line-height: 30px;
         margin: 0 3px;
         margin-bottom: 8px;
         cursor: pointer;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+        box-shadow: $ndtrp-range-button-shadow;
       }
 
       .active-range {
-        background-color: mat-color($primary-color);
-        border: 1px solid mat-color($primary-color);
+        background-color: $ndtrp-primary-color;
+        border: 1px solid $ndtrp-primary-color;
         color: #fff;
       }
 
       .active-range:hover {
         color: #fff;
-        background-color: $primary-hover-color;
-        border-color: $primary-hover-color;
+        background-color: $ndtrp-primary-hover-color;
+        border-color: $ndtrp-primary-hover-color;
       }
 
       .range-select-button-container {
@@ -191,7 +215,7 @@ $fa-font-path: "~font-awesome/fonts";
         width: 50%;
         border-radius: 0px;
         line-height: 30px;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+        box-shadow: $ndtrp-range-button-shadow;
       }
 
       .range-select-button:first-child {
@@ -204,14 +228,13 @@ $fa-font-path: "~font-awesome/fonts";
 
       .range-select-apply-button {
         color: #fff;
-        background-color: mat-color($primary-color);
-        border: 1px solid mat-color($primary-color);
+        background-color: $ndtrp-primary-color;
+        border: 1px solid $ndtrp-primary-color;
       }
 
       .range-select-cancel-button {
-        background-color: #f5f5f5;
-        border: 1px solid #f5f5f5;
-        color: mat-color($primary-color);
+        background-color: $ndtrp-range-button-background-color;
+        color: $ndtrp-primary-color;
       }
 
       .range-select-button-bottom {
@@ -237,21 +260,8 @@ $fa-font-path: "~font-awesome/fonts";
       width: 100%;
     }
 
-    .rowNumber {
-      color: #bbb !important;
-      font-size: 82%;
-      border-right: 1px solid #dedede;
-      width: 32px;
-    }
-
-    .rowNumberPlaceholder {
-      font-size: 82%;
-      padding: 0 !important;
-      min-width: 0px !important;
-    }
-
     .calendar-week-day {
-      color: #ffc266;
+      color: $ndtrp-weekdays-color;
       font-weight: normal;
       font-size: 95%;
     }
@@ -282,7 +292,7 @@ $fa-font-path: "~font-awesome/fonts";
         position: absolute !important;
         top: 11px !important;
         left: 10px !important;
-        color: #aaa !important;
+        color: $ndtrp-icon-color !important;
       }
     }
 
@@ -302,16 +312,29 @@ $fa-font-path: "~font-awesome/fonts";
           td {
             white-space: nowrap;
             text-align: center;
-            min-width: 32px;
+            min-width: 36px;
             padding: 5px;
           }
 
           td {
-            color: #bbb;
+            color: $ndtrp-secondary-text-color;
 
             .todayDate {
               font-size: 6px;
             }
+          }
+
+          td.rowNumber {
+            color: lighten($ndtrp-primary-text-color, 40%);
+            font-size: 82%;
+            border-right: 1px solid lighten($ndtrp-primary-text-color, 60%);
+            width: 32px;
+          }
+
+          td.rowNumberPlaceholder {
+            font-size: 82%;
+            padding: 0 !important;
+            min-width: 0px !important;
           }
 
           td.valid {
@@ -321,7 +344,7 @@ $fa-font-path: "~font-awesome/fonts";
           td.available,
           th.available {
             cursor: pointer;
-            color: #333;
+            color: $ndtrp-primary-text-color;
           }
 
           th.available {
@@ -330,12 +353,32 @@ $fa-font-path: "~font-awesome/fonts";
 
           td.available:hover,
           th.available:hover {
-            background-color: #eee;
+            background-color: lighten($ndtrp-primary-text-color, 65%);
           }
 
           td.in-range {
-            background-color: #f6f6f6;
-            color: mat-color($primary-color);
+            background-color: lighten($ndtrp-primary-text-color, 76%);
+            color: $ndtrp-primary-color;
+          }
+
+          td.today {
+            div {
+              border: 1px solid $ndtrp-primary-text-color;
+              border-radius: 50%;
+              padding: 1px;
+            }
+
+            &.active {
+              div {
+                border: 1px solid #fff;
+              }
+            }
+
+            &.in-range:not(.active) {
+              div {
+                border: 1px solid $ndtrp-primary-color;
+              }
+            }
           }
         }
       }
@@ -343,12 +386,12 @@ $fa-font-path: "~font-awesome/fonts";
 
     td.active,
     .fa.active {
-      background-color: mat-color($primary-color) !important;
+      background-color: $ndtrp-primary-color !important;
       color: #fff !important;
     }
 
     .disabled {
-      color: #eee;
+      color: $ndtrp-disabled-color;
       pointer-events: none;
     }
 
@@ -386,14 +429,14 @@ $fa-font-path: "~font-awesome/fonts";
         text-align: center;
         width: 50%;
         margin: 1em 6px 0;
-        border: 1px solid #ddd;
+        border: 1px solid $ndtrp-icon-color;
 
         .clock-icon-container {
           position: absolute;
           left: 0.5em;
           height: 100%;
           padding: 3px;
-          color: #aaa;
+          color: $ndtrp-icon-color;
         }
 
         .time-item-container {
