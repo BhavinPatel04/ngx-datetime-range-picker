@@ -97,7 +97,7 @@
     "ngx-datetime-range-picker": "^2.0.3",
     "node-gyp": "^5.0.3",
     "rxjs": "~6.6.3",
-    "tar": "^4.4.10",
+    "tar": "^4.4.15",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
