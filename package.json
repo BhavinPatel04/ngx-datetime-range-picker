@@ -126,7 +126,7 @@
     "lint-staged": "^8.1.0",
     "moment": "^2.23.0",
     "ng-packagr": "^10.1.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",
     "protractor": "~7.0.0",
