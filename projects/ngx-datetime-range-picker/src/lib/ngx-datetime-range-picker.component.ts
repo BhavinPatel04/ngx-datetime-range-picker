@@ -407,7 +407,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     }
   }
 
-  onTimeLabelChange(item: string, side: string, timeItem: string) {
+  onTimeLabelChange(timeItem: string, side: string, item: string) {
     let time = null;
     if (side === "left") {
       time = this.config.startTime.split(":");
