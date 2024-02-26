@@ -24,8 +24,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss", "src/app/app.theme.scss"],
-            "scripts": []
+            "styles": [
+              "src/styles.scss",
+              "src/app/app.theme.scss"
+            ],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            }
           },
           "configurations": {
             "dev": {
@@ -52,7 +58,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -89,24 +94,24 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-barebone-app:build"
+            "buildTarget": "ngx-barebone-app:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "ngx-barebone-app:build:dev"
+              "buildTarget": "ngx-barebone-app:build:dev"
             },
             "production": {
-              "browserTarget": "ngx-barebone-app:build:production"
+              "buildTarget": "ngx-barebone-app:build:production"
             },
             "test": {
-              "browserTarget": "ngx-barebone-app:build:test"
+              "buildTarget": "ngx-barebone-app:build:test"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-barebone-app:build"
+            "buildTarget": "ngx-barebone-app:build"
           }
         },
         "test": {
@@ -197,7 +202,6 @@
       }
     }
   },
-  "defaultProject": "ngx-barebone-app",
   "cli": {
     "analytics": false
   }

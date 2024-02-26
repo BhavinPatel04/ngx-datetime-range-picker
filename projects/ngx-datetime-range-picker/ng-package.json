@@ -1,6 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "./dist",
+  "assets": ["./src/lib/ngx-datetime-range-picker.component.scss"],
   "lib": {
     "entryFile": "src/public_api.ts"
   }

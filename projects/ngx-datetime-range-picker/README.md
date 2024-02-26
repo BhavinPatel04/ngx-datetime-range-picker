@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker.svg?branch=master)](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker)
 [![npm version](https://badge.fury.io/js/ngx-datetime-range-picker.svg)](https://badge.fury.io/js/ngx-datetime-range-picker)
 
-This plugin uses bootstrap, moment.js and font-awesome.
+This plugin uses bootstrap and moment.js.
 
 Demo: https://bhavinpatel04.github.io/ngx-datetime-range-picker/
 

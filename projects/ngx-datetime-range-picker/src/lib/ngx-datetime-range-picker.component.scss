@@ -1,10 +1,9 @@
-@import "~bootstrap/scss/bootstrap.scss";
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome.scss";
+@use '@angular/material' as mat;
+@use "bootstrap/scss/bootstrap.scss";
 
 @mixin ngx-datetime-range-picker-component-theme($theme) {
-  $ndtrp-primary-color-map: map-get($theme, primary);
-  $ndtrp-primary-color: mat-color($ndtrp-primary-color-map);
+  $ndtrp-primary-color: mat.get-theme-color($theme, primary);
+  // $ndtrp-primary-color: mat-color($ndtrp-primary-color-map);
   $ndtrp-primary-hover-color: darken($ndtrp-primary-color, 15%) !default;
   $ndtrp-primary-text-color: #333 !default;
   $ndtrp-secondary-text-color: lighten($ndtrp-primary-text-color, 50%) !default;
@@ -13,6 +12,11 @@ $fa-font-path: "~font-awesome/fonts";
   $ndtrp-weekdays-color: #ffc266 !default;
   $ndtrp-range-button-background-color: lighten($ndtrp-primary-text-color, 75%) !default;
   $ndtrp-range-button-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08) !default;
+
+  @include mat.form-field-theme($theme);
+  @include mat.icon-theme($theme);
+  @include mat.button-theme($theme);
+  @include mat.select-theme($theme);
 
   .ngx-datetime-range-picker {
     position: relative;
@@ -47,6 +51,9 @@ $fa-font-path: "~font-awesome/fonts";
     .fa {
       font-size: 100%;
       color: $ndtrp-icon-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .fa-calendar {
@@ -145,30 +152,49 @@ $fa-font-path: "~font-awesome/fonts";
       font-weight: bolder;
     }
 
+    .dateTitleInput,
+    .date-dropdown-container,
+    .time-item-container {
+      .mdc-text-field--filled:not(.mdc-text-field--disabled),
+      .mat-mdc-form-field-focus-overlay {
+        background-color: transparent;
+      }
+      .mdc-text-field--outlined .mat-mdc-form-field-infix,
+      .mdc-text-field--no-label .mat-mdc-form-field-infix {
+        padding: 4px 0;
+        min-height: 24px;
+      }
+    }
     .date-dropdown-container,
     .time-item-container {
       display: flex;
       justify-content: center;
 
-      .mat-form-field-wrapper {
-        padding-bottom: 0;
+      .mat-mdc-form-field {
+        width: 100%;
+      }
 
-        .mat-form-field-infix {
+      .mat-mdc-text-field-wrapper {
+        padding: 0;
+
+        .mat-mdc-form-field-infix {
           border-top: 0;
           width: auto;
 
-          .mat-select-value {
-            display: inline;
+          .mat-mdc-select-arrow-wrapper {
+            width: 24px;
+            justify-content: center;
           }
         }
 
-        .mat-form-field-underline {
-          display: none;
+        .mdc-line-ripple::before, .mdc-line-ripple::after {
+          border-bottom-width: 0px;
         }
       }
 
       .date-dropdown {
-        margin: 0 5px;
+        margin: 0 4px;
+        width: 50%;
       }
     }
 
@@ -294,14 +320,19 @@ $fa-font-path: "~font-awesome/fonts";
         left: 10px !important;
         color: $ndtrp-icon-color !important;
       }
+      .mat-mdc-text-field-wrapper {
+        .mdc-line-ripple::before, .mdc-line-ripple::after {
+          border-bottom-width: 1px;
+        }
+      }
     }
 
     .calendar-table {
       .calendar-side-container {
         .calendar-label-container {
-          display: inline-flex;
+          display: flex;
           width: 100%;
-          padding: 5px;
+          align-items: center;
         }
 
         table {
@@ -362,21 +393,15 @@ $fa-font-path: "~font-awesome/fonts";
           }
 
           td.today {
-            div {
-              border: 1px solid $ndtrp-primary-text-color;
-              border-radius: 50%;
-              padding: 1px;
-            }
-
             &.active {
               div {
-                border: 1px solid #fff;
+                border-bottom: 2px solid #fff;
               }
             }
 
             &.in-range:not(.active) {
               div {
-                border: 1px solid $ndtrp-primary-color;
+                border-bottom: 2px solid $ndtrp-primary-color;
               }
             }
           }
@@ -425,22 +450,21 @@ $fa-font-path: "~font-awesome/fonts";
 
       .time-select {
         position: relative;
-        padding: 3px 0;
+        padding: 4px;
         text-align: center;
         width: 50%;
         margin: 1em 6px 0;
         border: 1px solid $ndtrp-icon-color;
+        display: flex;
+        align-items: center;
 
         .clock-icon-container {
-          position: absolute;
-          left: 0.5em;
-          height: 100%;
-          padding: 3px;
-          color: $ndtrp-icon-color;
+          display: flex;
+          align-items: center;
         }
-
         .time-item-container {
-          margin: 0 5px;
+          width: 50%;
+          margin: 0 4px;
         }
       }
     }

@@ -2,8 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
-    "target": "es2015",
-    "module": "amd",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
@@ -12,7 +12,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "types": [],
-    "lib": ["dom", "es2015", "es2017"]
+    "lib": ["dom", "es2015", "es2017", "ESNext"]
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

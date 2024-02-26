@@ -6,7 +6,8 @@
 
   //Setting the overlay very high so it always appears on top
   $cdk-z-index-overlay-container: 999999;
-  @include cdk-overlay();
+  // @include cdk-overlay();
+  @import "@angular/cdk/overlay-prebuilt.css";
 
   //Custom
   .mat-form-field-placeholder {
