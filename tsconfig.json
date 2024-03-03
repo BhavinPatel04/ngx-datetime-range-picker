@@ -16,8 +16,8 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2015", "dom", "es2017", "ESNext"],
     "paths": {
-      "ngx-datetime-range-picker": ["dist/ngx-datetime-range-picker"],
-      "ngx-datetime-range-picker/*": ["dist/ngx-datetime-range-picker/*"]
+      "ngx-datetime-range-picker": ["../ngx-datetime-range-picker/dist"],
+      "ngx-datetime-range-picker/*": ["../ngx-datetime-range-picker/dist/*"]
     }
   }
 }

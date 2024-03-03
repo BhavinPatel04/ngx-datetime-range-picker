@@ -50,3 +50,4 @@ Thumbs.db
 tslint-to-eslint-config.log
 .angular/
 src/htaccess.dist
+.vs/

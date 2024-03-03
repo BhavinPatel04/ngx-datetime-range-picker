@@ -24,13 +24,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "src/styles.scss",
-              "src/app/app.theme.scss"
-            ],
+            "styles": ["src/styles.scss", "src/app/app.theme.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
+              "includePaths": ["./node_modules/"]
             }
           },
           "configurations": {
@@ -169,9 +166,8 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "aot": true,
             "tsConfig": "projects/ngx-datetime-range-picker/tsconfig.lib.json",
             "project": "projects/ngx-datetime-range-picker/ng-package.json"
           },
