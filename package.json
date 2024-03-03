@@ -56,11 +56,12 @@
   "scripts": {
     "setup": "yarn install && gulp init",
     "ng": "ng",
-    "start": "yarn package-lib && ng serve",
+    "start": "ng serve",
     "dev": "lite-server --baseDir=dist",
     "build": "ng build",
     "build-dev": "ng build --configuration dev --output-hashing=all && gulp build",
     "build-prod": "node --max-old-space-size=4076 node_modules/@angular/cli/bin/ng build --configuration production && gulp build",
+    "package-lib:prod": "ng build ngx-datetime-range-picker --configuration production && yarn build-lib-css",
     "package-lib": "ng-packagr -p ./projects/ngx-datetime-range-picker/ng-package.json && yarn build-lib-css",
     "build-lib-css": "sass --load-path=./node_modules ./projects/ngx-datetime-range-picker/dist/ngx-datetime-range-picker.component.scss ./projects/ngx-datetime-range-picker/dist/ngx-datetime-range-picker.component.css",
     "test": "ng test",
@@ -132,14 +133,14 @@
     "lite-server": "^2.6.1",
     "moment": "^2.23.0",
     "ng-packagr": "^17.2.0",
+    "ngx-datetime-range-picker": "^4.0.0",
     "node-sass": "^9.0.0",
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",
     "protractor": "~7.0.0",
     "stylelint": "^9.9.0",
     "ts-node": "~7.0.0",
-    "typescript": "^5.3.3",
-    "ngx-datetime-range-picker": "file:./projects/ngx-datetime-range-picker/dist"
+    "typescript": "^5.3.3"
   },
   "resolutions": {
     "json5": "^2.2.3",
