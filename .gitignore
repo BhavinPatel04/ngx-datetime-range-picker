@@ -47,5 +47,7 @@ Thumbs.db
 /coverage
 /projects/coverage
 
-yarn.lock
+tslint-to-eslint-config.log
+.angular/
+src/htaccess.dist
 .vs/

@@ -65,11 +65,16 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   @Output() selectedDate: EventEmitter<Options> = new EventEmitter<Options>();
   @ViewChild("filterInputBox", { static: false }) filterInputBox: any;
 
-  state: State = this.service.getDefaultState();
+  state: State;
 
   config: Config;
 
-  constructor(public element: ElementRef, private renderer: Renderer2, private service: NgxDatetimeRangePickerService) {
+  constructor(
+    public element: ElementRef,
+    private renderer: Renderer2,
+    private service: NgxDatetimeRangePickerService
+  ) {
+    this.state = this.service.getDefaultState();
     this.options = this.service.getDefaultOptions();
     this.settings = this.service.getDefaultSettings();
     this.config = Object.assign(this.options, this.settings);
@@ -80,9 +85,10 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       if (
         this.state.isCalendarVisible &&
         <HTMLElement>event.target &&
-        !(<HTMLElement>event.target).parentElement.getElementsByClassName("ngx-datetime-range-picker-select-panel")
+        !(<HTMLElement>event.target).parentElement
+          .getElementsByClassName("ngx-datetime-range-picker-select-panel")
           .length &&
-        (<HTMLElement>event.target).className !== "mat-option-text" &&
+        !Boolean((<HTMLElement>event.target).closest(".mat-mdc-option")) &&
         this.element.nativeElement !== event.target &&
         !this.element.nativeElement.contains(event.target)
       ) {
@@ -161,14 +167,14 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.state.isCalendarVisible = !this.state.isCalendarVisible;
   }
 
-  onFocusInput(event: MouseEvent): void {
+  onFocusInput(event: MouseEvent | FocusEvent): void {
     this.inputFocusBlur.emit({
       reason: InputFocusBlur.focus,
       value: (<HTMLInputElement>event.target).value
     });
   }
 
-  onBlurInput(event: MouseEvent): void {
+  onBlurInput(event: MouseEvent | FocusEvent): void {
     const value = (<HTMLInputElement>event.target).value;
     this.state.selectedDateText = value;
     this.inputFocusBlur.emit({
@@ -177,7 +183,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     });
   }
 
-  onCalendarClose(event: MouseEvent): void {
+  onCalendarClose(event: MouseEvent | KeyboardEvent): void {
     if (this.config.startDate && this.config.endDate) {
       if (this.filterInputBox) {
         this.filterInputBox.nativeElement.classList.remove("empty-filter");

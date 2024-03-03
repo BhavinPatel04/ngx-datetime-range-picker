@@ -25,7 +25,10 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss", "src/app/app.theme.scss"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules/"]
+            }
           },
           "configurations": {
             "dev": {
@@ -52,7 +55,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -89,24 +91,24 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-barebone-app:build"
+            "buildTarget": "ngx-barebone-app:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "ngx-barebone-app:build:dev"
+              "buildTarget": "ngx-barebone-app:build:dev"
             },
             "production": {
-              "browserTarget": "ngx-barebone-app:build:production"
+              "buildTarget": "ngx-barebone-app:build:production"
             },
             "test": {
-              "browserTarget": "ngx-barebone-app:build:test"
+              "buildTarget": "ngx-barebone-app:build:test"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-barebone-app:build"
+            "buildTarget": "ngx-barebone-app:build"
           }
         },
         "test": {
@@ -164,9 +166,8 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "aot": true,
             "tsConfig": "projects/ngx-datetime-range-picker/tsconfig.lib.json",
             "project": "projects/ngx-datetime-range-picker/ng-package.json"
           },
@@ -197,7 +198,6 @@
       }
     }
   },
-  "defaultProject": "ngx-barebone-app",
   "cli": {
     "analytics": false
   }

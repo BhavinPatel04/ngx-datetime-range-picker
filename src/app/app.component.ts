@@ -128,6 +128,7 @@ export class AppComponent {
       timezoneSupport: false,
       type: this.selectedOption,
       viewDateFormat: "MMM D, YYYY",
+      label: "Date",
       placeholder: "Date",
       inputDateFormat: "YYYY-MM-DD",
       showRowNumber: true
@@ -140,6 +141,7 @@ export class AppComponent {
       timezoneSupport: false,
       type: this.selectedOption,
       viewDateFormat: "MMM D, YYYY",
+      label: "Date Range",
       placeholder: "Date Range",
       inputDateFormat: "YYYY-MM-DD"
     };
@@ -151,6 +153,7 @@ export class AppComponent {
       timezoneSupport: false,
       type: this.selectedOption,
       viewDateFormat: "MMM D, YYYY",
+      label: "Date Array Range",
       placeholder: "Date Array Range",
       inputDateFormat: "YYYY-MM-DD"
     };
@@ -163,6 +166,7 @@ export class AppComponent {
       timePicker: true,
       type: this.selectedOption,
       viewDateFormat: "MMM D, YYYY",
+      label: "Date Time Range",
       placeholder: "Date Time Range",
       inputDateFormat: "YYYY-MM-DD"
     };

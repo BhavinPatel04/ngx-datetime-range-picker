@@ -1,7 +1,0 @@
-{
-  "bundlerOptions": {
-    "entryFile": "./projects/ngx-datetime-range-picker/src/lib/material/material.default.scss",
-    "rootDir": "./",
-    "outFile": "./projects/ngx-datetime-range-picker/dist/ngx-datetime-range-picker.default.scss"
-  }
-}

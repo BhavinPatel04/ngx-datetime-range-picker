@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker.svg?branch=master)](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker)
 [![npm version](https://badge.fury.io/js/ngx-datetime-range-picker.svg)](https://badge.fury.io/js/ngx-datetime-range-picker)
 
-This plugin uses bootstrap, moment.js and font-awesome.
+This plugin uses bootstrap and moment.js
 
 Demo: https://bhavinpatel04.github.io/ngx-datetime-range-picker/
 
@@ -42,16 +42,34 @@ export class AppModule {}
 Add below config in your `style.scss`/`some-cool-name-theme.scss`, which has material theme (or not) and is imported in your `angular.json`
 
 ```
-@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.scss";
-@include ngx-datetime-range-picker-theme($app-theme);
+// Top of the file
+@use "ngx-datetime-range-picker/ngx-datetime-range-picker.component.scss" as ndtrp;
+
+// You would need to include the themes for below components if you are not including them already
+@include mat.form-field-theme($your-app-theme);
+@include mat.icon-theme($your-app-theme);
+@include mat.button-theme($your-app-theme);
+@include mat.select-theme($your-app-theme);
+
+@include ndtrp.ngx-datetime-range-picker-theme($your-app-theme);
 ```
 
 If you _don't_ have a theme and want to use library's default theme
 
 ```
-@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.scss";
-@include ngx-datetime-range-picker-theme();
+// Top of the file
+@use "ngx-datetime-range-picker/ngx-datetime-range-picker.component.scss" as ndtrp;
+
+// You would need to include the themes for below components if you are not including them already
+@include mat.form-field-theme(ndtrp.$ndtrp-app-theme);
+@include mat.icon-theme(ndtrp.$ndtrp-app-theme);
+@include mat.button-theme(ndtrp.$ndtrp-app-theme);
+@include mat.select-theme(ndtrp.$ndtrp-app-theme);
+
+@include ndtrp.ngx-datetime-range-picker-theme();
 ```
+
+_Note_: _Themes for components are not included in the library to avoid duplicate styles error_
 
 ##### CSS
 

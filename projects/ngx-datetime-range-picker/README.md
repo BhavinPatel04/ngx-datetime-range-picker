@@ -5,37 +5,85 @@
 [![Build Status](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker.svg?branch=master)](https://travis-ci.org/BhavinPatel04/ngx-datetime-range-picker)
 [![npm version](https://badge.fury.io/js/ngx-datetime-range-picker.svg)](https://badge.fury.io/js/ngx-datetime-range-picker)
 
-This plugin uses bootstrap, moment.js and font-awesome.
+This plugin uses bootstrap and moment.js
 
 Demo: https://bhavinpatel04.github.io/ngx-datetime-range-picker/
 
 ## Installation
 
-Install the plugin from npm:
+#### Install the plugin from npm:
 
 ```
 npm install ngx-datetime-range-picker --save
 ```
 
-import **NgxDatetimeRangePickerModule** in your module:
+#### import _NgxDatetimeRangePickerModule_ in your module:
 
 ```typescript
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 ...
-import { FormsModule } from '@angular/forms';
-import { NgxDatetimeRangePickerModule } from 'ngx-datetime-range-picker';
+import { FormsModule } from "@angular/forms";
+import { NgxDatetimeRangePickerModule } from "ngx-datetime-range-picker";
 import { AppComponent } from "./app.component";
 
 @NgModule({
-    imports:      [... , FormsModule, NgxDatetimeRangePickerModule.forRoot()],
+    imports:      [BrowserModule, BrowserAnimationsModule, ... , FormsModule, NgxDatetimeRangePickerModule.forRoot()],
     declarations: [AppComponent],
     bootstrap:    [AppComponent]
 })
 export class AppModule {}
 ```
 
+#### Tell ngx-datetime-range-picker which theme to use:<br/>
+
+##### SCSS
+
+Add below config in your `style.scss`/`some-cool-name-theme.scss`, which has material theme (or not) and is imported in your `angular.json`
+
+```
+// Top of the file
+@use "ngx-datetime-range-picker/ngx-datetime-range-picker.component.scss" as ndtrp;
+
+// You would need to include the themes for below components if you are not including them already
+@include mat.form-field-theme($your-app-theme);
+@include mat.icon-theme($your-app-theme);
+@include mat.button-theme($your-app-theme);
+@include mat.select-theme($your-app-theme);
+
+@include ndtrp.ngx-datetime-range-picker-theme($your-app-theme);
+```
+
+If you _don't_ have a theme and want to use library's default theme
+
+```
+// Top of the file
+@use "ngx-datetime-range-picker/ngx-datetime-range-picker.component.scss" as ndtrp;
+
+// You would need to include the themes for below components if you are not including them already
+@include mat.form-field-theme(ndtrp.$ndtrp-app-theme);
+@include mat.icon-theme(ndtrp.$ndtrp-app-theme);
+@include mat.button-theme(ndtrp.$ndtrp-app-theme);
+@include mat.select-theme(ndtrp.$ndtrp-app-theme);
+
+@include ndtrp.ngx-datetime-range-picker-theme();
+```
+
+_Note_: _Themes for components are not included in the library to avoid duplicate styles error_
+
+##### CSS
+
+Add below config in your `style.css`/`some-cool-name-theme.css` and is imported in your `angular.json`
+
+```
+@import "ngx-datetime-range-picker/ngx-datetime-range-picker.theme.css";
+```
+
+_Note_: Make sure whichever file you are adding this to should be imported in `angular.json`
+
 ## Usage example
 
-Html:
+#### Html:
 
 ```html
 <ngx-datetime-range-picker
@@ -49,7 +97,7 @@ Html:
 </ngx-datetime-range-picker>
 ```
 
-Typescript:
+#### Typescript:
 
 ```typescript
 selectedDate: {

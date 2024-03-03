@@ -1,10 +1,7 @@
 {
-  "linters": {
-    "*.ts": ["npm run pretty-quick-current-branch", "tslint --fix", "git add"],
-    "*.css": ["npm run pretty-quick-current-branch", "npm run stylelint-current-branch", "git add"],
-    "*.scss": ["npm run pretty-quick-current-branch", "npm run stylelint-current-branch --syntax=scss", "git add"],
-    "*.{png,jpeg,jpg,gif,svg}": ["imagemin-lint-staged", "git add"],
-    "*.{js,html,json,md}": ["npm run pretty-quick-current-branch", "git add"]
-  },
-  "relative": true
+  "*.ts": ["yarn pretty-quick-current-branch", "tslint --fix", "git add"],
+  "*.css": ["yarn pretty-quick-current-branch", "yarn stylelint-current-branch", "git add"],
+  "*.scss": ["yarn pretty-quick-current-branch", "yarn stylelint-current-branch --syntax=scss", "git add"],
+  "*.{png,jpeg,jpg,gif,svg}": ["imagemin-lint-staged", "git add"],
+  "*.{js,html,json,md}": ["yarn pretty-quick-current-branch", "git add"]
 }

@@ -103,6 +103,7 @@ export interface Settings {
   outputDateFormat?: string;
   singleDatePicker?: boolean;
   componentDisabled?: boolean;
+  label?: string;
   placeholder?: string;
   showRowNumber?: boolean;
   availableRanges?: {};
