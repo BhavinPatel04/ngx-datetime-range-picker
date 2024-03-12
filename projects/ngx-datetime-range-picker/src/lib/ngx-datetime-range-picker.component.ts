@@ -282,7 +282,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     this.doApply();
   }
 
-  onCellMouseEnter(item: DateCharacteristics, itemCell) {
+  onCellMouseEnter(item: DateCharacteristics, itemCell, side: string) {
     if (!item.available) {
       return;
     }
@@ -316,11 +316,12 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
       this.service.iterateOverDateObj(this.state.dates, func.bind(this));
     } else {
-      if (this.config.singleDatePicker) {
-        this.state.dateTitleText.right = activeItemInputFieldText;
-      } else {
-        this.state.dateTitleText.left = activeItemInputFieldText;
-      }
+      // if (this.config.singleDatePicker) {
+      //   this.state.dateTitleText.right = activeItemInputFieldText;
+      // } else {
+      //   this.state.dateTitleText.left = activeItemInputFieldText;
+      // }
+      this.state.dateTitleText[side] = activeItemInputFieldText;
     }
   }
 
