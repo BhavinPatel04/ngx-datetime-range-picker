@@ -1,9 +1,10 @@
 import { TestBed } from "@angular/core/testing";
+import { provideZoneChangeDetection } from "@angular/core";
 
 import { NgxDatetimeRangePickerService } from "./ngx-datetime-range-picker.service";
 import { Options, Config, State, Settings } from "./interfaces";
 
-declare var require: any;
+declare let require: any;
 const moment = require("moment");
 
 const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
@@ -16,7 +17,9 @@ describe("NgxDatetimeRangePickerService", () => {
   let state: State;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideZoneChangeDetection({ ignoreChangesOutsideZone: true })]
+    });
     service = TestBed.get(NgxDatetimeRangePickerService);
     options = service.getDefaultOptions();
     settings = service.getDefaultSettings();

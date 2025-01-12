@@ -1,23 +1,24 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { SimpleChanges } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { provideZoneChangeDetection, SimpleChanges } from "@angular/core";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxDatetimeRangePickerModule } from "./ngx-datetime-range-picker.module";
 import { NgxDatetimeRangePickerComponent } from "./ngx-datetime-range-picker.component";
 import { DateSide, DateTimeRangeChangeOutput, DateTimeRangeModelChangeOutput } from "./interfaces";
 
-declare var require: any;
+declare let require: any;
 const moment = require("moment");
 
 describe("NgxDatetimeRangePickerComponent", () => {
   let component: NgxDatetimeRangePickerComponent;
   let fixture: ComponentFixture<NgxDatetimeRangePickerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NgxDatetimeRangePickerModule, NoopAnimationsModule],
+      providers: [provideZoneChangeDetection({ ignoreChangesOutsideZone: true })],
       declarations: []
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NgxDatetimeRangePickerComponent);
@@ -61,7 +62,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
 
   it("#onDateRangeInputChange", () => {
     spyOn(component, "dateRangeSelected");
-    component.onDateRangeInputChange("");
+    component.onDateRangeInputChange();
     expect(component.dateRangeSelected).toHaveBeenCalled();
   });
 
@@ -96,14 +97,9 @@ describe("NgxDatetimeRangePickerComponent", () => {
   });
 
   it("#onCalendarClose", () => {
-    const event: MouseEvent = {
-      target: {
-        value: "text"
-      }
-    } as any;
     component.config.startDate = "2017-01-01";
     component.config.endDate = "2017-12-31";
-    component.onCalendarClose(event);
+    component.onCalendarClose();
     expect(component.state.isCalendarVisible).toBeFalsy();
   });
 
@@ -188,7 +184,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
       date: "2017-02-04",
       available: false
     };
-    component.onCellMouseEnter(item, null);
+    component.onCellMouseEnter(item, null, "left");
 
     component.config.endDate = null;
     component.config.startDate = "2017-02-02";
@@ -219,7 +215,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
         ]
       }
     };
-    component.onCellMouseEnter(item, null);
+    component.onCellMouseEnter(item, null, "left");
   });
 
   it("#onCellMouseLeave", () => {

@@ -1,6 +1,6 @@
 import { ActiveItemSide, DateSide, AriaLabelsOptions, Options, Settings, State } from "./interfaces";
 
-declare var require: any;
+declare let require: any;
 const moment = require("moment");
 const USA_MST_TZ_CODE = "MST";
 const USA_TZ_CODE = "PST";

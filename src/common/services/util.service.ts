@@ -62,6 +62,7 @@ export const Util = new (class UtilService {
   }
 
   solrEscape(q) {
+    // eslint-disable-next-line no-useless-escape
     return q.replace(/[+\-\!\(\)\{\}\[\]\^"~\*\?:\\]+/g, " ");
   }
 
@@ -91,53 +92,23 @@ export const Util = new (class UtilService {
     return doWait(maxTime);
   }
 
-  recurUntil(func, check, args, nextArgsFunc, maxTime) {
-    let doRecur;
-    if (maxTime == null) {
-      maxTime = 100;
-    }
-    doRecur = function(time, lastRet) {
-      return new Promise((rs, rj) => {
-        if (time <= 0) {
-          rj("exceed " + maxTime + " times check");
-        } else {
-          let ret: any;
-          if (time === maxTime) {
-            ret = func.apply(this, args);
-          } else {
-            ret = func.apply(this, nextArgsFunc(lastRet));
-          }
-          if (check(ret)) {
-            rs(ret);
-          } else {
-            doRecur(time - 1, ret)
-              .then(rs)
-              .catch(rj);
-          }
-        }
-      });
-    };
-    return doRecur(maxTime);
-  }
-
   deepExtend(...ags: any[]) {
-    let args, target;
     if (ags.length < 1 || typeof ags[0] !== "object") {
       return false;
     }
     if (ags.length < 2) {
       return ags[0];
     }
-    target = ags[0];
-    args = Array.prototype.slice.call(ags, 1);
+    const target = ags[0];
+    const args = Array.prototype.slice.call(ags, 1);
     args.forEach(
       (function(_this) {
         return function(obj) {
-          let clone, key, src, val, _results;
+          let clone, key, src, val;
           if (typeof obj !== "object") {
             return;
           }
-          _results = [];
+          const _results = [];
           for (key in obj) {
             if (!(key in obj)) {
               continue;
@@ -188,8 +159,8 @@ export const Util = new (class UtilService {
     clicks = 0;
     timer = null;
     return function() {
-      let args;
-      args = arguments;
+      // eslint-disable-next-line prefer-rest-params
+      const args = arguments;
       clicks += 1;
       if (clicks === 1) {
         return (timer = setTimeout(

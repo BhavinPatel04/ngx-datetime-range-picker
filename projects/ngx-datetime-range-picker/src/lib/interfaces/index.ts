@@ -10,7 +10,7 @@ export interface DateSide {
   label: string;
   months: string[];
   years: string[];
-  itemRows: Object[];
+  itemRows: object[];
 }
 
 export interface TimeSide {
@@ -106,7 +106,7 @@ export interface Settings {
   label?: string;
   placeholder?: string;
   showRowNumber?: boolean;
-  availableRanges?: {};
+  availableRanges?: Record<string, any>;
   showRanges?: boolean;
   disableWeekends?: boolean;
   disableWeekdays?: boolean;

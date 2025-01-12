@@ -15,12 +15,7 @@ import { AppComponent } from "./app.component";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    NgxDatetimeRangePickerModule.forRoot(),
-    MaterialModule
-  ],
+  imports: [BrowserModule, BrowserAnimationsModule, NgxDatetimeRangePickerModule.forRoot(), MaterialModule],
   providers: [AppInitService, SharedService],
   bootstrap: [AppComponent]
 })

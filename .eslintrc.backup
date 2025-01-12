@@ -14,7 +14,8 @@ Happy linting! 💖
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
+    node: true
   },
   extends: ["prettier"],
   parser: "@typescript-eslint/parser",
@@ -23,32 +24,16 @@ module.exports = {
     sourceType: "module"
   },
   plugins: [
-    "@angular-eslint/eslint-plugin",
     "eslint-plugin-import",
     "eslint-plugin-jsdoc",
+    "@angular-eslint/eslint-plugin",
     "@typescript-eslint",
     "@typescript-eslint/tslint"
   ],
   root: true,
   rules: {
     "@angular-eslint/component-class-suffix": "error",
-    "@angular-eslint/component-selector": [
-      "error",
-      {
-        type: "element",
-        prefix: "",
-        style: "kebab-case"
-      }
-    ],
     "@angular-eslint/directive-class-suffix": "error",
-    "@angular-eslint/directive-selector": [
-      "error",
-      {
-        type: "attribute",
-        prefix: "",
-        style: "camelCase"
-      }
-    ],
     "@angular-eslint/no-host-metadata-property": "error",
     "@angular-eslint/no-input-rename": "error",
     "@angular-eslint/no-inputs-metadata-property": "error",

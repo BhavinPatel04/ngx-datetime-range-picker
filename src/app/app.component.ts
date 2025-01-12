@@ -1,14 +1,15 @@
 import { Component } from "@angular/core";
 import { Options, Settings, DateRangeModel } from "../../projects/ngx-datetime-range-picker/src/lib/interfaces";
 
-declare var require: any;
+declare let require: any;
 const moment = require("moment");
 const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
+  standalone: false
 })
 export class AppComponent {
   public selectedOption = "daily";

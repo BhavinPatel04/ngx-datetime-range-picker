@@ -10,6 +10,7 @@ This plugin uses bootstrap and moment.js
 [Demo](https://bhavinpatel04.github.io/ngx-datetime-range-picker/)
 
 ## React version
+
 [reactjs-datetime-range-picker](https://github.com/BhavinPatel04/reactjs-datetime-range-picker)
 
 ## Installation
