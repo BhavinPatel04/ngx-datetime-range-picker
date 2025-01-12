@@ -1,5 +1,5 @@
 {
-  "*.ts": ["yarn pretty-quick-current-branch", "tslint --fix", "git add"],
+  "*.ts": ["yarn pretty-quick-current-branch", "yarn lint:dev", "git add"],
   "*.css": ["yarn pretty-quick-current-branch", "yarn stylelint-current-branch", "git add"],
   "*.scss": ["yarn pretty-quick-current-branch", "yarn stylelint-current-branch --syntax=scss", "git add"],
   "*.{png,jpeg,jpg,gif,svg}": ["imagemin-lint-staged", "git add"],
