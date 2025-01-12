@@ -98,7 +98,7 @@
     "rxjs": "~6.6.3",
     "tar": "^4.4.10",
     "tslib": "^2.0.0",
-    "typescript-eslint": "^7.0.1",
+    "typescript-eslint": "^8.19.1",
     "zone.js": "~0.14.0"
   },
   "devDependencies": {
@@ -140,7 +140,7 @@
     "protractor": "~7.0.0",
     "stylelint": "^9.9.0",
     "ts-node": "~7.0.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.7.3"
   },
   "resolutions": {
     "json5": "^2.2.3",
