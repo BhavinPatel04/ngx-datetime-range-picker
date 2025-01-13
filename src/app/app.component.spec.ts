@@ -1,5 +1,5 @@
-import { TestBed, async, ComponentFixture, inject } from "@angular/core/testing";
-import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { TestBed, ComponentFixture, inject } from "@angular/core/testing";
+import { NO_ERRORS_SCHEMA, provideZoneChangeDetection } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { SharedService } from "src/common/services/shared.service";
@@ -8,13 +8,13 @@ describe("AppComponent", () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [SharedService]
+      providers: [provideZoneChangeDetection({ ignoreChangesOutsideZone: true }), SharedService]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);

@@ -36,7 +36,7 @@ import {
   DateTimeRangeModelChangeOutput
 } from "./interfaces";
 
-declare var require: any;
+declare let require: any;
 const moment = require("moment");
 
 enum InputFocusBlur {
@@ -51,7 +51,8 @@ const USA_TZ_CODE = Constants.CONSTANT.USA_TZ_CODE;
   selector: "ngx-datetime-range-picker",
   templateUrl: "./ngx-datetime-range-picker.component.html",
   styleUrls: ["./ngx-datetime-range-picker.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class NgxDatetimeRangePickerComponent implements OnChanges {
   @Input() options: Options;
@@ -61,7 +62,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   @Input() canBeEmpty = false;
   @Output() dateRangeModelChange: EventEmitter<Options | DateRangeModel> = new EventEmitter<Options | DateRangeModel>();
   @Output() dateRangeChanged: EventEmitter<Options> = new EventEmitter<Options>();
-  @Output() inputFocusBlur: EventEmitter<Object> = new EventEmitter<Object>();
+  @Output() inputFocusBlur: EventEmitter<object> = new EventEmitter<object>();
   @Output() selectedDate: EventEmitter<Options> = new EventEmitter<Options>();
   @ViewChild("filterInputBox", { static: false }) filterInputBox: any;
 
@@ -69,11 +70,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
 
   config: Config;
 
-  constructor(
-    public element: ElementRef,
-    private renderer: Renderer2,
-    private service: NgxDatetimeRangePickerService
-  ) {
+  constructor(public element: ElementRef, private renderer: Renderer2, private service: NgxDatetimeRangePickerService) {
     this.state = this.service.getDefaultState();
     this.options = this.service.getDefaultOptions();
     this.settings = this.service.getDefaultSettings();
@@ -85,14 +82,13 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       if (
         this.state.isCalendarVisible &&
         <HTMLElement>event.target &&
-        !(<HTMLElement>event.target).parentElement
-          .getElementsByClassName("ngx-datetime-range-picker-select-panel")
+        !(<HTMLElement>event.target).parentElement.getElementsByClassName("ngx-datetime-range-picker-select-panel")
           .length &&
-        !Boolean((<HTMLElement>event.target).closest(".mat-mdc-option")) &&
+        !(<HTMLElement>event.target).closest(".mat-mdc-option") &&
         this.element.nativeElement !== event.target &&
         !this.element.nativeElement.contains(event.target)
       ) {
-        this.onCalendarClose(event);
+        this.onCalendarClose();
       }
     });
   }
@@ -155,7 +151,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   }
 
   // Events
-  onDateRangeInputChange(value: string) {
+  onDateRangeInputChange() {
     this.dateRangeSelected();
   }
 
@@ -183,7 +179,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
     });
   }
 
-  onCalendarClose(event: MouseEvent | KeyboardEvent): void {
+  onCalendarClose(): void {
     if (this.config.startDate && this.config.endDate) {
       if (this.filterInputBox) {
         this.filterInputBox.nativeElement.classList.remove("empty-filter");
@@ -266,6 +262,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       this.config.endDate = null;
       this.config.startDate = item.date;
       this.state.activeItem.left = item;
+      // eslint-disable-next-line no-dupe-else-if
     } else if (!endDate && date < startDate) {
       this.config.endDate = cloneDeep(this.config.startDate) as string;
       this.state.activeItem.right = item;
@@ -716,7 +713,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       label: calendarLabel,
       months: this.service.getMonthsAvailable(this.config.minDate, this.config.maxDate, this.state.selectedYear[side]),
       years: this.service.getYearsAvailable(this.config),
-      itemRows: [] as Object[]
+      itemRows: [] as DateRow[]
     };
 
     this.state.weekDayOptions = [""];
@@ -804,7 +801,8 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
             available,
             inRange,
             active,
-            today
+            today,
+            formattedDateString: moment(currentItemDate, DEFAULT_DATE_FORMAT).format(this.config.viewDateFormat)
           };
           if (this.service.isRowIemValid(rowOptions)) {
             if (active) {
@@ -1002,7 +1000,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   getDateRangeModel(format?: string): DateTimeRangeModelChangeOutput {
     let dRModel: DateTimeRangeModelChangeOutput = {};
     if (undefined !== this.dateRangeModel && !isEmpty(this.dateRangeModel)) {
-      dRModel = cloneDeep(this.dateRangeModel) as {};
+      dRModel = cloneDeep(this.dateRangeModel) as Record<string, any>;
     }
     dRModel[this.config.type] = this.getNgxDatetimeRangeChangeOutput(format);
     return dRModel;
@@ -1131,7 +1129,13 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
   }
 
   /* ------------------------------------------ */
-  printSelect(options: { type: string; side: string; items: string[]; selected: string; onChange: Function }) {
+  printSelect(options: {
+    type: string;
+    side: string;
+    items: string[];
+    selected: string;
+    onChange: (e: Event, side: string, type: string) => void;
+  }) {
     let optionHTML = "";
     options.items.forEach((item) => {
       optionHTML += `

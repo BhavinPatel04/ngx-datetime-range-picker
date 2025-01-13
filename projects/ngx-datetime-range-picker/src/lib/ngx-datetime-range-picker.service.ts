@@ -20,7 +20,7 @@ import {
 } from "./interfaces";
 import { Moment } from "moment";
 
-declare var require: any;
+declare let require: any;
 const moment = require("moment");
 
 const DEFAULT_TIME_FORMAT = Constants.DEFAULT.TIME_FORMAT;
@@ -107,7 +107,7 @@ export class NgxDatetimeRangePickerService {
     })();
   }
 
-  createDefaultRanges(config: Config): Object {
+  createDefaultRanges(config: Config): object {
     const ranges = {};
     const type: string = config.type;
     const maxDate: string = cloneDeep(config.maxDate) as string;

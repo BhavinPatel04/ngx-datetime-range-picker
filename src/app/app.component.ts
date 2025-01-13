@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
 import { Options, Settings, DateRangeModel } from "../../projects/ngx-datetime-range-picker/src/lib/interfaces";
+import moment from "moment";
 
-declare var require: any;
-const moment = require("moment");
 const DEFAULT_DATE_FORMAT = "YYYY-MM-DD";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
+  standalone: false
 })
 export class AppComponent {
   public selectedOption = "daily";
@@ -18,6 +18,13 @@ export class AppComponent {
     { name: "Monthly", value: "monthly" },
     { name: "Quarterly", value: "quarterly" },
     { name: "Yearly", value: "yearly" }
+  ];
+  public componentTypes = [
+    { name: "Single Date Picker", value: "singleDatePicker" },
+    { name: "Date Range Picker", value: "dateRangePicker" },
+    { name: "Date Array Range Picker", value: "dateArrayRangePicker" },
+    { name: "Date Time Range Picker", value: "dateTimeRangePicker" },
+    { name: "Date Time Range Picker with Timezone", value: "dateTimeRangeWithTimeZonePicker" }
   ];
 
   public selectedOptions: any = {
@@ -92,8 +99,22 @@ export class AppComponent {
         startTime: "13:00",
         endTime: "18:00"
       } as Options
+    } as DateRangeModel,
+    dateTimeWithTimezoneRange: {
+      daily: {
+        startDate: moment()
+          .subtract(6, "weeks")
+          .format(DEFAULT_DATE_FORMAT),
+        endDate: moment().format(DEFAULT_DATE_FORMAT),
+        minDate: "2017-01-01",
+        maxDate: moment().format(DEFAULT_DATE_FORMAT),
+        startTime: "13:00",
+        endTime: "18:00"
+      } as Options
     } as DateRangeModel
   };
+
+  public selectedComponentType = "singleDatePicker";
 
   public config: any = JSON.parse(JSON.stringify(this.selectedOptions));
   public datePickerOptions: Options = {};
@@ -103,6 +124,7 @@ export class AppComponent {
   public dateArrayRangePickerOptions: Options = {};
   public dateArrayRangePickerSettings: Settings = this.getDateArrayRangeSettings();
   public dateTimeRangePickerSettings: Settings = this.getDateTimeRangeSettings();
+  public dateTimeRangeWithTimeZonePickerOptions: Settings = this.getDateTimeRangeWithTimeZoneSettings();
 
   public onFilterChange(event, filter) {
     if (typeof event.defaultPrevented !== "undefined") {
@@ -117,6 +139,8 @@ export class AppComponent {
       this.dateArrayRangePickerSettings.type = event.value;
       this.dateTimeRangePickerSettings = this.getDateTimeRangeSettings();
       this.dateTimeRangePickerSettings.type = event.value;
+      this.dateTimeRangeWithTimeZonePickerOptions = this.getDateTimeRangeWithTimeZoneSettings();
+      this.dateTimeRangeWithTimeZonePickerOptions.type = event.value;
     }
   }
 
@@ -163,6 +187,19 @@ export class AppComponent {
     return {
       retailCalendar: false,
       timezoneSupport: false,
+      timePicker: true,
+      type: this.selectedOption,
+      viewDateFormat: "MMM D, YYYY",
+      label: "Date Time Range",
+      placeholder: "Date Time Range",
+      inputDateFormat: "YYYY-MM-DD"
+    };
+  }
+
+  public getDateTimeRangeWithTimeZoneSettings(): Settings {
+    return {
+      retailCalendar: false,
+      timezoneSupport: true,
       timePicker: true,
       type: this.selectedOption,
       viewDateFormat: "MMM D, YYYY",

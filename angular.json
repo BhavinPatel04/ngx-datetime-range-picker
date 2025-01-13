@@ -15,20 +15,23 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "aot": true,
-            "outputPath": "dist",
+            "outputPath": {
+              "base": "dist",
+              "browser": ""
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss", "src/app/app.theme.scss"],
+            "styles": ["@angular/material/prebuilt-themes/azure-blue.css", "src/styles.scss", "src/app/app.theme.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules/"]
-            }
+            },
+            "browser": "src/main.ts"
           },
           "configurations": {
             "dev": {
@@ -58,8 +61,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -118,7 +119,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": ["src/styles.scss", "src/app/app.theme.scss"],
+            "styles": ["@angular/material/prebuilt-themes/azure-blue.css", "src/styles.scss", "src/app/app.theme.scss"],
             "scripts": [],
             "assets": ["src/favicon.ico", "src/assets"],
             "codeCoverageExclude": ["src/common/**/*", "src/config/**/*", "src/test.ts", "src/app/app.config.ts"]

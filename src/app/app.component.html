@@ -1,98 +1,185 @@
 <div class="date-container">
-  <mat-form-field>
-    <mat-select [(value)]="selectedOption" (selectionChange)="onFilterChange($event, 'level')">
-      <mat-option *ngFor="let option of options" [value]="option.value"> {{ option.name }} </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="app-name">
+    <h1>ngx-datetime-range-picker</h1>
+  </div>
+  <div class="selectors">
+    <div class="component-level-selector">
+      <mat-button-toggle-group
+        name="Component level"
+        aria-label="Component level"
+        [(value)]="selectedOption"
+        (change)="onFilterChange($event, 'level')"
+      >
+        <mat-button-toggle *ngFor="let option of options" [value]="option.value"> {{ option.name }} </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
 
-  <ul class="list-inline filter-container">
-    <li class="filter">
-      <ngx-datetime-range-picker
-        class="date"
-        name="date"
-        [options]="datePickerOptions"
-        [settings]="datePickerSettings"
-        [(dateRangeModel)]="selectedOptions.date"
-        (dateRangeChanged)="onFilterChange($event, 'date')"
-        required
+    <div class="component-type-selector">
+      <mat-button-toggle-group
+        name="Component type"
+        aria-label="Component type"
+        [(value)]="selectedComponentType"
+        (change)="onFilterChange($event, 'type')"
       >
-      </ngx-datetime-range-picker>
-      <div
-        *ngTemplateOutlet="
-          printSelectedDate;
-          context: { settings: datePickerSettings, config: config.date, date: selectedOptions.date }
-        "
-      ></div>
-    </li>
-    <li class="filter">
-      <ngx-datetime-range-picker
-        name="dateRange"
-        class="date-range"
-        [options]="dateRangePickerOptions"
-        [settings]="dateRangePickerSettings"
-        [(dateRangeModel)]="selectedOptions.dateRange"
-        (dateRangeChanged)="onFilterChange($event, 'date-range')"
-        required
-      >
-      </ngx-datetime-range-picker>
-      <div
-        *ngTemplateOutlet="
-          printSelectedDate;
-          context: { settings: dateRangePickerSettings, config: config.dateRange, date: selectedOptions.dateRange }
-        "
-      ></div>
-    </li>
-    <li class="filter">
-      <ngx-datetime-range-picker
-        name="dateArrayRange"
-        class="date-array-range"
-        [options]="dateArrayRangePickerOptions"
-        [settings]="dateArrayRangePickerSettings"
-        [(dateRangeModel)]="selectedOptions.dateArrayRange"
-        (dateRangeChanged)="onFilterChange($event, 'date-array-range')"
-        required
-      >
-      </ngx-datetime-range-picker>
-      <div
-        *ngTemplateOutlet="
-          printSelectedDate;
-          context: {
-            settings: dateArrayRangePickerSettings,
-            config: config.dateArrayRange,
-            date: selectedOptions.dateArrayRange
-          }
-        "
-      ></div>
-    </li>
-    <li class="filter">
-      <ngx-datetime-range-picker
-        name="dateTimeRange"
-        class="date-time-range"
-        [options]="dateRangePickerOptions"
-        [settings]="dateTimeRangePickerSettings"
-        [(dateRangeModel)]="selectedOptions.dateTimeRange"
-        (dateRangeChanged)="onFilterChange($event, 'date-range')"
-        required
-      >
-      </ngx-datetime-range-picker>
-      <div
-        *ngTemplateOutlet="
-          printSelectedDate;
-          context: {
-            settings: dateTimeRangePickerSettings,
-            config: config.dateTimeRange,
-            date: selectedOptions.dateTimeRange
-          }
-        "
-      ></div>
-    </li>
-  </ul>
+        <mat-button-toggle *ngFor="let componentType of componentTypes" [value]="componentType.value">
+          {{ componentType.name }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <div class="list-inline filter-container">
+    <div *ngIf="selectedComponentType === 'singleDatePicker'" class="filter">
+      <mat-card appearance="outlined" class="filter-card">
+        <mat-card-header>
+          <mat-card-title>Single select</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-datetime-range-picker
+            class="date"
+            name="date"
+            [options]="datePickerOptions"
+            [settings]="datePickerSettings"
+            [(dateRangeModel)]="selectedOptions.date"
+            (dateRangeChanged)="onFilterChange($event, 'date')"
+            required
+          >
+          </ngx-datetime-range-picker>
+          <div
+            *ngTemplateOutlet="
+              printSelectedDate;
+              context: { settings: datePickerSettings, config: config.date, date: selectedOptions.date }
+            "
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div *ngIf="selectedComponentType === 'dateRangePicker'" class="filter">
+      <mat-card appearance="outlined" class="filter-card">
+        <mat-card-header>
+          <mat-card-title>Date range</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-datetime-range-picker
+            name="dateRange"
+            class="date-range"
+            [options]="dateRangePickerOptions"
+            [settings]="dateRangePickerSettings"
+            [(dateRangeModel)]="selectedOptions.dateRange"
+            (dateRangeChanged)="onFilterChange($event, 'date-range')"
+            required
+          >
+          </ngx-datetime-range-picker>
+          <div
+            *ngTemplateOutlet="
+              printSelectedDate;
+              context: { settings: dateRangePickerSettings, config: config.dateRange, date: selectedOptions.dateRange }
+            "
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div *ngIf="selectedComponentType === 'dateArrayRangePicker'" class="filter">
+      <mat-card appearance="outlined" class="filter-card">
+        <mat-card-header>
+          <mat-card-title>Date array range</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-datetime-range-picker
+            name="dateArrayRange"
+            class="date-array-range"
+            [options]="dateArrayRangePickerOptions"
+            [settings]="dateArrayRangePickerSettings"
+            [(dateRangeModel)]="selectedOptions.dateArrayRange"
+            (dateRangeChanged)="onFilterChange($event, 'date-array-range')"
+            required
+          >
+          </ngx-datetime-range-picker>
+          <div
+            *ngTemplateOutlet="
+              printSelectedDate;
+              context: {
+                settings: dateArrayRangePickerSettings,
+                config: config.dateArrayRange,
+                date: selectedOptions.dateArrayRange
+              }
+            "
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div *ngIf="selectedComponentType === 'dateTimeRangePicker'" class="filter">
+      <mat-card appearance="outlined" class="filter-card">
+        <mat-card-header>
+          <mat-card-title>Date time range</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-datetime-range-picker
+            name="dateTimeRange"
+            class="date-time-range"
+            [options]="dateRangePickerOptions"
+            [settings]="dateTimeRangePickerSettings"
+            [(dateRangeModel)]="selectedOptions.dateTimeRange"
+            (dateRangeChanged)="onFilterChange($event, 'date-range')"
+            required
+          >
+          </ngx-datetime-range-picker>
+          <div
+            *ngTemplateOutlet="
+              printSelectedDate;
+              context: {
+                settings: dateTimeRangePickerSettings,
+                config: config.dateTimeRange,
+                date: selectedOptions.dateTimeRange
+              }
+            "
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div *ngIf="selectedComponentType === 'dateTimeRangeWithTimeZonePicker'" class="filter">
+      <mat-card appearance="outlined" class="filter-card">
+        <mat-card-header>
+          <mat-card-title>Date time range with timezone</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-datetime-range-picker
+            name="dateTimeWithTimezoneRange"
+            class="date-time-range"
+            [options]="dateRangePickerOptions"
+            [settings]="dateTimeRangeWithTimeZonePickerOptions"
+            [(dateRangeModel)]="selectedOptions.dateTimeWithTimezoneRange"
+            (dateRangeChanged)="onFilterChange($event, 'date-range')"
+            required
+          >
+          </ngx-datetime-range-picker>
+          <div
+            *ngTemplateOutlet="
+              printSelectedDate;
+              context: {
+                settings: dateTimeRangeWithTimeZonePickerOptions,
+                config: config.dateTimeWithTimezoneRange,
+                date: selectedOptions.dateTimeWithTimezoneRange
+              }
+            "
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
 
 <ng-template #printSelectedDate let-settings="settings" let-config="config" let-date="date">
-  <code class="selectedDate">
-    <pre>Settings: {{ printSettings(settings) }}</pre>
-    <pre>Config: {{ printSettings(config) }}</pre>
-    <pre>{{ printDate(date) }}</pre>
-  </code>
+  <div class="selectedDate">
+    <code>
+      <div>Settings:</div>
+      <pre>{{ printSettings(settings) }}</pre>
+      <mat-divider class="display-divider"></mat-divider>
+      <div>Config:</div>
+      <pre>{{ printSettings(config) }}</pre>
+      <mat-divider class="display-divider"></mat-divider>
+      <div>Selected:</div>
+      <pre>{{ printDate(date) }}</pre>
+    </code>
+  </div>
 </ng-template>
