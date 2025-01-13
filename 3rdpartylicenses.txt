@@ -157,6 +157,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --------------------------------------------------------------------------------
+Package: ngx-datetime-range-picker
+License: undefined
+
+
+--------------------------------------------------------------------------------
 Package: @angular/core
 License: "MIT"
 
