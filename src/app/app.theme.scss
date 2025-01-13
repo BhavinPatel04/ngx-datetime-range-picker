@@ -1,6 +1,8 @@
+@use 'sass:map';
 @use "@angular/material" as mat;
-// @use "ngx-datetime-range-picker/ngx-datetime-range-picker.component.scss" as ndtrp;
-@use "../../projects/ngx-datetime-range-picker/src/lib/ngx-datetime-range-picker.component.scss" as ndtrp;
+// @use "@angular/material/_index.scss";
+@use "ngx-datetime-range-picker/ngx-datetime-range-picker.component.scss" as ndtrp;
+// @use "../../projects/ngx-datetime-range-picker/src/lib/ngx-datetime-range-picker.component.scss" as ndtrp;
 @include mat.elevation-classes();
 @include mat.app-background();
 @include mat.core();
@@ -25,7 +27,7 @@ $body-1: mat.m2-define-typography-level(16px, 20px, 400)
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat.m2-define-palette($ndtrp-primary); //colors most widely used across all screens and components
+$app-primary: mat.m2-define-palette($ndtrp-primary, A200); //colors most widely used across all screens and components
 $app-accent: mat.m2-define-palette(
 $ndtrp-primary,
 A200,
@@ -34,7 +36,7 @@ A400
 ); //colors used for the floating action button and interactive elements
 
 // The warn palette is optional (defaults to red).
-$app-warn: mat.m2-define-palette($ndtrp-primary); //colors used to convey error state
+$app-warn: mat.m2-define-palette($ndtrp-primary, A200); //colors used to convey error state
 
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat.m2-define-light-theme(
@@ -49,15 +51,20 @@ $app-theme: mat.m2-define-light-theme(
 )
 );
 
+:root {
+  --mat-standard-button-toggle-shape: var(--mat-sys-corner-full);
+  --mat-standard-button-toggle-divider-color: var(--mat-sys-outline);
+}
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.elevation-classes();
 @include mat.app-background();
-@include mat.form-field-theme($app-theme);
-@include mat.icon-theme($app-theme);
-@include mat.button-theme($app-theme);
-@include mat.select-theme($app-theme);
+// @include mat.form-field-theme($app-theme);
+// @include mat.icon-theme($app-theme);
+// @include mat.button-theme($app-theme);
+// @include mat.select-theme($app-theme);
 @include mat.all-component-themes($app-theme);
 
 // library's theme

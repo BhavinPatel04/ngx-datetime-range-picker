@@ -10,7 +10,7 @@ export interface DateSide {
   label: string;
   months: string[];
   years: string[];
-  itemRows: object[];
+  itemRows: DateRow[];
 }
 
 export interface TimeSide {
@@ -31,6 +31,7 @@ export interface ActiveItemSide extends DateCharacteristics {
   rowItemText?: string;
   firstDay?: string;
   lastDay?: string;
+  formattedDateString?: string;
 }
 
 export interface CalendarSides {
@@ -123,7 +124,7 @@ export interface Config extends Options, Settings {
 export interface DateRow {
   rowNumber: string;
   rowNumberText: string;
-  items: DateCharacteristics[];
+  items: ActiveItemSide[];
 }
 
 export interface RowVariables {

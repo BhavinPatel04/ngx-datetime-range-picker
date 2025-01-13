@@ -134,6 +134,7 @@
     "lite-server": "^2.6.1",
     "moment": "^2.23.0",
     "ng-packagr": "^19.0.1",
+    "ngx-datetime-range-picker": "^5.0.0",
     "node-sass": "^9.0.0",
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",

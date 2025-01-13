@@ -9629,6 +9629,13 @@ ng-packagr@^19.0.1:
   optionalDependencies:
     rollup "^4.24.0"
 
+ngx-datetime-range-picker@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-datetime-range-picker/-/ngx-datetime-range-picker-5.0.0.tgz#ee338285ac068105e6ae5285b2168f005a7304d7"
+  integrity sha512-HyBA9V+r2Y2frJ03OzxuNDOYd9nLiFfDkn3SQIRqoAQhTOcSX004F0hVfAY+M0sTk0/zdBijxho+3GA8BKY5xg==
+  dependencies:
+    tslib "^2.3.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

@@ -204,7 +204,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
             items: [
               {
                 date: "2017-02-02",
-                rowItemText: 2,
+                rowItemText: "2",
                 available: true,
                 inRange: true,
                 active: false,
@@ -232,7 +232,7 @@ describe("NgxDatetimeRangePickerComponent", () => {
             items: [
               {
                 date: "2017-02-02",
-                rowItemText: 2,
+                rowItemText: "2",
                 available: true,
                 inRange: true,
                 active: false,

@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@use 'sass:color';
 
 $ndtrp-primary: (
 50: #e6f0fa,
@@ -75,16 +76,17 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
   $ndtrp-primary-color: mat.get-theme-color($theme, primary);
   $ndtrp-typography-config: mat.m2-get-typography-config($theme, primary);
   // $ndtrp-primary-color: mat-color($ndtrp-primary-color-map);
-  $ndtrp-primary-hover-color: darken($ndtrp-primary-color, 15%) !default;
+  $ndtrp-primary-hover-color: color.adjust($ndtrp-primary-color, $blackness: 25%) !default;
   $ndtrp-primary-text-color: #333 !default;
-  $ndtrp-secondary-text-color: lighten($ndtrp-primary-text-color, 50%) !default;
-  $ndtrp-icon-color: lighten($ndtrp-primary-text-color, 40%) !default;
-  $ndtrp-disabled-color: lighten($ndtrp-primary-text-color, 70%) !default;
+  $ndtrp-secondary-text-color: color.adjust($ndtrp-primary-text-color, $lightness: 50%) !default;
+  $ndtrp-icon-color: color.adjust($ndtrp-primary-text-color, $lightness: 40%) !default;
+  $ndtrp-disabled-color: color.adjust($ndtrp-primary-text-color, $lightness: 70%) !default;
   $ndtrp-weekdays-color: #ffc266 !default;
-  $ndtrp-range-button-background-color: lighten($ndtrp-primary-text-color, 75%) !default;
+  $ndtrp-range-button-background-color: color.adjust($ndtrp-primary-text-color, $lightness: 75%) !default;
   $ndtrp-range-button-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08) !default;
   $ndtrp-font-family: mat.m2-font-family($ndtrp-typography-config);
   $ndtrp-font-size: mat.m2-font-size($ndtrp-typography-config, body-1);
+  $ndtrp-border-color: #74777f !default;
   // @include mat.form-field-colors($theme);
   // @include mat.icon-colors($theme);
   // @include mat.button-colors($theme);
@@ -127,10 +129,7 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
 
     .timezone-info {
       font-size: 95%;
-      position: absolute;
-      right: 8px;
-      top: 8px;
-      opacity: 0.6;
+      opacity: 0.8;
       font-weight: bolder;
     }
 
@@ -168,7 +167,6 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
     .timezone-select {
       font-size: 90%;
       display: flex;
-      margin: 0 6px 6px;
 
       .timezones,
       .currentTime {
@@ -197,15 +195,9 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
         display: inline-block;
         cursor: pointer;
       }
-
-      .today-text {
-        font-weight: bold;
-        text-decoration: underline;
-      }
     }
 
-    .active-timezone {
-      color: $ndtrp-primary-color;
+    .active-timezone.code {
       font-weight: bolder;
     }
 
@@ -264,6 +256,13 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
     .date-select {
       display: inline-flex;
       gap: 4px;
+
+      .date-pick-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
     }
 
     .ranges {
@@ -281,7 +280,7 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
         color: $ndtrp-primary-color;
         line-height: 30px;
         cursor: pointer;
-        border: 1px solid #74777f;
+        border: 1px solid $ndtrp-border-color;
       }
 
       .active-range {
@@ -324,7 +323,7 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
 
       .range-select-cancel-button {
         color: $ndtrp-primary-color;
-        border: 1px solid #74777f;
+        border: 1px solid $ndtrp-border-color;
       }
 
       .range-select-button-bottom {
@@ -337,12 +336,14 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
       display: flex;
       padding: 0;
       gap: 8px;
+      margin: 0;
     }
 
     .calendar {
       float: left;
-      display: block;
       width: auto;
+      display: flex;
+      flex-direction: column;
     }
 
     .calendar-label {
@@ -409,6 +410,8 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
     }
 
     .calendar-table {
+      flex-grow: 1;
+
       .calendar-side-container {
         .calendar-label-container {
           display: flex;
@@ -427,17 +430,29 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
           td {
             white-space: nowrap;
             text-align: center;
-            padding: 8px;
           }
 
           td {
-            color: $ndtrp-secondary-text-color;
+            button {
+              border: none;
+              background: transparent;
+              cursor: pointer;
+              padding: 8px;
+              width: 100%;
+              color: inherit;
+
+              &:disabled {
+                cursor: default;
+                color: $ndtrp-secondary-text-color;
+              }
+            }
           }
 
           td.rowNumber {
-            color: lighten($ndtrp-primary-text-color, 40%);
-            border-right: 1px solid lighten($ndtrp-primary-text-color, 60%);
+            color: color.adjust($ndtrp-primary-text-color, $lightness: 40%);
+            border-right: 1px solid color.adjust($ndtrp-primary-text-color, $lightness: 60%);
             font-size: 70%;
+            padding: 8px;
           }
 
           td.rowNumberPlaceholder {
@@ -449,24 +464,14 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
             cursor: pointer;
           }
 
-          td.available,
-          th.available {
-            cursor: pointer;
-            color: $ndtrp-primary-text-color;
-          }
-
-          th.available {
-            width: 32px;
-          }
-
           td.available:hover,
           th.available:hover {
-            background-color: lighten($ndtrp-primary-text-color, 70%);
+            background-color: color.adjust($ndtrp-primary-text-color, $lightness: 70%);
             border-radius: 8px;
           }
 
           td.in-range {
-            background-color: lighten($ndtrp-primary-text-color, 76%);
+            background-color: color.adjust($ndtrp-primary-text-color, $lightness: 76%);
             color: $ndtrp-primary-color;
           }
 
@@ -536,6 +541,7 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
       background: #fff;
       padding: 0;
       box-shadow: none;
+      text-align: center;
     }
 
     .dropdown-menu {
@@ -566,10 +572,11 @@ $ndtrp-app-theme: mat.m2-define-light-theme(
         text-align: center;
         width: 50%;
         margin: 4px 0;
-        border: 1px solid $ndtrp-icon-color;
+        border: 1px solid $ndtrp-border-color;
         border-radius: 8px;
         display: flex;
         align-items: center;
+        width: 100%;
 
         .clock-icon-container {
           display: flex;

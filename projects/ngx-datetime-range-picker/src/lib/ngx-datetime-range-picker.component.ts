@@ -713,7 +713,7 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
       label: calendarLabel,
       months: this.service.getMonthsAvailable(this.config.minDate, this.config.maxDate, this.state.selectedYear[side]),
       years: this.service.getYearsAvailable(this.config),
-      itemRows: [] as object[]
+      itemRows: [] as DateRow[]
     };
 
     this.state.weekDayOptions = [""];
@@ -801,7 +801,8 @@ export class NgxDatetimeRangePickerComponent implements OnChanges {
             available,
             inRange,
             active,
-            today
+            today,
+            formattedDateString: moment(currentItemDate, DEFAULT_DATE_FORMAT).format(this.config.viewDateFormat)
           };
           if (this.service.isRowIemValid(rowOptions)) {
             if (active) {

@@ -7,12 +7,14 @@
             d="M216-96q-29.7 0-50.85-21.5Q144-139 144-168v-528q0-29 21.15-50.5T216-768h72v-96h72v96h240v-96h72v96h72q29.7 0 50.85 21.5Q816-725 816-696v528q0 29-21.15 50.5T744-96H216Zm0-72h528v-360H216v360Zm0-432h528v-96H216v96Zm0 0v-96 96Zm264.211 216Q465-384 454.5-394.289q-10.5-10.29-10.5-25.5Q444-435 454.289-445.5q10.29-10.5 25.5-10.5Q495-456 505.5-445.711q10.5 10.29 10.5 25.5Q516-405 505.711-394.5q-10.29 10.5-25.5 10.5Zm-156 0Q309-384 298.5-394.289q-10.5-10.29-10.5-25.5Q288-435 298.289-445.5q10.29-10.5 25.5-10.5Q339-456 349.5-445.711q10.5 10.29 10.5 25.5Q360-405 349.711-394.5q-10.29 10.5-25.5 10.5Zm312 0Q621-384 610.5-394.289q-10.5-10.29-10.5-25.5Q600-435 610.289-445.5q10.29-10.5 25.5-10.5Q651-456 661.5-445.711q10.5 10.29 10.5 25.5Q672-405 661.711-394.5q-10.29 10.5-25.5 10.5Zm-156 144Q465-240 454.5-250.289q-10.5-10.29-10.5-25.5Q444-291 454.289-301.5q10.29-10.5 25.5-10.5Q495-312 505.5-301.711q10.5 10.29 10.5 25.5Q516-261 505.711-250.5q-10.29 10.5-25.5 10.5Zm-156 0Q309-240 298.5-250.289q-10.5-10.29-10.5-25.5Q288-291 298.289-301.5q10.29-10.5 25.5-10.5Q339-312 349.5-301.711q10.5 10.29 10.5 25.5Q360-261 349.711-250.5q-10.29 10.5-25.5 10.5Zm312 0Q621-240 610.5-250.289q-10.5-10.29-10.5-25.5Q600-291 610.289-301.5q10.29-10.5 25.5-10.5Q651-312 661.5-301.711q10.5 10.29 10.5 25.5Q672-261 661.711-250.5q-10.29 10.5-25.5 10.5Z"
           />
         </svg>
-        &nbsp;&nbsp;
       </span>
-      <span matPrefix *ngIf="state.selectedTimezone" class="timezone-info active-timezone">
-        {{ state.selectedTimezone }}
-      </span>
-      <mat-label>{{ config.label }}</mat-label>
+
+      <mat-label
+        >{{ config.label }}
+        <span matPrefix *ngIf="state.selectedTimezone" class="timezone-info active-timezone">
+          ({{ state.selectedTimezone }})
+        </span>
+      </mat-label>
       <input
         matInput
         #filterInputBox
@@ -25,8 +27,8 @@
         (click)="onComponentClick()"
         placeholder="{{ config.placeholder }}"
         [ngModel]="state.selectedDateText"
-        (ngModelChange)="onDateRangeInputChange($event)"
-        (keyup)="onCalendarClose($event)"
+        (ngModelChange)="onDateRangeInputChange()"
+        (keyup)="onCalendarClose()"
         (focus)="onFocusInput($event)"
         (blur)="onBlurInput($event)"
         [value]="state.selectedDateText"
@@ -40,13 +42,14 @@
   </div>
   <div *ngIf="state.isCalendarVisible" class="calendar-view">
     <div class="date-select">
-      <div style="position: relative;">
+      <div class="date-pick-container">
         <div *ngIf="config.timezoneSupport" class="list-inline timezone-select">
           <div class="timeZones">
             <div
               *ngFor="let tz of state.timeZones; let last = last"
               class="timezone"
               [ngClass]="{
+                code: true,
                 'border-separator': !last,
                 'active-timezone': state.selectedTimezone == tz
               }"
@@ -155,21 +158,24 @@
                     </div>
                   </div>
                 </div>
-                <table>
+                <table role="grid">
                   <thead>
                     <tr>
-                      <th *ngIf="config.showRowNumber" class="rowNumber"></th>
-                      <th *ngFor="let day of state.weekDayOptions" class="calendar-week-day capitalize">{{ day }}</th>
+                      <th *ngIf="config.showRowNumber" scope="col" class="rowNumber"></th>
+                      <th *ngFor="let day of state.weekDayOptions" scope="col" class="calendar-week-day capitalize">
+                        {{ day }}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of state.dates[side]['itemRows']">
+                    <tr *ngFor="let row of state.dates[side]['itemRows']" role="row">
                       <td *ngIf="config.showRowNumber && row.rowNumberText" class="rowNumber">
                         {{ row.rowNumberText }}
                       </td>
                       <td
                         #itemCell
                         *ngFor="let item of row.items"
+                        role="gridcell"
                         [attr.firstDay]="item.firstDay"
                         [attr.lastDay]="item.lastDay"
                         [ngClass]="{
@@ -190,37 +196,49 @@
                         (mouseover)="onCellMouseEnter(item, itemCell, side)"
                         (mouseleave)="onCellMouseLeave()"
                       >
-                        <div>{{ item.rowItemText }}</div>
+                        <button
+                          role="button"
+                          tabindex="0"
+                          [attr.disabled]="item.available ? null : true"
+                          [attr.aria-pressed]="
+                            item.inRange ||
+                            (state.activeStartDate == item.date && side == 'left') ||
+                            (state.activeEndDate == item.date && side == 'right')
+                          "
+                          [attr.aria-label]="item.formattedDateString"
+                        >
+                          {{ item.rowItemText }}
+                        </button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </li>
-        </ul>
-        <ul *ngIf="config.timePicker" class="list-inline time-picker-container">
-          <li *ngFor="let side of state.sides; let lastSide = last" class="time-select" [ngClass]="side">
-            <div class="clock-icon-container">
-              <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
-                <path
-                  d="m614-310 51-51-149-149v-210h-72v240l170 170ZM480-96q-79.376 0-149.188-30Q261-156 208.5-208.5T126-330.958q-30-69.959-30-149.5Q96-560 126-630t82.5-122q52.5-52 122.458-82 69.959-30 149.5-30 79.542 0 149.548 30.24 70.007 30.24 121.792 82.08 51.786 51.84 81.994 121.92T864-480q0 79.376-30 149.188Q804-261 752-208.5T629.869-126Q559.738-96 480-96Zm0-384Zm.477 312q129.477 0 220.5-91.5T792-480.477q0-129.477-91.023-220.5T480.477-792Q351-792 259.5-700.977t-91.5 220.5Q168-351 259.5-259.5T480.477-168Z"
-                />
-              </svg>
-            </div>
-            <div *ngFor="let timeItem of state.timeItems" class="d-inline-block time-item-container">
-              <mat-form-field subscriptSizing="dynamic">
-                <mat-select
-                  class="timeItem-select"
-                  panelClass="ngx-datetime-range-picker-select-panel timeItem-select-panel"
-                  [value]="getSelectedTimeItemText(timeItem, side)"
-                  (selectionChange)="onTimeLabelChange(timeItem, side, $event.value)"
-                >
-                  <mat-option class="dropdown-item" *ngFor="let item of state.times[side][timeItem]" [value]="item">
-                    {{ item }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <div *ngIf="config.timePicker" class="time-picker-container">
+              <div class="time-select">
+                <div class="clock-icon-container">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+                    <path
+                      d="m614-310 51-51-149-149v-210h-72v240l170 170ZM480-96q-79.376 0-149.188-30Q261-156 208.5-208.5T126-330.958q-30-69.959-30-149.5Q96-560 126-630t82.5-122q52.5-52 122.458-82 69.959-30 149.5-30 79.542 0 149.548 30.24 70.007 30.24 121.792 82.08 51.786 51.84 81.994 121.92T864-480q0 79.376-30 149.188Q804-261 752-208.5T629.869-126Q559.738-96 480-96Zm0-384Zm.477 312q129.477 0 220.5-91.5T792-480.477q0-129.477-91.023-220.5T480.477-792Q351-792 259.5-700.977t-91.5 220.5Q168-351 259.5-259.5T480.477-168Z"
+                    />
+                  </svg>
+                </div>
+                <div *ngFor="let timeItem of state.timeItems" class="d-inline-block time-item-container">
+                  <mat-form-field subscriptSizing="dynamic">
+                    <mat-select
+                      class="timeItem-select"
+                      panelClass="ngx-datetime-range-picker-select-panel timeItem-select-panel"
+                      [value]="getSelectedTimeItemText(timeItem, side)"
+                      (selectionChange)="onTimeLabelChange(timeItem, side, $event.value)"
+                    >
+                      <mat-option class="dropdown-item" *ngFor="let item of state.times[side][timeItem]" [value]="item">
+                        {{ item }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
           </li>
         </ul>
