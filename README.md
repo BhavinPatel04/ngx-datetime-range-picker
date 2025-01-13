@@ -15,10 +15,16 @@ This plugin uses bootstrap and moment.js
 
 ## Installation
 
-#### Install the plugin from npm:
+#### Install the plugin through npm:
 
 ```
 npm install ngx-datetime-range-picker --save
+```
+
+#### Install the plugin through yarn:
+
+```
+yarn add ngx-datetime-range-picker
 ```
 
 #### import _NgxDatetimeRangePickerModule_ in your module:
