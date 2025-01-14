@@ -1,6 +1,6 @@
 {
   "name": "ngx-datetime-range-picker",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "homepage": "https://github.com/BhavinPatel04/ngx-datetime-range-picker",
   "bugs": "https://github.com/BhavinPatel04/ngx-datetime-range-picker/issues",
   "repository": {
@@ -11,6 +11,7 @@
     "name": "Bhavin Patel",
     "url": "https://github.com/BhavinPatel04"
   },
+  "license": "MIT",
   "keywords": [
     "angular",
     "angular2",

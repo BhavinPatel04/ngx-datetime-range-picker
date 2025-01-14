@@ -8,6 +8,7 @@
     "url": "git+https://github.com/BhavinPatel04/ngx-barebone-app"
   },
   "author": "Bhavin Patel",
+  "license": "MIT",
   "keywords": [
     "angular",
     "angular2",
